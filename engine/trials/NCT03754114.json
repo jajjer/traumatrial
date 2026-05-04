@@ -1,0 +1,79 @@
+{
+  "trial_id": "NCT03754114",
+  "short_name": "BOOST3",
+  "title": "Brain Oxygen Optimization in Severe TBI, Phase 3",
+  "requires_efic": true,
+  "phase": "NA",
+  "inclusion": [
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 3,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 14,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "gsw",
+        "stab"
+      ],
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": ["pregnant", "unknown_could_be_pregnant"],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Glasgow Coma Scale motor score < 6 if endotracheally intubated: requires a separate GCS motor subscore field and conditional intubation status, neither of which exist in the schema.",
+      "Evidence of intracranial trauma on CT scan: requires imaging/diagnostic result field not in the schema.",
+      "Able to place intracranial probes and randomize within 6 hours of arrival at enrolling hospital: requires temporal/procedural logic not expressible in the schema.",
+      "Able to place intracranial probes and randomize within 12 hours from injury: requires time-from-injury field not in the schema.",
+      "Non-survivable injury (exclusion): requires clinical judgment field not in the schema.",
+      "Bilaterally absent pupillary response in the absence of paralytic medication (exclusion): requires neurological exam field not in the schema.",
+      "Contraindication to the placement of intracranial probes (exclusion): requires procedural contraindication field not in the schema.",
+      "Treatment of brain tissue oxygen values prior to randomization (exclusion): requires prior treatment history field not in the schema.",
+      "Planned use of devices which may unblind treating physicians to brain tissue hypoxia (exclusion): requires planned device use field not in the schema.",
+      "Systemic sepsis at screening (exclusion): requires infection/sepsis diagnosis field not in the schema.",
+      "Refractory hypotension (exclusion): 'refractory' implies treatment-resistant status beyond a simple SBP threshold, which cannot be fully expressed in the schema.",
+      "Refractory systemic hypoxia (exclusion): requires oxygenation status field not in the schema.",
+      "PaO2/FiO2 ratio < 150 (exclusion): requires arterial blood gas lab values not in the schema.",
+      "Known pre-existing neurologic disease with confounding residual neurological deficits (exclusion): requires prior medical history field not in the schema.",
+      "Known inability to perform activities of daily living without assistance prior to injury (exclusion): requires functional status history field not in the schema.",
+      "Known active drug or alcohol dependence that would interfere with physiological response (exclusion): requires substance use history field not in the schema.",
+      "Prisoner (exclusion): requires legal/custody status field not in the schema.",
+      "On EFIC Opt-Out list as indicated by a bracelet or medical alert (exclusion): requires consent registry/opt-out status field not in the schema."
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "trial_id": "NCT05889650",
+  "short_name": "ELASTIC",
+  "title": "External Lumbar Drainage to Reduce ICP in Severe TBI: a Phase 1 Clinical Trial",
+  "requires_efic": true,
+  "phase": "NA",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 3,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": ["pregnant", "unknown_could_be_pregnant"],
+      "hard": true
+    },
+    {
+      "field": "anticoagulant_use",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "gsw",
+        "stab"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Pupils symmetric and bilaterally reactive (no pupil reactivity field in schema)",
+      "Midline shift \u22645mm at the level of foramen of Monro on admission or post-operative brain CT (no imaging/midline shift field in schema)",
+      "Patent (complete or partial) quadrigeminal cisterns on admission or post-operative brain CT (no cistern patency field in schema)",
+      "First randomization and intervention may be commenced within 24 hours of injury (temporal logic relative to injury time not expressible in schema)",
+      "ELD safety score \u22655 (no ELD safety score field in schema)",
+      "Cisterns on CT completely effaced (no cistern patency field in schema)",
+      "GCS 3 with dilated and fixed pupils (compound criterion requiring pupil exam data not in schema; GCS lte 8 inclusion already encodes the GCS portion)",
+      "Uncal or tonsillar herniation on admission or post-operative brain CT (no herniation field in schema)",
+      "Temporal lobe contusions with effaced ipsilateral cisterns (no imaging finding fields in schema)",
+      "Primary hemicraniectomy (no surgical history field in schema)",
+      "Prisoners (no incarceration status field in schema)",
+      "Patients previously lacking capacity to consent or with advanced directives to forego aggressive care (no legal/capacity field in schema)",
+      "Pre-existing conditions affecting functional status or life expectancy to less than 1 year (no comorbidity or life expectancy field in schema)",
+      "Coagulopathy or thrombocytopenia <50,000 as contraindication for ELD (no coagulation or platelet count field in schema)",
+      "Severe spinal deformity as contraindication for ELD (no spinal deformity field in schema)",
+      "Posterior fossa hemorrhage (no anatomic hemorrhage location field in schema)"
+    ]
+  }
+}

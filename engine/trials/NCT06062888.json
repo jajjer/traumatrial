@@ -1,0 +1,67 @@
+{
+  "trial_id": "NCT06062888",
+  "short_name": "FIT-BRAIN",
+  "title": "FFP In Traumatic BRAin INjury (FIT-BRAIN) Trial",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 3,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 12,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion #3: Cerebral trauma confirmed on CT with BIG 3 radiographic findings \u2014 requires imaging/radiology data not available in schema.",
+      "Inclusion #4: Wallet examined and no power of attorney related to blood product administration identified \u2014 requires legal document check not in schema.",
+      "Exclusion #1: Known history of adverse reaction to plasma products \u2014 requires prior medical history not in schema.",
+      "Exclusion #2: Known history of congestive heart failure, renal failure, liver failure, or severe respiratory dysfunction requiring home supplemental oxygen \u2014 requires prior medical history not in schema.",
+      "Exclusion #3: Persons who are currently incarcerated \u2014 requires incarceration status not in schema.",
+      "Exclusion #4: Persons with inadequate venous access \u2014 requires physical exam finding not in schema.",
+      "Exclusion #5: Treatment cannot start within 1 hour of arrival at the hospital \u2014 requires temporal/logistical data not in schema.",
+      "Exclusion #6: Time of injury is unknown \u2014 requires injury time data not in schema.",
+      "Exclusion #7: Non-survivable injuries in the estimation of the attending trauma and/or neurosurgeon \u2014 requires clinical judgment field not in schema.",
+      "Exclusion #8: Interfacility transfers \u2014 requires transfer origin data not in schema.",
+      "Exclusion #9: Class 3 hemorrhagic shock \u2014 requires hemorrhagic shock classification not directly available; partially related to presumed_hemorrhage but shock class cannot be determined from schema fields alone.",
+      "Exclusion #10: Known DNR orders prior to randomization \u2014 requires advance directive status not in schema.",
+      "Exclusion #11: Persons who refuse administration of blood products \u2014 requires patient consent/refusal status not in schema.",
+      "Exclusion #12: Persons with a research opt-out bracelet \u2014 requires opt-out status not in schema.",
+      "Exclusion #13: Persons who require FFP for any other indication (e.g., reversal of coagulopathy) \u2014 requires clinical indication data not in schema."
+    ]
+  }
+}

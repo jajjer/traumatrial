@@ -1,0 +1,62 @@
+{
+  "trial_id": "NCT05634109",
+  "short_name": "WEBSTER",
+  "title": "Whole Blood in Trauma Patients With Hemorrhagic Shock",
+  "requires_efic": true,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "trauma_activation_level",
+      "op": "lte",
+      "value": 2,
+      "hard": false
+    },
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": ["pregnant", "unknown_could_be_pregnant"],
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "More than 4 hours from trauma to hospital admission: requires temporal/time-from-injury field not in schema.",
+      "More than 2 hours from hospital admission to randomization: requires time-from-admission field not in schema.",
+      "Transfusion of more than one packed red blood cell unit prior to randomization: requires prior transfusion count field not in schema.",
+      "Patients who have undergone surgery (laparotomy, thoracotomy, or sternotomy) before hospital admission: requires prior surgical history field not in schema.",
+      "In-extremis patients with devastating injuries (expected to die within 60 minutes): requires clinical prognosis/expected survival field not in schema.",
+      "Blood group other than O or A and positive Rh factor: requires blood type/Rh factor field not in schema.",
+      "Severe traumatic brain injury in which neurosurgical intervention is futile (partial decapitation, massive intracranial hemorrhage, or transcranial gunshot wounds): requires nuanced TBI severity/futility assessment beyond available boolean fields.",
+      "Burns over 20% of the total body surface area: requires burn TBSA percentage field not in schema.",
+      "Suspected airway burn: requires airway burn field not in schema.",
+      "CPR for more than 5 minutes before randomization: requires CPR duration field not in schema; mechanism=cardiac_arrest used as a proxy for pre-arrival CPR exclusion only.",
+      "Do not resuscitate order: requires DNR/advance directive field not in schema.",
+      "Incarcerated/prisoners: requires legal/custody status field not in schema.",
+      "Patient or legal representative who refuse to participate: requires consent status field not in schema.",
+      "Candidate for massive transfusion (ABC Score >= 2 or physician discretion): ABC score is a composite clinical score not directly representable in schema fields.",
+      "Concurrent availability of whole blood or blood component therapy: requires resource/inventory availability field not in schema.",
+      "Trauma activation level rule used as partial proxy for hemorrhagic shock trauma code activation, but the schema does not distinguish hemorrhagic shock specifically."
+    ]
+  }
+}

@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -98,6 +99,10 @@ Be conservative: hard=true ONLY when missing/violating that criterion definitely
 
 Avoid tautological rule pairs. If you encode "age >= X" as a hard inclusion, do NOT also add "age < X" as a hard exclusion — the inclusion already covers it.
 
+Prefer `in` over multiple `eq`. If two clauses test the same field with the same operator (e.g., pregnancy_status eq 'pregnant' AND pregnancy_status eq 'unknown_could_be_pregnant'), MERGE them into one `in` rule.
+
+If the trial title contains a recognized acronym in parentheses (e.g., "Foo Bar (FIT-BRAIN) Trial"), use the acronym as short_name — never the truncated full title.
+
 Output valid JSON only — no prose, no markdown fences, no preamble."""
 
 
@@ -158,6 +163,15 @@ def fetch_trial(nct_id: str) -> dict[str, Any]:
     return r.json()
 
 
+_PARENS_RE = re.compile(r"\(([A-Z][A-Z0-9\-]{1,15}(?:\s*[A-Z0-9\-]+)?)\)")
+
+
+def _short_name_from_title(title: str) -> str | None:
+    """Pull an acronym from a brief title like 'Foo Bar (FIT-BRAIN) Trial'."""
+    m = _PARENS_RE.search(title)
+    return m.group(1) if m else None
+
+
 def extract_metadata(study: dict[str, Any]) -> dict[str, Any]:
     ps = study.get("protocolSection", {})
     ident = ps.get("identificationModule", {})
@@ -168,10 +182,17 @@ def extract_metadata(study: dict[str, Any]) -> dict[str, Any]:
     phases = design.get("phases") or [design.get("phase") or "?"]
     phase = phases[0] if phases else "?"
 
+    title = ident.get("briefTitle", "?")
+    short_name = (
+        ident.get("acronym")
+        or _short_name_from_title(title)
+        or title  # full title, the LLM is told to compress this if no acronym exists
+    )
+
     return {
         "trial_id": ident.get("nctId", "?"),
-        "short_name": ident.get("acronym") or ident.get("briefTitle", "")[:40],
-        "title": ident.get("briefTitle", "?"),
+        "short_name": short_name,
+        "title": title,
         "phase": phase,
         "status": status.get("overallStatus", "?"),
         "criteria_text": elig.get("eligibilityCriteria", ""),
