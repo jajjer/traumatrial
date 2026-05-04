@@ -41,6 +41,7 @@ export default function Home() {
   const [active, setActive] = useState<PatientMatchPayload | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -53,6 +54,9 @@ export default function Home() {
       })
       .catch(() => {
         // public/ fetches are static — never block the UI on a transient failure
+      })
+      .finally(() => {
+        setLoaded(true);
       });
   }, []);
 
@@ -89,6 +93,7 @@ export default function Home() {
         active={!!active}
         patientCount={patients.length}
         trialCount={trials.length}
+        loaded={loaded}
       />
 
       <div className="flex-1 flex flex-col items-center px-6 py-10 max-w-6xl w-full mx-auto">
@@ -121,10 +126,12 @@ function StatusBar({
   active,
   patientCount,
   trialCount,
+  loaded,
 }: {
   active: boolean;
   patientCount: number;
   trialCount: number;
+  loaded: boolean;
 }) {
   return (
     <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-10">
@@ -144,7 +151,9 @@ function StatusBar({
           </span>
         </div>
         <div className="font-mono text-[11px] text-slate-400 hidden sm:block">
-          {trialCount} active trials · {patientCount} simulated arrivals
+          {loaded
+            ? `${trialCount} active trials · ${patientCount} simulated arrivals`
+            : " "}
         </div>
       </div>
     </header>
