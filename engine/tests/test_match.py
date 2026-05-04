@@ -147,3 +147,60 @@ def test_match_result_is_pydantic_serializable():
     payload = res.model_dump_json()
     assert "patient_id" in payload
     assert "trace" in payload
+
+
+def test_rule_rejects_string_for_int_field():
+    """The schema is the contract — LLM-invented enum strings on int fields fail loudly."""
+    with pytest.raises(Exception):
+        Rule(
+            field="trauma_activation_level",
+            op="eq",
+            value="massive_hemorrhage_protocol",
+            hard=True,
+        )
+
+
+def test_rule_rejects_bool_for_enum_field():
+    """pregnancy_status is an enum string; passing True fails fast."""
+    with pytest.raises(Exception):
+        Rule(field="pregnancy_status", op="eq", value=True, hard=True)
+
+
+def test_rule_rejects_unknown_enum_value():
+    """Unknown mechanism values like 'spaceship_collision' must be rejected."""
+    with pytest.raises(Exception):
+        Rule(field="mechanism", op="eq", value="spaceship_collision", hard=True)
+
+
+def test_rule_rejects_int_out_of_range():
+    """gcs is bounded 3-15; a value of 42 is wrong on its face."""
+    with pytest.raises(Exception):
+        Rule(field="gcs", op="lte", value=42, hard=True)
+
+
+def test_rule_accepts_valid_enum_in_list():
+    """The `in` operator must validate every list element against the field type."""
+    rule = Rule(
+        field="mechanism",
+        op="in",
+        value=["gsw", "stab"],
+        hard=True,
+    )
+    assert rule.value == ["gsw", "stab"]
+
+
+def test_rule_rejects_invalid_enum_in_list():
+    """One bad element in an `in` list is enough to fail."""
+    with pytest.raises(Exception):
+        Rule(
+            field="mechanism",
+            op="in",
+            value=["gsw", "made_up_mechanism"],
+            hard=True,
+        )
+
+
+def test_rule_rejects_empty_list_for_in():
+    """An `in` rule with an empty list is a coding error, not a valid spec."""
+    with pytest.raises(Exception):
+        Rule(field="mechanism", op="in", value=[], hard=True)

@@ -7,6 +7,7 @@ from traumatrial_match.schema import (
     MatchResult,
     ClauseTrace,
     PATIENT_FIELDS,
+    PATIENT_FIELD_TYPES,
     OPERATORS,
 )
 from traumatrial_match.match import match, match_all
@@ -20,6 +21,7 @@ __all__ = [
     "MatchResult",
     "ClauseTrace",
     "PATIENT_FIELDS",
+    "PATIENT_FIELD_TYPES",
     "OPERATORS",
     "match",
     "match_all",

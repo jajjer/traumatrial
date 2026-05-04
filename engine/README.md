@@ -95,6 +95,21 @@ This generates the static match payloads consumed by the Next.js demo in `../dem
 python scripts/precompute.py
 ```
 
+## Auto-import a trial from clinicaltrials.gov
+
+Watch a real trial become structured rules in 10 seconds. Fetches the trial from clinicaltrials.gov, sends the inclusion/exclusion text to Claude with our schema as the contract, validates the response with pydantic, and writes a `engine/trials/NCT….json`. If a criterion can't be expressed in our 8-operator vocabulary, it goes into `_metadata.skipped_criteria` instead of being silently dropped.
+
+```bash
+pip install -e ".[parse]"
+export ANTHROPIC_API_KEY=sk-ant-...   # or put it in a .env at the repo root
+python scripts/parse_trial.py NCT05638581
+python scripts/parse_trial.py NCT05638581 NCT04217551 NCT04995068 --overwrite
+```
+
+**The schema is the constraint that keeps the LLM honest.** Field types (int / bool / enum) and value ranges are injected into the system prompt, AND validated at load time by `Rule._value_must_match_field_type`. A hallucinated value like `trauma_activation_level eq "massive_hemorrhage_protocol"` (the LLM's first attempt at TROOP) fails pydantic validation, which feeds the error back to the model for a retry. Up to 3 attempts before giving up.
+
+Always hand-review the generated JSON before committing — the LLM is good but not perfect. Look for `gte` vs `gt` off-by-ones, soft-vs-hard misclassifications, and the `_metadata.skipped_criteria` list for things that need a schema extension.
+
 ## What this is NOT
 
 - Not a clinical decision-support system.
