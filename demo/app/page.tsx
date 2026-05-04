@@ -411,26 +411,42 @@ function MatchCard({
   const [open, setOpen] = useState(false);
   const isEligible = result.eligible;
   const conf = Math.round(result.confidence * 100);
+  // Hard inclusions all pass but soft inclusions miss → eligible but low confidence.
+  // A coordinator should see this as "review needed", not "ready to enroll".
+  const needsReview = isEligible && result.confidence < 0.5;
+  const status: "review" | "eligible" | "excluded" = needsReview
+    ? "review"
+    : isEligible
+      ? "eligible"
+      : "excluded";
+
+  const cardCls = {
+    eligible: "border-emerald-700/70 bg-emerald-950/20",
+    review: "border-amber-700/70 bg-amber-950/20",
+    excluded: "border-slate-800 bg-slate-900/30 opacity-70",
+  }[status];
+
+  const chipCls = {
+    eligible: "bg-emerald-900/60 text-emerald-200",
+    review: "bg-amber-900/60 text-amber-100",
+    excluded: "bg-slate-800 text-slate-400",
+  }[status];
+
+  const chipLabel = {
+    eligible: "ELIGIBLE",
+    review: "REVIEW NEEDED",
+    excluded: "EXCLUDED",
+  }[status];
 
   return (
-    <div
-      className={`rounded-lg border p-4 transition slide-in ${
-        isEligible
-          ? "border-emerald-700/70 bg-emerald-950/20"
-          : "border-slate-800 bg-slate-900/30 opacity-70"
-      }`}
-    >
+    <div className={`rounded-lg border p-4 transition slide-in ${cardCls}`}>
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
             <span
-              className={`font-mono text-[10px] tracking-[0.15em] px-1.5 py-0.5 rounded ${
-                isEligible
-                  ? "bg-emerald-900/60 text-emerald-200"
-                  : "bg-slate-800 text-slate-400"
-              }`}
+              className={`font-mono text-[10px] tracking-[0.15em] px-1.5 py-0.5 rounded ${chipCls}`}
             >
-              {isEligible ? "ELIGIBLE" : "EXCLUDED"}
+              {chipLabel}
             </span>
             <span className="font-mono text-xs text-slate-300">
               {trial?.short_name ?? "?"}
@@ -447,7 +463,7 @@ function MatchCard({
           <p className="text-sm text-slate-300 mt-1.5 leading-snug">
             {trial?.title ?? result.trial_id}
           </p>
-          {isEligible && (
+          {status === "eligible" && (
             <div className="mt-3 flex items-center gap-2">
               <div className="h-1.5 flex-1 max-w-[200px] rounded-full bg-slate-800 overflow-hidden">
                 <div
@@ -460,14 +476,23 @@ function MatchCard({
               </span>
             </div>
           )}
+          {status === "review" && (
+            <p className="mt-3 font-mono text-[10px] text-amber-200/80">
+              Hard criteria pass, but soft inclusions miss. Coordinator review recommended before enrolling.
+            </p>
+          )}
         </div>
         <div className="flex flex-row sm:flex-col items-stretch sm:items-end gap-2 sm:shrink-0">
           {isEligible && (
             <button
               onClick={() => onAcknowledge(trial?.short_name ?? result.trial_id)}
-              className="font-mono text-[11px] tracking-wider px-3 py-2 sm:py-1.5 rounded bg-rose-600 hover:bg-rose-500 text-white whitespace-nowrap flex-1 sm:flex-none"
+              className={`font-mono text-[11px] tracking-wider px-3 py-2 sm:py-1.5 rounded text-white whitespace-nowrap flex-1 sm:flex-none ${
+                status === "review"
+                  ? "bg-amber-600 hover:bg-amber-500"
+                  : "bg-rose-600 hover:bg-rose-500"
+              }`}
             >
-              ACKNOWLEDGE & EN ROUTE
+              {status === "review" ? "PAGE & FLAG FOR REVIEW" : "ACKNOWLEDGE & EN ROUTE"}
             </button>
           )}
           <button
