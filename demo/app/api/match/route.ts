@@ -27,6 +27,8 @@ export async function POST(request: Request) {
   if (!v.ok) return Response.json({ error: v.error }, { status: 400 });
 
   const trials = await loadTrials();
+  const t0 = performance.now();
   const results = matchAll(v.patient, trials);
-  return Response.json({ patient: v.patient, results });
+  const latency_ms = +(performance.now() - t0).toFixed(2);
+  return Response.json({ patient: v.patient, results, latency_ms, trials_evaluated: trials.length });
 }

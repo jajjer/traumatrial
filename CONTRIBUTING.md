@@ -29,7 +29,7 @@ npm run dev
 1. **Synthetic data only.** No real patient data, ever. No data with the smell of a specific institution. If a trial JSON references a hospital, scrub it.
 2. **No clinical claims.** This is structured-rule infrastructure, not a clinical decision-support system. PRs that add language implying clinical validation will be sent back.
 3. **Keep the engine pure.** No web framework, no I/O beyond the JSON loaders, no LLM calls. The matching engine has to be deterministic and embeddable.
-4. **Tests with PRs.** Engine PRs include pytest coverage for the changed behavior. Demo PRs include a screenshot or short Loom of the change.
+4. **Tests with PRs.** Engine PRs include pytest coverage for the changed behavior. Demo PRs include a before/after screenshot.
 5. **MIT-licensed contributions.** By submitting a PR you agree your contribution is MIT-licensed.
 
 ## Filing an issue

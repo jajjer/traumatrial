@@ -79,4 +79,7 @@ export interface MatchResult {
 export interface PatientMatchPayload {
   patient: Patient;
   results: MatchResult[];
+  // Present on /api/match responses; omitted from precomputed persona payloads.
+  latency_ms?: number;
+  trials_evaluated?: number;
 }

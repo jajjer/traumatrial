@@ -75,7 +75,7 @@ The categorical signal is `eligible: bool`; magnitude is `confidence: float`. Th
 
 ## Bundled corpus
 
-The repo ships with 5 verified active trauma trials (TROOP, SWiFTCanada, ICECAP, SELECT-TBI, AEDH-MT) and 8 patient personas covering hemorrhage, TBI, anticoagulation, pregnancy exclusion, cardiac arrest, and pediatric exclusion. See `trials/` and `patients/`.
+The repo ships with 10 verified active trauma trials (TROOP, SWiFTCanada, ICECAP, SELECT-TBI, AEDH-MT, BOOST3, WEBSTER, FIT-BRAIN, Ketamine-TBI, ELASTIC) and 8 patient personas covering hemorrhage, TBI, anticoagulation, pregnancy exclusion, cardiac arrest, and pediatric exclusion. See `trials/` and `patients/`.
 
 These are hand-written from the public clinicaltrials.gov criteria. **They are an approximation, not a clinical decision system.** PRs welcome that improve fidelity, add trials, or extend the operator vocabulary.
 

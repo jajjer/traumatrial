@@ -200,6 +200,7 @@ function IdleScreen({
 }) {
   const [showForm, setShowForm] = useState(false);
   const [showParse, setShowParse] = useState(false);
+  const [showPortfolio, setShowPortfolio] = useState(false);
   return (
     <div className="flex flex-col items-center gap-12 mt-12">
       <div className="text-center max-w-2xl">
@@ -297,6 +298,18 @@ function IdleScreen({
           </button>
         </div>
         {showParse && <ParseTrialPanel patients={patients} />}
+      </div>
+
+      <div className="w-full max-w-3xl">
+        <div className="flex items-center justify-center">
+          <button
+            onClick={() => setShowPortfolio((s) => !s)}
+            className="font-mono text-[10px] tracking-[0.2em] text-slate-400 hover:text-slate-200 underline-offset-4 hover:underline"
+          >
+            {showPortfolio ? "▾ HIDE PORTFOLIO ANALYZER" : "▸ OR ANALYZE A HOSPITAL'S TRIAL PORTFOLIO"}
+          </button>
+        </div>
+        {showPortfolio && <PortfolioPanel />}
       </div>
     </div>
   );
@@ -735,6 +748,247 @@ function ParsedTrialMatches({ trial, patients }: { trial: Trial; patients: Patie
   );
 }
 
+interface PortfolioResponse {
+  portfolio: {
+    trial: Trial;
+    source: "bundled" | "parsed";
+    skipped_criteria: string[];
+    parse_attempts: number;
+  }[];
+  coverage: {
+    patient_id: string;
+    eligible_count: number;
+    results: MatchResult[];
+  }[];
+  summary: {
+    total_trials: number;
+    bundled_count: number;
+    parsed_count: number;
+    personas_covered: number;
+    personas_total: number;
+    total_skipped_criteria: number;
+  };
+  failures: { nct_id: string; error: string }[];
+}
+
+const EXAMPLE_PORTFOLIO = [
+  "NCT03754114",
+  "NCT05889650",
+  "NCT06062628",
+  "NCT04217551",
+  "NCT06495294",
+];
+
+function PortfolioPanel() {
+  const [text, setText] = useState(EXAMPLE_PORTFOLIO.join("\n"));
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<PortfolioResponse | null>(null);
+
+  async function run() {
+    setError(null);
+    setData(null);
+    const ids = text
+      .split(/[\s,]+/)
+      .map((s) => s.trim().toUpperCase())
+      .filter(Boolean);
+    if (ids.length === 0) {
+      setError("paste at least one NCT ID");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch("/api/portfolio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nct_ids: ids }),
+      });
+      const body = (await res.json()) as Record<string, unknown>;
+      if (!res.ok) {
+        setError((body.error as string | undefined) ?? `request failed (${res.status})`);
+        return;
+      }
+      setData(body as unknown as PortfolioResponse);
+    } catch {
+      setError("network error reaching /api/portfolio");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="mt-4 rounded-lg border border-slate-800 bg-slate-900/40 p-5 fade-in">
+      <p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 mb-2">
+        PORTFOLIO COVERAGE — which personas does your trial set actually reach?
+      </p>
+      <p className="text-[12px] text-slate-400 leading-relaxed mb-3">
+        Paste a list of NCT IDs (one per line, up to 10). Bundled trials are reused; new
+        ones are parsed live through Claude. The matrix below shows which of the 8 personas
+        each trial covers — and which patients have <em>no</em> eligible trial in your portfolio.
+      </p>
+
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={6}
+        spellCheck={false}
+        placeholder={"NCT03754114\nNCT05889650\n…"}
+        className="w-full px-3 py-2 rounded border border-slate-800 bg-slate-950 font-mono text-[12px] text-slate-100 focus:outline-none focus:border-slate-500 leading-relaxed"
+      />
+      <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-2">
+        <button
+          onClick={run}
+          disabled={loading}
+          className="font-mono text-[11px] tracking-wider px-4 py-2 rounded bg-rose-600 hover:bg-rose-500 text-white disabled:opacity-50"
+        >
+          {loading ? "ANALYZING…" : "ANALYZE PORTFOLIO"}
+        </button>
+        <span className="font-mono text-[10px] text-slate-500">
+          Each unbundled NCT takes 5-15s · 2 portfolios per IP per 10 min
+        </span>
+      </div>
+
+      {error && (
+        <p className="mt-3 font-mono text-[11px] text-rose-300 bg-rose-950/30 border border-rose-900/60 rounded p-3">
+          {error}
+        </p>
+      )}
+
+      {data && <PortfolioResults data={data} />}
+    </div>
+  );
+}
+
+function PortfolioResults({ data }: { data: PortfolioResponse }) {
+  const { summary, portfolio, coverage, failures } = data;
+  const trials = portfolio.map((p) => p.trial);
+  const trialIndex = new Map(trials.map((t, i) => [t.trial_id, i]));
+
+  const uncoveredPersonas = coverage.filter((c) => c.eligible_count === 0);
+
+  return (
+    <div className="mt-5 fade-in">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+        <Stat label="Trials" value={`${summary.total_trials}`} sub={`${summary.bundled_count} bundled · ${summary.parsed_count} parsed`} />
+        <Stat
+          label="Personas covered"
+          value={`${summary.personas_covered} / ${summary.personas_total}`}
+          sub={uncoveredPersonas.length === 0 ? "no gaps" : `${uncoveredPersonas.length} unmatched`}
+          accent={summary.personas_covered === summary.personas_total ? "emerald" : "amber"}
+        />
+        <Stat label="Skipped criteria" value={`${summary.total_skipped_criteria}`} sub="don't fit current schema" />
+        <Stat label="Failures" value={`${failures.length}`} sub={failures.length === 0 ? "all parsed" : "see below"} accent={failures.length > 0 ? "rose" : "slate"} />
+      </div>
+
+      {failures.length > 0 && (
+        <div className="mb-4 rounded-md border border-rose-900/60 bg-rose-950/20 p-3">
+          <p className="font-mono text-[10px] tracking-wider text-rose-300 mb-1">FAILED TO PARSE</p>
+          {failures.map((f, i) => (
+            <p key={i} className="text-[11px] text-rose-200/80 font-mono leading-snug">
+              {f.nct_id}: {f.error}
+            </p>
+          ))}
+        </div>
+      )}
+
+      <div className="rounded-md border border-slate-800 bg-slate-950/60 p-4 overflow-x-auto">
+        <table className="w-full text-[11px] font-mono">
+          <thead>
+            <tr>
+              <th className="text-left pr-3 pb-2 text-slate-500 font-normal sticky left-0 bg-slate-950/60">PATIENT</th>
+              {trials.map((t) => (
+                <th key={t.trial_id} className="px-1 pb-2 text-slate-400 font-normal whitespace-nowrap">
+                  <span className="block text-slate-200">{t.short_name}</span>
+                  <span className="block text-slate-600 text-[9px]">{t.trial_id.slice(0, 11)}</span>
+                </th>
+              ))}
+              <th className="text-right pl-3 pb-2 text-slate-500 font-normal">COVERAGE</th>
+            </tr>
+          </thead>
+          <tbody>
+            {coverage.map((c) => (
+              <tr key={c.patient_id} className="border-t border-slate-900">
+                <td className="pr-3 py-1.5 text-slate-300 sticky left-0 bg-slate-950/60">{c.patient_id}</td>
+                {trials.map((t) => {
+                  const idx = trialIndex.get(t.trial_id) ?? -1;
+                  const r = c.results.find((res) => res.trial_id === t.trial_id);
+                  if (!r) return <td key={idx} className="px-1 py-1.5 text-center text-slate-700">·</td>;
+                  if (r.eligible) {
+                    return (
+                      <td
+                        key={idx}
+                        className="px-1 py-1.5 text-center text-emerald-400"
+                        title={`${Math.round(r.confidence * 100)}% confidence`}
+                      >
+                        ✓
+                      </td>
+                    );
+                  }
+                  return (
+                    <td key={idx} className="px-1 py-1.5 text-center text-slate-700" title="excluded">
+                      ✗
+                    </td>
+                  );
+                })}
+                <td className="pl-3 py-1.5 text-right text-slate-400">
+                  {c.eligible_count > 0 ? (
+                    <span className="text-emerald-400">{c.eligible_count}</span>
+                  ) : (
+                    <span className="text-amber-400">0 — gap</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {uncoveredPersonas.length > 0 && (
+        <div className="mt-3 rounded-md border border-amber-900/60 bg-amber-950/20 p-3">
+          <p className="font-mono text-[10px] tracking-wider text-amber-300 mb-1.5">
+            COVERAGE GAPS
+          </p>
+          <p className="text-[11px] text-amber-200/80 leading-snug">
+            {uncoveredPersonas.map((c) => c.patient_id).join(", ")} have no eligible trial in this portfolio.
+            Some gaps are correct (e.g. a no-flags control patient should match nothing).
+            Others suggest your portfolio doesn&apos;t address a patient profile your bay actually sees.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  sub,
+  accent = "slate",
+}: {
+  label: string;
+  value: string;
+  sub: string;
+  accent?: "slate" | "emerald" | "amber" | "rose";
+}) {
+  const valueCls = {
+    slate: "text-slate-100",
+    emerald: "text-emerald-300",
+    amber: "text-amber-300",
+    rose: "text-rose-300",
+  }[accent];
+  return (
+    <div className="rounded-md border border-slate-800 bg-slate-950/60 px-3 py-2">
+      <div className="font-mono text-[9px] tracking-[0.2em] text-slate-500 uppercase">
+        {label}
+      </div>
+      <div className={`font-mono text-xl font-semibold ${valueCls} leading-tight mt-0.5`}>
+        {value}
+      </div>
+      <div className="font-mono text-[9px] text-slate-500 mt-0.5">{sub}</div>
+    </div>
+  );
+}
+
 function ActiveScreen({
   payload,
   trialFor,
@@ -755,13 +1009,21 @@ function ActiveScreen({
         onDismiss={onDismiss}
       />
       <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <h2 className="font-mono text-[11px] tracking-[0.2em] text-slate-400">
             TRIAL MATCHES — RANKED
           </h2>
           <span className="font-mono text-[10px] text-slate-500">
             {eligibleCount} eligible ·{" "}
             {payload.results.length - eligibleCount} excluded
+            {typeof payload.latency_ms === "number" && (
+              <>
+                {" · "}
+                <span className="text-emerald-400">
+                  matched in {payload.latency_ms.toFixed(1)} ms
+                </span>
+              </>
+            )}
           </span>
         </div>
         {payload.results.map((r) => (
@@ -1084,11 +1346,24 @@ function Footer() {
   return (
     <footer className="border-t border-slate-900 mt-16 py-6">
       <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-500 font-mono">
-        <span>
-          synthetic data · pre-computed match results · live engine in{" "}
-          <code className="text-slate-300">engine/</code>
+        <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span>synthetic data · MIT</span>
+          <a
+            href="/playground"
+            className="text-slate-400 hover:text-slate-200 underline-offset-2 hover:underline"
+          >
+            engine playground →
+          </a>
+          <a
+            href="https://github.com/jajjer/traumatrial"
+            target="_blank"
+            rel="noreferrer"
+            className="text-slate-400 hover:text-slate-200 underline-offset-2 hover:underline"
+          >
+            github →
+          </a>
         </span>
-        <span>open infrastructure for trauma trial matching · MIT</span>
+        <span>open infrastructure for trauma trial matching</span>
       </div>
     </footer>
   );
