@@ -1,21 +1,21 @@
-# traumatrial-match
+# @traumatrial/match
 
 > Real-time trauma trial eligibility matching. TypeScript port of the [Python engine](https://github.com/jajjer/traumatrial/tree/main/engine) — same operators, same trace format, same confidence rubric. Includes a NEMSIS v3.5 ePCR adapter.
 
-[![npm](https://img.shields.io/npm/v/traumatrial-match.svg)](https://www.npmjs.com/package/traumatrial-match)
+[![npm](https://img.shields.io/npm/v/@traumatrial/match.svg)](https://www.npmjs.com/package/@traumatrial/match)
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![demo](https://img.shields.io/badge/live%20demo-traumatrial.vercel.app-rose)](https://traumatrial.vercel.app)
 
 ```bash
-npm install traumatrial-match
+npm install @traumatrial/match
 ```
 
-The matching engine has zero runtime dependencies. The optional NEMSIS adapter at `traumatrial-match/nemsis` requires `fast-xml-parser` (declared as a peer dep).
+The matching engine has zero runtime dependencies. The optional NEMSIS adapter at `@traumatrial/match/nemsis` requires `fast-xml-parser` (declared as a peer dep).
 
 ## Match a patient
 
 ```ts
-import { match, matchAll, type Patient, type Trial } from "traumatrial-match";
+import { match, matchAll, type Patient, type Trial } from "@traumatrial/match";
 
 const patient: Patient = {
   patient_id: "P-001",
@@ -59,12 +59,12 @@ Eight operators: `eq`, `ne`, `gte`, `lte`, `gt`, `lt`, `in`, `not_in`. `in`/`not
 ## Convert a NEMSIS v3.5 ePCR
 
 ```bash
-npm install traumatrial-match fast-xml-parser
+npm install @traumatrial/match fast-xml-parser
 ```
 
 ```ts
-import { fromNemsisXml } from "traumatrial-match/nemsis";
-import { matchAll } from "traumatrial-match";
+import { fromNemsisXml } from "@traumatrial/match/nemsis";
+import { matchAll } from "@traumatrial/match";
 
 const xml = `<?xml version="1.0"?>
 <EMSDataSet xmlns="http://www.nemsis.org"> … </EMSDataSet>`;

@@ -100,14 +100,14 @@ See [`engine/README.md`](engine/README.md) for the full API and operator vocabul
 ### Embed the engine (TypeScript / Node)
 
 ```bash
-npm install traumatrial-match
+npm install @traumatrial/match
 ```
 
-[![npm](https://img.shields.io/npm/v/traumatrial-match.svg)](https://www.npmjs.com/package/traumatrial-match)
+[![npm](https://img.shields.io/npm/v/@traumatrial/match.svg)](https://www.npmjs.com/package/@traumatrial/match)
 
 ```ts
-import { match, matchAll } from "traumatrial-match";
-import { fromNemsisXml } from "traumatrial-match/nemsis";  // optional sub-export
+import { match, matchAll } from "@traumatrial/match";
+import { fromNemsisXml } from "@traumatrial/match/nemsis";  // optional sub-export
 ```
 
 Same operators, same trace format, same confidence rubric as the Python core. Zero runtime deps; the NEMSIS sub-export has `fast-xml-parser` as an optional peer dep.

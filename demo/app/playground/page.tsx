@@ -171,11 +171,11 @@ for c in result.trace:
     print("HIT" if c.hit else "MISS", c.clause)`}
           />
           <div className="h-3" />
-          <CodeBlock label="npm" content={`npm install traumatrial-match`} />
+          <CodeBlock label="npm" content={`npm install @traumatrial/match`} />
           <CodeBlock
             label="typescript"
-            content={`import { match, matchAll } from "traumatrial-match";
-import { fromNemsisXml } from "traumatrial-match/nemsis"; // optional, peer dep on fast-xml-parser
+            content={`import { match, matchAll } from "@traumatrial/match";
+import { fromNemsisXml } from "@traumatrial/match/nemsis"; // optional, peer dep on fast-xml-parser
 const result = match(patient, trial);`}
           />
         </section>

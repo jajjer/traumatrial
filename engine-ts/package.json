@@ -1,5 +1,5 @@
 {
-  "name": "traumatrial-match",
+  "name": "@traumatrial/match",
   "version": "0.0.2",
   "description": "Real-time trauma trial eligibility matching engine. TypeScript port of the Python engine — same operators, same trace format, same confidence rubric. Includes a NEMSIS v3.5 ePCR adapter.",
   "keywords": [
