@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { matchAll } from "../lib/engine";
 import type {
   ClauseTrace,
   Mechanism,
@@ -198,19 +199,34 @@ function IdleScreen({
   patients: Patient[];
 }) {
   const [showForm, setShowForm] = useState(false);
+  const [showParse, setShowParse] = useState(false);
   return (
-    <div className="flex flex-col items-center gap-12 mt-16">
-      <div className="text-center max-w-xl">
+    <div className="flex flex-col items-center gap-12 mt-12">
+      <div className="text-center max-w-2xl">
         <p className="font-mono text-xs tracking-[0.2em] text-slate-500 mb-3">
-          STANDBY — TRAUMA BAY
+          REAL-TIME TRAUMA TRIAL ELIGIBILITY MATCHING
         </p>
-        <h1 className="text-3xl sm:text-4xl font-semibold text-slate-100 tracking-tight">
-          No patient inbound.
+        <h1 className="text-3xl sm:text-4xl font-semibold text-slate-100 tracking-tight leading-tight">
+          Trauma patients die who could have been saved by drugs already in trials.
         </h1>
-        <p className="text-slate-400 mt-3 leading-relaxed">
-          When a qualifying trauma patient hits the bay, the on-call research
-          coordinator gets paged with their match. Press the button to simulate
-          an arrival.
+        <p className="text-slate-400 mt-4 leading-relaxed">
+          The consent window for an unconscious patient is minutes, not days. Coordinators
+          can&apos;t comb through 20 active protocols in time. This demo matches a trauma
+          bay arrival against a portfolio of real{" "}
+          <a
+            href="https://clinicaltrials.gov"
+            target="_blank"
+            rel="noreferrer"
+            className="text-slate-300 underline-offset-2 hover:underline"
+          >
+            clinicaltrials.gov
+          </a>{" "}
+          studies in under 100ms, with a clause-level reasoning trace so the coordinator can
+          trust what they&apos;re paged about.
+        </p>
+        <p className="text-slate-500 mt-3 text-sm leading-relaxed">
+          Pick a persona to see the match flow, build a custom patient, or paste an NCT ID
+          to watch the engine parse a brand-new trial live.
         </p>
       </div>
 
@@ -269,6 +285,18 @@ function IdleScreen({
         {showForm && (
           <CustomPatientForm onSubmit={onSimulateCustom} loading={loading} />
         )}
+      </div>
+
+      <div className="w-full max-w-3xl">
+        <div className="flex items-center justify-center">
+          <button
+            onClick={() => setShowParse((s) => !s)}
+            className="font-mono text-[10px] tracking-[0.2em] text-slate-400 hover:text-slate-200 underline-offset-4 hover:underline"
+          >
+            {showParse ? "▾ HIDE NCT PARSER" : "▸ OR PASTE AN NCT ID — WATCH IT PARSE LIVE"}
+          </button>
+        </div>
+        {showParse && <ParseTrialPanel patients={patients} />}
       </div>
     </div>
   );
@@ -461,6 +489,249 @@ function BoolField({
       />
       <span className="text-xs text-slate-200">{label}</span>
     </label>
+  );
+}
+
+interface ParsedTrialResponse {
+  trial: Trial;
+  skipped_criteria: string[];
+  ctg_status: string;
+  attempts: number;
+}
+
+function ParseTrialPanel({ patients }: { patients: Patient[] }) {
+  const [nctId, setNctId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [parsed, setParsed] = useState<ParsedTrialResponse | null>(null);
+  const [showMatches, setShowMatches] = useState(false);
+
+  async function parse() {
+    setError(null);
+    setParsed(null);
+    setShowMatches(false);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/parse-trial", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nct_id: nctId.trim().toUpperCase() }),
+      });
+      const data = (await res.json()) as Record<string, unknown>;
+      if (!res.ok) {
+        setError((data.error as string | undefined) ?? `request failed (${res.status})`);
+        return;
+      }
+      setParsed(data as unknown as ParsedTrialResponse);
+    } catch {
+      setError("network error reaching /api/parse-trial");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="mt-4 rounded-lg border border-slate-800 bg-slate-900/40 p-5 fade-in">
+      <p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 mb-2">
+        LIVE PARSE — clinicaltrials.gov ID → engine rules
+      </p>
+      <p className="text-[12px] text-slate-400 leading-relaxed mb-3">
+        The parser fetches the trial from clinicaltrials.gov, sends the eligibility text
+        through Claude with the engine&apos;s rule schema as the contract, and validates
+        every output. Criteria that don&apos;t fit the schema (lab values, temporal logic, etc.)
+        are surfaced as <span className="text-slate-300">skipped</span> rather than silently dropped.
+      </p>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          parse();
+        }}
+        className="flex flex-col sm:flex-row gap-2"
+      >
+        <input
+          type="text"
+          value={nctId}
+          onChange={(e) => setNctId(e.target.value)}
+          placeholder="NCT05889650"
+          spellCheck={false}
+          className="flex-1 px-3 py-2 rounded border border-slate-800 bg-slate-950 font-mono text-sm text-slate-100 focus:outline-none focus:border-slate-500"
+        />
+        <button
+          type="submit"
+          disabled={loading || !nctId.trim()}
+          className="font-mono text-[11px] tracking-wider px-4 py-2 rounded bg-rose-600 hover:bg-rose-500 text-white disabled:opacity-50"
+        >
+          {loading ? "PARSING…" : "PARSE LIVE"}
+        </button>
+      </form>
+      <p className="font-mono text-[10px] text-slate-500 mt-2">
+        Try any recruiting trial not in the demo set, e.g.{" "}
+        <button type="button" className="text-slate-300 underline-offset-2 hover:underline" onClick={() => setNctId("NCT04573114")}>NCT04573114</button>.
+        Takes 5-20s.
+      </p>
+
+      {error && (
+        <p className="mt-3 font-mono text-[11px] text-rose-300 bg-rose-950/30 border border-rose-900/60 rounded p-3">
+          {error}
+        </p>
+      )}
+
+      {parsed && (
+        <div className="mt-4 fade-in">
+          <ParsedTrialDisplay parsed={parsed} />
+          <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-2">
+            <button
+              onClick={() => setShowMatches((s) => !s)}
+              className="font-mono text-[11px] tracking-wider px-3 py-2 rounded bg-emerald-700 hover:bg-emerald-600 text-white"
+            >
+              {showMatches ? "HIDE PERSONA RESULTS" : "MATCH AGAINST ALL 8 PERSONAS"}
+            </button>
+            <span className="font-mono text-[10px] text-slate-500">
+              Runs locally — same engine, no extra API call
+            </span>
+          </div>
+          {showMatches && (
+            <ParsedTrialMatches trial={parsed.trial} patients={patients} />
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ParsedTrialDisplay({ parsed }: { parsed: ParsedTrialResponse }) {
+  const t = parsed.trial;
+  const inclusion = t.inclusion as { field: string; op: string; value: unknown; hard: boolean }[];
+  const exclusion = t.exclusion as { field: string; op: string; value: unknown; hard: boolean }[];
+  return (
+    <div className="rounded-md border border-slate-800 bg-slate-950/60 p-4">
+      <div className="flex items-center gap-2 flex-wrap mb-2">
+        <span className="font-mono text-xs text-slate-200">{t.short_name}</span>
+        <span className="font-mono text-[10px] text-slate-500">{t.trial_id}</span>
+        <span className="font-mono text-[10px] text-slate-500">phase {t.phase}</span>
+        <span className="font-mono text-[10px] text-slate-500">CTG status: {parsed.ctg_status}</span>
+        {t.requires_efic && (
+          <span className="font-mono text-[10px] tracking-wider px-1.5 py-0.5 rounded bg-rose-900/60 text-rose-200 border border-rose-800">
+            EFIC
+          </span>
+        )}
+        {parsed.attempts > 1 && (
+          <span className="font-mono text-[10px] tracking-wider px-1.5 py-0.5 rounded bg-amber-900/60 text-amber-200 border border-amber-800">
+            recovered after {parsed.attempts} attempts
+          </span>
+        )}
+      </div>
+      <p className="text-sm text-slate-300 leading-snug mb-4">{t.title}</p>
+
+      <RuleList label="INCLUSION" rules={inclusion} accent="emerald" />
+      <RuleList label="EXCLUSION" rules={exclusion} accent="rose" />
+
+      {parsed.skipped_criteria.length > 0 && (
+        <div className="mt-4 pt-3 border-t border-slate-800">
+          <p className="font-mono text-[10px] tracking-wider text-slate-500 mb-2">
+            SKIPPED — couldn&apos;t fit the schema, surfaced for human review
+          </p>
+          <ul className="space-y-1.5">
+            {parsed.skipped_criteria.map((s, i) => (
+              <li key={i} className="text-[11px] text-slate-400 leading-snug">
+                <span className="text-slate-600">·</span> {s}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RuleList({
+  label,
+  rules,
+  accent,
+}: {
+  label: string;
+  rules: { field: string; op: string; value: unknown; hard: boolean }[];
+  accent: "emerald" | "rose";
+}) {
+  if (rules.length === 0) return null;
+  const dotCls = accent === "emerald" ? "text-emerald-400" : "text-rose-400";
+  return (
+    <div className="mb-3">
+      <p className="font-mono text-[10px] tracking-wider text-slate-500 mb-1.5">{label}</p>
+      <ul className="space-y-1">
+        {rules.map((r, i) => (
+          <li key={i} className="grid grid-cols-[14px_1fr_auto] items-center gap-2 font-mono text-[11px]">
+            <span className={dotCls}>{r.hard ? "■" : "□"}</span>
+            <span className="text-slate-200 truncate">
+              {r.field} {r.op} {formatValue(r.value)}
+            </span>
+            <span className="text-slate-500 text-[10px]">{r.hard ? "hard" : "soft"}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function ParsedTrialMatches({ trial, patients }: { trial: Trial; patients: Patient[] }) {
+  if (patients.length === 0) {
+    return (
+      <p className="mt-3 text-[11px] text-slate-500 font-mono">
+        No personas loaded yet — refresh once the persona panel appears above.
+      </p>
+    );
+  }
+  const rows = patients.map((p) => {
+    const [r] = matchAll(p, [trial]);
+    return { patient: p, result: r };
+  });
+  const eligibleCount = rows.filter((r) => r.result.eligible).length;
+  return (
+    <div className="mt-3 rounded-md border border-slate-800 bg-slate-950/60 p-4 fade-in">
+      <p className="font-mono text-[10px] tracking-wider text-slate-500 mb-3">
+        {eligibleCount} / {rows.length} personas eligible
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {rows.map((row) => {
+          const eligible = row.result.eligible;
+          const conf = Math.round(row.result.confidence * 100);
+          const reason = !eligible ? firstFailingHardClause(row.result.trace) : null;
+          return (
+            <div
+              key={row.patient.patient_id}
+              className={`rounded border p-2.5 ${
+                eligible
+                  ? "border-emerald-800/60 bg-emerald-950/20"
+                  : "border-slate-800 bg-slate-900/40"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <span className="font-mono text-xs text-slate-200">{row.patient.patient_id}</span>
+                <span
+                  className={`font-mono text-[9px] tracking-wider px-1.5 py-0.5 rounded ${
+                    eligible
+                      ? "bg-emerald-900/60 text-emerald-200"
+                      : "bg-slate-800 text-slate-400"
+                  }`}
+                >
+                  {eligible ? `ELIGIBLE · ${conf}%` : "EXCLUDED"}
+                </span>
+              </div>
+              <p className="text-[10px] text-slate-500 font-mono">
+                {row.patient.age_years}
+                {row.patient.sex} · GCS {row.patient.gcs} · SBP {row.patient.sbp_mmhg}
+              </p>
+              {reason && (
+                <p className="mt-1 text-[10px] text-rose-300/80 font-mono truncate">
+                  ✗ {reason.clause}
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
