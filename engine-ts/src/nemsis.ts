@@ -4,9 +4,9 @@
 
 import { XMLParser } from "fast-xml-parser";
 
-import type { Mechanism, Patient, PregnancyStatus, Sex } from "./types";
+import type { Mechanism, Patient, PregnancyStatus, Sex } from "./types.js";
 
-export type { Patient } from "./types";
+export type { Patient } from "./types.js";
 
 const NEMSIS_GENDER: Record<string, Sex> = {
   "9906001": "F",

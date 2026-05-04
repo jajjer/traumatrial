@@ -201,10 +201,8 @@ function IdleScreen({
   patients: Patient[];
   trials: Trial[];
 }) {
-  const [showForm, setShowForm] = useState(false);
-  const [showParse, setShowParse] = useState(false);
-  const [showPortfolio, setShowPortfolio] = useState(false);
-  const [showNemsis, setShowNemsis] = useState(false);
+  type AdvancedTab = "form" | "nemsis" | "parse" | "portfolio";
+  const [tab, setTab] = useState<AdvancedTab | null>(null);
   return (
     <div className="flex flex-col items-center gap-12 mt-12">
       <div className="text-center max-w-2xl">
@@ -230,8 +228,9 @@ function IdleScreen({
           trust what they&apos;re paged about.
         </p>
         <p className="text-slate-500 mt-3 text-sm leading-relaxed">
-          Pick a persona to see the match flow, build a custom patient, or paste an NCT ID
-          to watch the engine parse a brand-new trial live.
+          Pick a persona, build a custom patient, paste a NEMSIS v3.5 ePCR, or feed any
+          clinicaltrials.gov NCT — everything runs through the same matching engine
+          in well under a millisecond.
         </p>
       </div>
 
@@ -279,55 +278,61 @@ function IdleScreen({
       )}
 
       <div className="w-full max-w-3xl">
-        <div className="flex items-center justify-center">
-          <button
-            onClick={() => setShowForm((s) => !s)}
-            className="font-mono text-[10px] tracking-[0.2em] text-slate-400 hover:text-slate-200 underline-offset-4 hover:underline"
-          >
-            {showForm ? "▾ HIDE CUSTOM PATIENT" : "▸ OR BUILD A CUSTOM PATIENT"}
-          </button>
+        <div className="border-t border-slate-800 pt-6">
+          <p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 mb-3 text-center">
+            OR DRIVE THE ENGINE YOURSELF
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <TabButton active={tab === "form"} onClick={() => setTab(tab === "form" ? null : "form")}>
+              <span className="block font-medium text-slate-200">Custom patient</span>
+              <span className="block text-[10px] text-slate-500 mt-0.5">vitals & flags form</span>
+            </TabButton>
+            <TabButton active={tab === "nemsis"} onClick={() => setTab(tab === "nemsis" ? null : "nemsis")}>
+              <span className="block font-medium text-slate-200">NEMSIS XML</span>
+              <span className="block text-[10px] text-slate-500 mt-0.5">paste an ePCR</span>
+            </TabButton>
+            <TabButton active={tab === "parse"} onClick={() => setTab(tab === "parse" ? null : "parse")}>
+              <span className="block font-medium text-slate-200">Parse NCT</span>
+              <span className="block text-[10px] text-slate-500 mt-0.5">live LLM extraction</span>
+            </TabButton>
+            <TabButton active={tab === "portfolio"} onClick={() => setTab(tab === "portfolio" ? null : "portfolio")}>
+              <span className="block font-medium text-slate-200">Portfolio</span>
+              <span className="block text-[10px] text-slate-500 mt-0.5">coverage matrix</span>
+            </TabButton>
+          </div>
+          {tab === "form" && (
+            <CustomPatientForm onSubmit={onSimulateCustom} loading={loading} />
+          )}
+          {tab === "nemsis" && <NemsisPanel trials={trials} />}
+          {tab === "parse" && <ParseTrialPanel patients={patients} />}
+          {tab === "portfolio" && <PortfolioPanel />}
         </div>
-        {showForm && (
-          <CustomPatientForm onSubmit={onSimulateCustom} loading={loading} />
-        )}
-      </div>
-
-      <div className="w-full max-w-3xl">
-        <div className="flex items-center justify-center">
-          <button
-            onClick={() => setShowParse((s) => !s)}
-            className="font-mono text-[10px] tracking-[0.2em] text-slate-400 hover:text-slate-200 underline-offset-4 hover:underline"
-          >
-            {showParse ? "▾ HIDE NCT PARSER" : "▸ OR PASTE AN NCT ID — WATCH IT PARSE LIVE"}
-          </button>
-        </div>
-        {showParse && <ParseTrialPanel patients={patients} />}
-      </div>
-
-      <div className="w-full max-w-3xl">
-        <div className="flex items-center justify-center">
-          <button
-            onClick={() => setShowPortfolio((s) => !s)}
-            className="font-mono text-[10px] tracking-[0.2em] text-slate-400 hover:text-slate-200 underline-offset-4 hover:underline"
-          >
-            {showPortfolio ? "▾ HIDE PORTFOLIO ANALYZER" : "▸ OR ANALYZE A HOSPITAL'S TRIAL PORTFOLIO"}
-          </button>
-        </div>
-        {showPortfolio && <PortfolioPanel />}
-      </div>
-
-      <div className="w-full max-w-3xl">
-        <div className="flex items-center justify-center">
-          <button
-            onClick={() => setShowNemsis((s) => !s)}
-            className="font-mono text-[10px] tracking-[0.2em] text-slate-400 hover:text-slate-200 underline-offset-4 hover:underline"
-          >
-            {showNemsis ? "▾ HIDE NEMSIS ADAPTER" : "▸ OR PASTE A NEMSIS v3.5 ePCR XML"}
-          </button>
-        </div>
-        {showNemsis && <NemsisPanel trials={trials} />}
       </div>
     </div>
+  );
+}
+
+function TabButton({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`text-left p-3 rounded-md border transition ${
+        active
+          ? "border-rose-700/70 bg-rose-950/30"
+          : "border-slate-800 hover:border-slate-600 bg-slate-900/40 hover:bg-slate-900"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
 

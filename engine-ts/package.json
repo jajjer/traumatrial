@@ -1,0 +1,65 @@
+{
+  "name": "traumatrial-match",
+  "version": "0.0.2",
+  "description": "Real-time trauma trial eligibility matching engine. TypeScript port of the Python engine — same operators, same trace format, same confidence rubric. Includes a NEMSIS v3.5 ePCR adapter.",
+  "keywords": [
+    "trauma",
+    "clinical-trials",
+    "EMS",
+    "NEMSIS",
+    "ePCR",
+    "eligibility",
+    "matching",
+    "healthcare"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jajjer/traumatrial",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jajjer/traumatrial.git",
+    "directory": "engine-ts"
+  },
+  "bugs": "https://github.com/jajjer/traumatrial/issues",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./nemsis": {
+      "types": "./dist/nemsis.d.ts",
+      "import": "./dist/nemsis.js",
+      "require": "./dist/nemsis.cjs"
+    }
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts src/nemsis.ts --format esm,cjs --dts --clean",
+    "test": "node --test test/*.test.mjs",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "fast-xml-parser": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "fast-xml-parser": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "fast-xml-parser": "^5.3.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}

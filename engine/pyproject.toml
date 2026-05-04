@@ -4,20 +4,27 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "traumatrial-match"
-version = "0.0.1"
-description = "Real-time trauma trial eligibility matching engine."
+version = "0.0.2"
+description = "Open infrastructure for matching trauma patients to clinical trials in real time. Pure-Python rule engine with clause-level reasoning trace and NEMSIS v3.5 ePCR adapter."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
 authors = [{ name = "traumatrial contributors" }]
+keywords = ["trauma", "clinical-trials", "EMS", "NEMSIS", "ePCR", "eligibility", "matching", "healthcare"]
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Typing :: Typed",
 ]
 dependencies = [
     "pydantic>=2.0",
@@ -33,12 +40,17 @@ parse = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/jajjer/traumatrial-match"
-Issues = "https://github.com/jajjer/traumatrial-match/issues"
+Homepage = "https://github.com/jajjer/traumatrial"
+Repository = "https://github.com/jajjer/traumatrial"
+Issues = "https://github.com/jajjer/traumatrial/issues"
+Demo = "https://traumatrial.vercel.app"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["traumatrial_match*"]
+
+[tool.setuptools.package-data]
+traumatrial_match = ["py.typed"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -127,7 +127,7 @@ NEMSIS_CAUSE_CODES: dict[str, Mechanism] = {
 }
 
 # Substrings to look for in eHistory.06 medication free text. Lowercase
-# substring match — illustrative, not RxNorm-strict.
+# substring match.
 ANTICOAGULANT_STRINGS = (
     "warfarin", "coumadin",
     "apixaban", "eliquis",
@@ -136,6 +136,23 @@ ANTICOAGULANT_STRINGS = (
     "edoxaban", "savaysa",
     "heparin", "enoxaparin", "lovenox",
 )
+
+# RxNorm CUIs for anticoagulants. Partial — the live RxNorm graph has many
+# concept-type variants per drug; this lifts the most common ingredient/branded
+# CUIs that turn up in NEMSIS eHistory.06 fields. Cross-checked against
+# https://uts.nlm.nih.gov/uts/rxnorm/.
+ANTICOAGULANT_RXNORM_CUIS = frozenset({
+    "11289",     # warfarin
+    "855288",    # warfarin sodium
+    "5224",      # heparin
+    "67108",     # enoxaparin sodium
+    "1037045",   # dabigatran etexilate
+    "1114195",   # rivaroxaban
+    "1364430",   # apixaban
+    "1599538",   # edoxaban tosylate
+    "284562",    # heparin sodium
+    "11128",     # enoxaparin
+})
 
 
 ExtractionSource = Literal["extracted", "inferred", "defaulted", "skipped"]
@@ -220,7 +237,7 @@ def from_nemsis_xml(
     pregnancy_status = _extract_pregnancy(pcr, ns, trace, sex)
     anticoagulant_use = _extract_anticoagulant(pcr, ns, trace)
     eta_minutes = _extract_eta(pcr, ns, trace)
-    activation = _extract_activation(pcr, ns, trace)
+    activation = _infer_activation_level(gcs, sbp, mechanism, age_years, trace)
 
     # Inferred clinical flags. None of these are canonical NEMSIS fields —
     # the trace makes the inference rule visible.
@@ -520,9 +537,31 @@ def _extract_anticoagulant(
             nemsis_path="eHistory.06", notes="no eHistory; defaulted to False",
         )
         return False
-    # eHistory.06 (medications) often appears multiple times.
+    # eHistory.06 (medications) often appears multiple times. NEMSIS v3.5 may
+    # carry an RxNorm CUI as the element text or in a nested code element;
+    # we check both. Free-text descriptions also flow through.
     meds = e_history.findall(f"{ns}eHistory.06")
-    haystack = " ".join((m.text or "") for m in meds).lower()
+    raw_values: list[str] = []
+    for m in meds:
+        if m.text:
+            raw_values.append(m.text.strip())
+        # Some implementations carry codes nested as eHistory.061
+        for child in m:
+            if child.text:
+                raw_values.append(child.text.strip())
+
+    # Channel 1: RxNorm code match (deterministic).
+    for v in raw_values:
+        if v in ANTICOAGULANT_RXNORM_CUIS:
+            trace.add(
+                field="anticoagulant_use", source="inferred", value=True,
+                nemsis_path="eHistory.06", raw=v,
+                notes=f"RxNorm CUI {v} matches anticoagulant list",
+            )
+            return True
+
+    # Channel 2: substring match (catches free-text descriptions).
+    haystack = " ".join(raw_values).lower()
     for needle in ANTICOAGULANT_STRINGS:
         if needle in haystack:
             trace.add(
@@ -531,10 +570,11 @@ def _extract_anticoagulant(
                 notes=f"medication list contains {needle!r}",
             )
             return True
+
     trace.add(
         field="anticoagulant_use", source="extracted" if meds else "defaulted",
         value=False, nemsis_path="eHistory.06",
-        notes="no anticoagulant substring matched"
+        notes="no anticoagulant code or substring matched"
         if meds
         else "no eHistory.06 entries; defaulted to False",
     )
@@ -555,17 +595,50 @@ def _extract_eta(
     return 0
 
 
-def _extract_activation(
-    pcr: ET.Element, ns: str, trace: NemsisConversionTrace
+def _infer_activation_level(
+    gcs: int, sbp: int, mechanism: Mechanism, age: int,
+    trace: NemsisConversionTrace,
 ) -> int:
-    # Trauma activation level isn't a clean single NEMSIS field across
-    # implementations. Default to level 2 with a note.
+    """Infer trauma activation level using simplified CDC field triage criteria.
+
+    Step 1 (physiology) → Level 1: GCS <= 13 OR SBP < 90.
+    Step 2 (anatomy / mechanism) → Level 2: penetrating mechanisms (gsw, stab,
+    blast, crush) OR (blunt MVC/fall AND age >= 55 — proxy for energy + frailty).
+    Otherwise → Level 3.
+
+    Citable but illustrative: real activation triggers vary by trauma center
+    and don't reduce to four ints. The trace makes the rule visible.
+    """
+    if gcs <= 13 or sbp < 90:
+        reason = (
+            f"GCS<=13 ({gcs})" if gcs <= 13 else f"SBP<90 ({sbp})"
+        )
+        trace.add(
+            field="trauma_activation_level", source="inferred", value=1,
+            nemsis_path=None,
+            notes=f"CDC Step 1 physiology: {reason} → Level 1",
+        )
+        return 1
+    if mechanism in {"gsw", "stab", "blast", "crush"}:
+        trace.add(
+            field="trauma_activation_level", source="inferred", value=2,
+            nemsis_path=None,
+            notes=f"penetrating/crush mechanism ({mechanism}) → Level 2",
+        )
+        return 2
+    if mechanism in {"blunt_mvc", "fall"} and age >= 55:
+        trace.add(
+            field="trauma_activation_level", source="inferred", value=2,
+            nemsis_path=None,
+            notes=f"high-energy blunt ({mechanism}) + age>=55 ({age}) → Level 2",
+        )
+        return 2
     trace.add(
-        field="trauma_activation_level", source="defaulted", value=2,
+        field="trauma_activation_level", source="inferred", value=3,
         nemsis_path=None,
-        notes="no canonical NEMSIS activation field in v0 mapping; defaulted to level 2",
+        notes="no Step 1 / Step 2 criteria met → Level 3",
     )
-    return 2
+    return 3
 
 
 # ---------- inferred clinical flags ----------

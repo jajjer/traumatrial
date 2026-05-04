@@ -87,8 +87,11 @@ def test_incomplete_xml_falls_back_safely() -> None:
 
     # Trace should have at least one defaulted note for each missing field.
     defaulted_fields = {e.field for e in trace.extractions if e.source == "defaulted"}
-    assert {"age_years", "gcs", "sbp_mmhg", "hr_bpm", "mechanism", "eta_minutes",
-            "trauma_activation_level"} <= defaulted_fields
+    assert {"age_years", "gcs", "sbp_mmhg", "hr_bpm", "mechanism",
+            "eta_minutes"} <= defaulted_fields
+    # trauma_activation_level is now inferred (CDC field triage), not defaulted.
+    activation = next(e for e in trace.extractions if e.field == "trauma_activation_level")
+    assert activation.source == "inferred"
 
 
 def test_invalid_xml_raises() -> None:
@@ -112,6 +115,72 @@ def test_extracted_patient_runs_through_match_all() -> None:
     # P-001 hemorrhage shock should hit at least one eligible trial
     eligible = [r for r in results if r.eligible]
     assert len(eligible) >= 1, "synthetic hemorrhage patient hit zero trials"
+
+
+# ---------- mechanism mapping ----------
+
+
+def _wrap_pcr(extra: str = "", *, gcs: int = 15, sbp: int = 120, hr: int = 80,
+              age: int = 30, mechanism_code: str = "V40") -> str:
+    return f"""<?xml version="1.0"?>
+<EMSDataSet xmlns="http://www.nemsis.org"><PatientCareReport>
+  <eRecord><eRecord.01>X</eRecord.01></eRecord>
+  <ePatient><ePatient.13>9906003</ePatient.13><ePatient.15>{age}</ePatient.15><ePatient.16>2516001</ePatient.16></ePatient>
+  <eVitals><eVitalsGroup>
+    <eVitals.06>{sbp}</eVitals.06><eVitals.10>{hr}</eVitals.10><eVitals.23>{gcs}</eVitals.23>
+  </eVitalsGroup></eVitals>
+  <eSituation><eSituation.02>{mechanism_code}</eSituation.02></eSituation>
+  {extra}
+</PatientCareReport></EMSDataSet>"""
+
+
+# ---------- CDC field triage activation level ----------
+
+
+def test_activation_level_1_on_low_gcs() -> None:
+    p, trace = from_nemsis_xml(_wrap_pcr(gcs=8))
+    assert p.trauma_activation_level == 1
+    note = next(e.notes for e in trace.extractions if e.field == "trauma_activation_level")
+    assert "GCS<=13" in note
+
+
+def test_activation_level_1_on_hypotension() -> None:
+    p, _ = from_nemsis_xml(_wrap_pcr(sbp=80))
+    assert p.trauma_activation_level == 1
+
+
+def test_activation_level_2_on_penetrating() -> None:
+    p, _ = from_nemsis_xml(_wrap_pcr(mechanism_code="X95"))  # gsw
+    assert p.trauma_activation_level == 2
+
+
+def test_activation_level_2_on_geriatric_mvc() -> None:
+    p, _ = from_nemsis_xml(_wrap_pcr(age=70, mechanism_code="V40"))
+    assert p.trauma_activation_level == 2
+
+
+def test_activation_level_3_on_normal_blunt() -> None:
+    p, _ = from_nemsis_xml(_wrap_pcr(age=30, mechanism_code="V40", gcs=15, sbp=120))
+    assert p.trauma_activation_level == 3
+
+
+# ---------- RxNorm anticoagulant detection ----------
+
+
+def test_anticoagulant_via_rxnorm_cui() -> None:
+    p, trace = from_nemsis_xml(
+        _wrap_pcr(extra="<eHistory><eHistory.06>1364430</eHistory.06></eHistory>")
+    )
+    assert p.anticoagulant_use is True
+    note = next(e.notes for e in trace.extractions if e.field == "anticoagulant_use")
+    assert "RxNorm CUI 1364430" in note
+
+
+def test_anticoagulant_via_substring_still_works() -> None:
+    p, _ = from_nemsis_xml(
+        _wrap_pcr(extra="<eHistory><eHistory.06>warfarin 5mg PO QD</eHistory.06></eHistory>")
+    )
+    assert p.anticoagulant_use is True
 
 
 # ---------- mechanism mapping ----------

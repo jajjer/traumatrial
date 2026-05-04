@@ -1,0 +1,37 @@
+name: publish to npm
+
+# Tag a commit `js-vX.Y.Z` to trigger an npm release for traumatrial-match.
+# Requires NPM_TOKEN in repo secrets.
+
+on:
+  push:
+    tags:
+      - "js-v*"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+      - name: Install
+        working-directory: engine-ts
+        run: npm ci
+      - name: Build
+        working-directory: engine-ts
+        run: npm run build
+      - name: Test
+        working-directory: engine-ts
+        run: npm test
+      - name: Publish
+        working-directory: engine-ts
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
