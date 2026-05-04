@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 
 import type {
   ClauseTrace,
+  Mechanism,
   MatchResult,
   Patient,
   PatientMatchPayload,
+  PregnancyStatus,
+  Sex,
   Trial,
 } from "../lib/types";
 
@@ -79,6 +82,28 @@ export default function Home() {
     }
   }
 
+  async function simulateCustom(patient: Patient) {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/match", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(patient),
+      });
+      if (!res.ok) {
+        const { error } = (await res.json().catch(() => ({ error: "request failed" }))) as { error?: string };
+        setToast(`Match failed: ${error ?? res.status}`);
+        return;
+      }
+      const payload = (await res.json()) as PatientMatchPayload;
+      setActive(payload);
+    } catch {
+      setToast("Match failed: network error");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   function reset() {
     setActive(null);
   }
@@ -100,6 +125,7 @@ export default function Home() {
         {!active ? (
           <IdleScreen
             onSimulate={simulate}
+            onSimulateCustom={simulateCustom}
             loading={loading}
             patients={patients}
           />
@@ -162,13 +188,16 @@ function StatusBar({
 
 function IdleScreen({
   onSimulate,
+  onSimulateCustom,
   loading,
   patients,
 }: {
   onSimulate: (id?: string) => void;
+  onSimulateCustom: (p: Patient) => void;
   loading: boolean;
   patients: Patient[];
 }) {
+  const [showForm, setShowForm] = useState(false);
   return (
     <div className="flex flex-col items-center gap-12 mt-16">
       <div className="text-center max-w-xl">
@@ -227,7 +256,211 @@ function IdleScreen({
           </div>
         </div>
       )}
+
+      <div className="w-full max-w-3xl">
+        <div className="flex items-center justify-center">
+          <button
+            onClick={() => setShowForm((s) => !s)}
+            className="font-mono text-[10px] tracking-[0.2em] text-slate-400 hover:text-slate-200 underline-offset-4 hover:underline"
+          >
+            {showForm ? "▾ HIDE CUSTOM PATIENT" : "▸ OR BUILD A CUSTOM PATIENT"}
+          </button>
+        </div>
+        {showForm && (
+          <CustomPatientForm onSubmit={onSimulateCustom} loading={loading} />
+        )}
+      </div>
     </div>
+  );
+}
+
+const DEFAULT_PATIENT: Patient = {
+  patient_id: "P-CUSTOM",
+  age_years: 35,
+  sex: "M",
+  gcs: 7,
+  sbp_mmhg: 95,
+  hr_bpm: 118,
+  mechanism: "blunt_mvc",
+  trauma_activation_level: 1,
+  eta_minutes: 8,
+  pregnancy_status: "not_applicable",
+  anticoagulant_use: false,
+  presumed_tbi: true,
+  presumed_hemorrhage: false,
+  presumed_intracranial_hemorrhage: true,
+  spinal_injury_suspected: false,
+};
+
+function CustomPatientForm({
+  onSubmit,
+  loading,
+}: {
+  onSubmit: (p: Patient) => void;
+  loading: boolean;
+}) {
+  const [p, setP] = useState<Patient>(DEFAULT_PATIENT);
+  function set<K extends keyof Patient>(k: K, v: Patient[K]) {
+    setP((cur) => ({ ...cur, [k]: v }));
+  }
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit(p);
+      }}
+      className="mt-4 rounded-lg border border-slate-800 bg-slate-900/40 p-5 fade-in"
+    >
+      <p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 mb-4">
+        VITALS &amp; SCORES
+      </p>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
+        <NumField label="Age (yrs)" value={p.age_years} min={0} max={120} onChange={(v) => set("age_years", v)} />
+        <NumField label="GCS" value={p.gcs} min={3} max={15} onChange={(v) => set("gcs", v)} />
+        <NumField label="SBP (mmHg)" value={p.sbp_mmhg} min={0} max={300} onChange={(v) => set("sbp_mmhg", v)} />
+        <NumField label="HR (bpm)" value={p.hr_bpm} min={0} max={300} onChange={(v) => set("hr_bpm", v)} />
+        <NumField label="ETA (min)" value={p.eta_minutes} min={0} max={480} onChange={(v) => set("eta_minutes", v)} />
+        <SelectField
+          label="Activation"
+          value={String(p.trauma_activation_level)}
+          options={[["1", "Level 1 (highest)"], ["2", "Level 2"], ["3", "Level 3"]]}
+          onChange={(v) => set("trauma_activation_level", Number(v))}
+        />
+      </div>
+
+      <p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 mb-4">
+        DEMOGRAPHICS &amp; MECHANISM
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+        <SelectField
+          label="Sex"
+          value={p.sex}
+          options={[["M", "Male"], ["F", "Female"], ["U", "Unknown"]]}
+          onChange={(v) => set("sex", v as Sex)}
+        />
+        <SelectField
+          label="Mechanism"
+          value={p.mechanism}
+          options={Object.entries(MECHANISM_LABEL) as [Mechanism, string][]}
+          onChange={(v) => set("mechanism", v as Mechanism)}
+        />
+        <SelectField
+          label="Pregnancy"
+          value={p.pregnancy_status}
+          options={[
+            ["not_applicable", "N/A"],
+            ["not_pregnant", "Not pregnant"],
+            ["pregnant", "Pregnant"],
+            ["unknown_could_be_pregnant", "Unknown / possible"],
+          ]}
+          onChange={(v) => set("pregnancy_status", v as PregnancyStatus)}
+        />
+      </div>
+
+      <p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 mb-3">
+        CONDITIONS
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
+        <BoolField label="Anticoagulant use" value={p.anticoagulant_use} onChange={(v) => set("anticoagulant_use", v)} />
+        <BoolField label="Presumed TBI" value={p.presumed_tbi} onChange={(v) => set("presumed_tbi", v)} />
+        <BoolField label="Presumed hemorrhage" value={p.presumed_hemorrhage} onChange={(v) => set("presumed_hemorrhage", v)} />
+        <BoolField label="Presumed ICH" value={p.presumed_intracranial_hemorrhage} onChange={(v) => set("presumed_intracranial_hemorrhage", v)} />
+        <BoolField label="Spinal injury suspected" value={p.spinal_injury_suspected} onChange={(v) => set("spinal_injury_suspected", v)} />
+      </div>
+
+      <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-800">
+        <p className="font-mono text-[10px] text-slate-500">
+          Submits to <code className="text-slate-300">POST /api/match</code> · live engine
+        </p>
+        <button
+          type="submit"
+          disabled={loading}
+          className="font-mono text-[11px] tracking-wider px-4 py-2 rounded bg-rose-600 hover:bg-rose-500 text-white disabled:opacity-50"
+        >
+          {loading ? "MATCHING…" : "RUN MATCH"}
+        </button>
+      </div>
+    </form>
+  );
+}
+
+function NumField({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (v: number) => void;
+}) {
+  return (
+    <label className="block">
+      <span className="font-mono text-[10px] tracking-wider text-slate-500 uppercase">{label}</span>
+      <input
+        type="number"
+        value={value}
+        min={min}
+        max={max}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="mt-1 w-full px-2 py-1.5 rounded border border-slate-800 bg-slate-950 font-mono text-sm text-slate-100 focus:outline-none focus:border-slate-500"
+      />
+    </label>
+  );
+}
+
+function SelectField({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: [string, string][];
+  onChange: (v: string) => void;
+}) {
+  return (
+    <label className="block">
+      <span className="font-mono text-[10px] tracking-wider text-slate-500 uppercase">{label}</span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="mt-1 w-full px-2 py-1.5 rounded border border-slate-800 bg-slate-950 font-mono text-sm text-slate-100 focus:outline-none focus:border-slate-500"
+      >
+        {options.map(([v, l]) => (
+          <option key={v} value={v}>
+            {l}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+function BoolField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: boolean;
+  onChange: (v: boolean) => void;
+}) {
+  return (
+    <label className="flex items-center gap-2 px-2 py-1.5 rounded border border-slate-800 bg-slate-950 cursor-pointer hover:border-slate-700">
+      <input
+        type="checkbox"
+        checked={value}
+        onChange={(e) => onChange(e.target.checked)}
+        className="accent-rose-500"
+      />
+      <span className="text-xs text-slate-200">{label}</span>
+    </label>
   );
 }
 
@@ -481,6 +714,16 @@ function MatchCard({
               Hard criteria pass, but soft inclusions miss. Coordinator review recommended before enrolling.
             </p>
           )}
+          {status === "excluded" && (() => {
+            const reason = firstFailingHardClause(result.trace);
+            if (!reason) return null;
+            return (
+              <p className="mt-3 font-mono text-[10px] text-rose-300/80">
+                ✗ Fails: <span className="text-slate-200">{reason.clause}</span>
+                <span className="text-slate-500"> · patient = {formatValue(reason.patient_value)}</span>
+              </p>
+            );
+          })()}
         </div>
         <div className="flex flex-row sm:flex-col items-stretch sm:items-end gap-2 sm:shrink-0">
           {isEligible && (
@@ -536,6 +779,12 @@ function ClauseRow({ clause }: { clause: ClauseTrace }) {
         patient = {formatValue(clause.patient_value)}
       </span>
     </div>
+  );
+}
+
+function firstFailingHardClause(trace: ClauseTrace[]): ClauseTrace | undefined {
+  return trace.find((c) =>
+    c.hard && (c.kind === "inclusion" ? !c.hit : c.hit),
   );
 }
 

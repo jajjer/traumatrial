@@ -31,3 +31,4 @@ out/
 .env
 .env.local
 .env.*.local
+.gstack/
