@@ -1,0 +1,31 @@
+{
+  "trial_id": "NCT04117672",
+  "short_name": "AFISTBI",
+  "title": "Antisecretory Factor In Severe Traumatic Brain Injury",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Clinical indication for insertion of intracranial pressure monitor, intracerebral oxygen pressure monitor and microdialysis catheter: requires clinical assessment not available in schema.",
+      "Consultation with relatives or consent from guardians: consent process criterion, not expressible as a patient data field.",
+      "Known egg yolk allergy: allergy history field does not exist in schema.",
+      "Unilateral or bilateral fixed and dilated pupil after initial operative intervention: pupil exam finding field does not exist in schema."
+    ]
+  }
+}

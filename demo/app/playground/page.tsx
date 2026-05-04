@@ -160,11 +160,8 @@ export default function Playground() {
         </section>
 
         <section>
-          <SectionHead label="Or skip the network" tagline="install the Python engine and embed it" />
-          <CodeBlock
-            label="bash"
-            content={`pip install -e 'git+https://github.com/jajjer/traumatrial#egg=traumatrial-match&subdirectory=engine'`}
-          />
+          <SectionHead label="Or skip the network" tagline="install the engine and embed it locally" />
+          <CodeBlock label="pip" content={`pip install traumatrial-match`} />
           <CodeBlock
             label="python"
             content={`from traumatrial_match import Patient, Trial, Rule, match
@@ -172,6 +169,14 @@ result = match(patient, trial)
 print(result.eligible, result.confidence)
 for c in result.trace:
     print("HIT" if c.hit else "MISS", c.clause)`}
+          />
+          <div className="h-3" />
+          <CodeBlock label="npm" content={`npm install traumatrial-match`} />
+          <CodeBlock
+            label="typescript"
+            content={`import { match, matchAll } from "traumatrial-match";
+import { fromNemsisXml } from "traumatrial-match/nemsis"; // optional, peer dep on fast-xml-parser
+const result = match(patient, trial);`}
           />
         </section>
       </div>

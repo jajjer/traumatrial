@@ -1,0 +1,42 @@
+{
+  "trial_id": "NCT05449834",
+  "short_name": "FEISTY II",
+  "title": "Fibrinogen Early In Severe Trauma StudY II",
+  "requires_efic": true,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "eq",
+      "value": "pregnant",
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Activation of local MHP and/or Transfusion of Emergency Blood Products: no schema field for massive hemorrhage protocol activation or emergency blood product transfusion.",
+      "FIBTEM A5 \u2264 10mm or TEG FF A5 \u2264 15mm or FibC \u2264 2 g/l: no schema fields for viscoelastic hemostatic assay results or fibrinogen concentration lab values.",
+      "Injury judged incompatible with survival: no schema field for clinician survival prognosis.",
+      "Randomisation unable to occur within 6 hours of presentation to hospital: temporal/logistical criterion not expressible with available schema fields.",
+      "Known genetic or drug induced coagulation disorder: no schema field for genetic coagulation disorders; anticoagulant_use covers only drug-induced anticoagulation partially, but the criterion is broader (any coagulation disorder) so it is skipped entirely to avoid partial misrepresentation.",
+      "Known objection to blood products: no schema field for patient advance directives or blood product refusal.",
+      "Dedicated prior fibrinogen replacement: no schema field for prior fibrinogen administration.",
+      "Participation in a competing study: no schema field for concurrent trial enrollment."
+    ]
+  }
+}

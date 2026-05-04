@@ -1,0 +1,67 @@
+{
+  "trial_id": "NCT05958342",
+  "short_name": "CAVALIER",
+  "title": "CAlcium and VAsopressin Following Injury Early Resuscitation (CAVALIER) Trial",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "sbp_mmhg",
+      "op": "lte",
+      "value": 90,
+      "hard": true
+    },
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 90,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "fall",
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion 1A (prehospital/in-hospital): The OR logic combining SBP \u2264 90 + HR \u2265 108 versus SBP \u2264 70 alone cannot be expressed as a single rule; only SBP \u2264 90 is encoded as a hard inclusion, and the HR \u2265 108 tachycardia sub-condition is partially skipped.",
+      "Inclusion 2: Blood/blood component transfusion initiated or deemed clinically indicated within 60 minutes of arrival cannot be expressed with available fields.",
+      "Inclusion 3: Clinical team deems OR for major hemorrhage control indicated within 60 minutes of arrival cannot be expressed with available fields.",
+      "Inclusion 4: Anticipated ICU admission cannot be expressed with available fields.",
+      "Exclusion 1: Wearing a NO CAVALIER opt-out bracelet cannot be expressed with available fields.",
+      "Exclusion 3: 'Isolated fall from standing' is a specific sub-type of fall mechanism; the schema only has 'fall' as a mechanism enum, so the 'isolated' and 'from standing' qualifiers cannot be captured \u2014 encoded as soft exclusion on mechanism=fall.",
+      "Exclusion 4: Known prisoner status cannot be expressed with available fields.",
+      "Exclusion 6: Traumatic arrest with >5 minutes of CPR without return of vital signs cannot be fully expressed; cardiac_arrest mechanism is available but the CPR duration and ROSC conditions are not.",
+      "Exclusion 7: Brain matter exposed or penetrating brain injury cannot be precisely expressed with available fields (presumed_tbi is a partial proxy but does not distinguish penetrating/exposed brain injury).",
+      "Exclusion 8: Isolated drowning or hanging victims cannot be expressed with available fields (no matching mechanism enum values).",
+      "Exclusion 9: Objection to study voiced by subject or family member cannot be expressed with available fields.",
+      "Exclusion 10: Inability to obtain IV/IO access cannot be expressed with available fields."
+    ]
+  }
+}

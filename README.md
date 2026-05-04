@@ -58,6 +58,14 @@ Open https://traumatrial.vercel.app — pick a persona, build a custom patient, 
 ### Embed the engine (Python)
 
 ```bash
+pip install traumatrial-match
+```
+
+[![PyPI](https://img.shields.io/pypi/v/traumatrial-match.svg)](https://pypi.org/project/traumatrial-match/)
+
+For local development with tests:
+
+```bash
 cd engine
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[test]"
@@ -89,6 +97,23 @@ print(r.eligible, r.confidence)  # True 1.0
 
 See [`engine/README.md`](engine/README.md) for the full API and operator vocabulary.
 
+### Embed the engine (TypeScript / Node)
+
+```bash
+npm install traumatrial-match
+```
+
+[![npm](https://img.shields.io/npm/v/traumatrial-match.svg)](https://www.npmjs.com/package/traumatrial-match)
+
+```ts
+import { match, matchAll } from "traumatrial-match";
+import { fromNemsisXml } from "traumatrial-match/nemsis";  // optional sub-export
+```
+
+Same operators, same trace format, same confidence rubric as the Python core. Zero runtime deps; the NEMSIS sub-export has `fast-xml-parser` as an optional peer dep.
+
+See [`engine-ts/README.md`](engine-ts/README.md) for the full API.
+
 ### Run the demo locally
 
 ```bash
@@ -105,7 +130,7 @@ The custom-patient form and `/api/match` work with no setup. The NCT parser at `
 .
 ├── engine/                       # Python OSS matching engine
 │   ├── traumatrial_match/        # schema.py · match.py · loader.py
-│   ├── trials/                   # 10 verified trauma trials (JSON)
+│   ├── trials/                   # 15 verified trauma trials (JSON)
 │   ├── patients/                 # 8 synthetic personas
 │   ├── scripts/
 │   │   ├── parse_trial.py        # clinicaltrials.gov → Rule JSON via Claude

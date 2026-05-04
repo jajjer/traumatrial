@@ -1,0 +1,80 @@
+{
+  "trial_id": "NCT06065046",
+  "short_name": "Baricitinib-TBI",
+  "title": "Baricitinib for Moderate and Severe Traumatic Intracerebral Hemorrhage/Contusions",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lt",
+      "value": 80,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 5,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 12,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Admission within \u226424 hours after traumatic brain injury: requires temporal logic (time from injury to admission) not available in schema.",
+      "CT scans demonstrate intracerebral hemorrhage/contusions: imaging confirmation cannot be expressed with available fields.",
+      "Closed head injury (inclusion) / Open head injury (exclusion): no open/closed head injury field in schema.",
+      "Admission without infections: no infection status field in schema.",
+      "Signed and dated informed consent: consent process cannot be expressed in schema.",
+      "Time of head injury cannot be reliably assessed (exclusion): temporal reliability of injury time cannot be expressed in schema.",
+      "Candidate for immediate surgical intervention due to severe extracranial injury (exclusion): surgical candidacy field not in schema.",
+      "Parturition within previous 30 days or active lactation (exclusion): postpartum/lactation status not in schema.",
+      "Use of Janus kinase inhibitors (exclusion): specific medication use not in schema.",
+      "Pre-traumatic dementia or disability (exclusion): prior medical history field not in schema.",
+      "Severe liver, kidney disease, or malignancy with life expectancy less than 14 days (exclusion): comorbidity and life expectancy fields not in schema.",
+      "Severe pulmonary infection (exclusion): infection/pulmonary status not in schema.",
+      "Severe or acute heart failure (exclusion): cardiac comorbidity field not in schema.",
+      "Severe infections within previous 30 days (exclusion): infection history field not in schema.",
+      "History of myocardial infarction (exclusion): prior cardiac history field not in schema.",
+      "Known sensitivity to baricitinib (exclusion): drug allergy/sensitivity field not in schema.",
+      "Severe decreases in neutrophil, lymphocyte, platelet counts or hemoglobin (exclusion): lab values not in schema.",
+      "Severe liver and kidney dysfunction (exclusion): organ function lab values not in schema.",
+      "Currently participating in other interventional clinical trials (exclusion): trial enrollment status not in schema."
+    ]
+  }
+}

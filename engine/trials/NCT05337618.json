@@ -1,0 +1,36 @@
+{
+  "trial_id": "NCT05337618",
+  "short_name": "INDICT",
+  "title": "Improving Neurotrauma by Depolarization Inhibition With Combination Therapy (INDICT)",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion (1): Clinical indication for emergency craniotomy with dural opening \u2014 requires surgical plan/indication data not available in schema.",
+      "Inclusion (1): Within 72 hours post-trauma \u2014 requires temporal logic (time since injury) not available in schema.",
+      "Exclusion (1): Persistent bilateral non-reactive pupils or other evidence of non-survivable injury \u2014 requires neurological exam findings not available in schema.",
+      "Exclusion (2): Decompressive craniectomy to treat refractory ICP subsequent to diffuse injury \u2014 requires surgical history and ICP management data not available in schema.",
+      "Exclusion (3): Co-enrollment in another therapeutic TBI trial \u2014 requires enrollment status in other trials, not available in schema."
+    ]
+  }
+}

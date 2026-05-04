@@ -2,6 +2,14 @@
 
 Open infrastructure for trauma trial eligibility matching. Evaluates structured trauma trial inclusion/exclusion rules against patient records in <100ms with clause-level reasoning trace.
 
+[![PyPI](https://img.shields.io/pypi/v/traumatrial-match.svg)](https://pypi.org/project/traumatrial-match/)
+[![MIT](https://img.shields.io/badge/license-MIT-blue.svg)](../LICENSE)
+[![demo](https://img.shields.io/badge/live%20demo-traumatrial.vercel.app-rose)](https://traumatrial.vercel.app)
+
+```bash
+pip install traumatrial-match
+```
+
 MIT licensed. Synthetic data only — never PHI. Pure-Python core; pydantic for validation.
 
 ## 60-second example
@@ -76,13 +84,21 @@ The categorical signal is `eligible: bool`; magnitude is `confidence: float`. Th
 
 ## Bundled corpus
 
-The repo ships with 10 verified active trauma trials (TROOP, SWiFTCanada, ICECAP, SELECT-TBI, AEDH-MT, BOOST3, WEBSTER, FIT-BRAIN, Ketamine-TBI, ELASTIC) and 8 patient personas covering hemorrhage, TBI, anticoagulation, pregnancy exclusion, cardiac arrest, and pediatric exclusion. See `trials/` and `patients/`.
+The repo ships with 15 verified active recruiting trauma trials (TROOP, SWiFTCanada, ICECAP, SELECT-TBI, AEDH-MT, BOOST3, WEBSTER, FIT-BRAIN, Ketamine-TBI, ELASTIC, INDICT, AFISTBI, Baricitinib-TBI, FEISTY II, CAVALIER) and 8 patient personas covering hemorrhage, TBI, anticoagulation, pregnancy exclusion, cardiac arrest, and pediatric exclusion. See `trials/` and `patients/`.
 
 These are hand-written from the public clinicaltrials.gov criteria. **They are an approximation, not a clinical decision system.** PRs welcome that improve fidelity, add trials, or extend the operator vocabulary.
 
-## Install (dev)
+## Install (released)
 
 ```bash
+pip install traumatrial-match
+```
+
+## Install (dev, from source)
+
+```bash
+git clone https://github.com/jajjer/traumatrial.git
+cd traumatrial/engine
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[test]"
 pytest
