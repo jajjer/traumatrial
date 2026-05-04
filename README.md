@@ -1,6 +1,10 @@
 # traumatrial
 
-Real-time trauma trial eligibility matching. Monorepo containing:
+Real-time trauma trial eligibility matching.
+
+**Live demo:** https://traumatrial.vercel.app
+
+Monorepo containing:
 
 - **`engine/`** — `traumatrial-match`, the Python OSS matching engine. MIT-licensed. Evaluates structured trauma trial inclusion/exclusion rules against patient records in <100ms with clause-level reasoning trace.
 - **`demo/`** — Next.js demo deployed to Vercel. Pre-computed match results from the engine, animated coordinator-view UI, "Simulate Patient Arrival" button.
