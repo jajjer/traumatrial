@@ -1,0 +1,14 @@
+{
+  "trial_id": "NCT06495294",
+  "short_name": "SWiFTCanada",
+  "title": "Study of Whole Blood in Frontline Trauma",
+  "requires_efic": true,
+  "phase": "III",
+  "inclusion": [
+    {"field": "age_years", "op": "gte", "value": 16, "hard": true},
+    {"field": "presumed_hemorrhage", "op": "eq", "value": true, "hard": true},
+    {"field": "mechanism", "op": "in", "value": ["blunt_mvc", "blunt_other", "gsw", "stab", "blast", "fall", "crush", "other"], "hard": true},
+    {"field": "trauma_activation_level", "op": "lte", "value": 1, "hard": false}
+  ],
+  "exclusion": []
+}

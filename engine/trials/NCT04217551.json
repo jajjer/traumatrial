@@ -1,0 +1,16 @@
+{
+  "trial_id": "NCT04217551",
+  "short_name": "ICECAP",
+  "title": "Influence of Cooling Duration on Efficacy in Cardiac Arrest Patients",
+  "requires_efic": true,
+  "phase": "III",
+  "inclusion": [
+    {"field": "age_years", "op": "gte", "value": 18, "hard": true},
+    {"field": "mechanism", "op": "eq", "value": "cardiac_arrest", "hard": true},
+    {"field": "gcs", "op": "lte", "value": 8, "hard": true},
+    {"field": "eta_minutes", "op": "lte", "value": 60, "hard": false}
+  ],
+  "exclusion": [
+    {"field": "sbp_mmhg", "op": "lt", "value": 80, "hard": true}
+  ]
+}

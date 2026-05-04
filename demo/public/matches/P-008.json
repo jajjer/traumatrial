@@ -1,0 +1,236 @@
+{
+  "patient": {
+    "patient_id": "P-008",
+    "age_years": 8,
+    "sex": "M",
+    "gcs": 14,
+    "sbp_mmhg": 96,
+    "hr_bpm": 118,
+    "mechanism": "blunt_mvc",
+    "trauma_activation_level": 2,
+    "eta_minutes": 6,
+    "pregnancy_status": "not_applicable",
+    "anticoagulant_use": false,
+    "presumed_tbi": true,
+    "presumed_hemorrhage": false,
+    "presumed_intracranial_hemorrhage": false,
+    "spinal_injury_suspected": false
+  },
+  "results": [
+    {
+      "patient_id": "P-008",
+      "trial_id": "NCT04217551",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 8
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "blunt_mvc"
+        },
+        {
+          "clause": "gcs lte 8",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 14
+        },
+        {
+          "clause": "eta_minutes lte 60",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": 6
+        },
+        {
+          "clause": "sbp_mmhg lt 80",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 96
+        }
+      ]
+    },
+    {
+      "patient_id": "P-008",
+      "trial_id": "NCT04995068",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 15",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 8
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": true
+        },
+        {
+          "clause": "gcs in [13, 14, 15]",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 14
+        },
+        {
+          "clause": "mechanism in ['gsw', 'stab']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "blunt_mvc"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-008",
+      "trial_id": "NCT05638581",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 15",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 8
+        },
+        {
+          "clause": "presumed_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "trauma_activation_level lte 1",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": 2
+        },
+        {
+          "clause": "eta_minutes lte 3",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": 6
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "mechanism eq 'burn'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "blunt_mvc"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-008",
+      "trial_id": "NCT06292585",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 8
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs gt 8",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 14
+        },
+        {
+          "clause": "eta_minutes lte 360",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": 6
+        },
+        {
+          "clause": "anticoagulant_use eq True",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-008",
+      "trial_id": "NCT06495294",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 16",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 8
+        },
+        {
+          "clause": "presumed_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "mechanism in ['blunt_mvc', 'blunt_other', 'gsw', ...]",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "blunt_mvc"
+        },
+        {
+          "clause": "trauma_activation_level lte 1",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": 2
+        }
+      ]
+    }
+  ]
+}

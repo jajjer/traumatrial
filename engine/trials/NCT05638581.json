@@ -1,0 +1,17 @@
+{
+  "trial_id": "NCT05638581",
+  "short_name": "TROOP",
+  "title": "Trauma Resuscitation With Low-Titer Group O Whole Blood or Products",
+  "requires_efic": true,
+  "phase": "III",
+  "inclusion": [
+    {"field": "age_years", "op": "gte", "value": 15, "hard": true},
+    {"field": "presumed_hemorrhage", "op": "eq", "value": true, "hard": true},
+    {"field": "trauma_activation_level", "op": "lte", "value": 1, "hard": false},
+    {"field": "eta_minutes", "op": "lte", "value": 3, "hard": false}
+  ],
+  "exclusion": [
+    {"field": "pregnancy_status", "op": "in", "value": ["pregnant", "unknown_could_be_pregnant"], "hard": true},
+    {"field": "mechanism", "op": "eq", "value": "burn", "hard": true}
+  ]
+}

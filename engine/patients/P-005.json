@@ -1,0 +1,17 @@
+{
+  "patient_id": "P-005",
+  "age_years": 19,
+  "sex": "M",
+  "gcs": 14,
+  "sbp_mmhg": 105,
+  "hr_bpm": 96,
+  "mechanism": "blunt_mvc",
+  "trauma_activation_level": 2,
+  "eta_minutes": 9,
+  "pregnancy_status": "not_applicable",
+  "anticoagulant_use": true,
+  "presumed_tbi": true,
+  "presumed_hemorrhage": false,
+  "presumed_intracranial_hemorrhage": true,
+  "spinal_injury_suspected": false
+}

@@ -1,0 +1,17 @@
+{
+  "patient_id": "P-007",
+  "age_years": 71,
+  "sex": "M",
+  "gcs": 3,
+  "sbp_mmhg": 98,
+  "hr_bpm": 78,
+  "mechanism": "cardiac_arrest",
+  "trauma_activation_level": 1,
+  "eta_minutes": 18,
+  "pregnancy_status": "not_applicable",
+  "anticoagulant_use": false,
+  "presumed_tbi": false,
+  "presumed_hemorrhage": false,
+  "presumed_intracranial_hemorrhage": false,
+  "spinal_injury_suspected": false
+}

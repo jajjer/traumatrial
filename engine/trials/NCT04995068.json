@@ -1,0 +1,15 @@
+{
+  "trial_id": "NCT04995068",
+  "short_name": "SELECT-TBI",
+  "title": "Score Predicting Lesion Development on CT Following Mild TBI",
+  "requires_efic": false,
+  "phase": "Observational",
+  "inclusion": [
+    {"field": "age_years", "op": "gte", "value": 15, "hard": true},
+    {"field": "presumed_tbi", "op": "eq", "value": true, "hard": true},
+    {"field": "gcs", "op": "in", "value": [13, 14, 15], "hard": true}
+  ],
+  "exclusion": [
+    {"field": "mechanism", "op": "in", "value": ["gsw", "stab"], "hard": true}
+  ]
+}

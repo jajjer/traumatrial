@@ -1,0 +1,17 @@
+{
+  "trial_id": "NCT06292585",
+  "short_name": "AEDH-MT",
+  "title": "Acute Epidural Hematoma Treated With Middle Meningeal Artery Embolization",
+  "requires_efic": false,
+  "phase": "II/III",
+  "inclusion": [
+    {"field": "age_years", "op": "gte", "value": 18, "hard": true},
+    {"field": "presumed_intracranial_hemorrhage", "op": "eq", "value": true, "hard": true},
+    {"field": "gcs", "op": "gt", "value": 8, "hard": true},
+    {"field": "eta_minutes", "op": "lte", "value": 360, "hard": false}
+  ],
+  "exclusion": [
+    {"field": "anticoagulant_use", "op": "eq", "value": true, "hard": true},
+    {"field": "pregnancy_status", "op": "in", "value": ["pregnant", "unknown_could_be_pregnant"], "hard": true}
+  ]
+}
