@@ -129,6 +129,7 @@ export default function Home() {
             onSimulateCustom={simulateCustom}
             loading={loading}
             patients={patients}
+            trials={trials}
           />
         ) : (
           <ActiveScreen
@@ -192,15 +193,18 @@ function IdleScreen({
   onSimulateCustom,
   loading,
   patients,
+  trials,
 }: {
   onSimulate: (id?: string) => void;
   onSimulateCustom: (p: Patient) => void;
   loading: boolean;
   patients: Patient[];
+  trials: Trial[];
 }) {
   const [showForm, setShowForm] = useState(false);
   const [showParse, setShowParse] = useState(false);
   const [showPortfolio, setShowPortfolio] = useState(false);
+  const [showNemsis, setShowNemsis] = useState(false);
   return (
     <div className="flex flex-col items-center gap-12 mt-12">
       <div className="text-center max-w-2xl">
@@ -310,6 +314,18 @@ function IdleScreen({
           </button>
         </div>
         {showPortfolio && <PortfolioPanel />}
+      </div>
+
+      <div className="w-full max-w-3xl">
+        <div className="flex items-center justify-center">
+          <button
+            onClick={() => setShowNemsis((s) => !s)}
+            className="font-mono text-[10px] tracking-[0.2em] text-slate-400 hover:text-slate-200 underline-offset-4 hover:underline"
+          >
+            {showNemsis ? "▾ HIDE NEMSIS ADAPTER" : "▸ OR PASTE A NEMSIS v3.5 ePCR XML"}
+          </button>
+        </div>
+        {showNemsis && <NemsisPanel trials={trials} />}
       </div>
     </div>
   );
@@ -743,6 +759,260 @@ function ParsedTrialMatches({ trial, patients }: { trial: Trial; patients: Patie
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+interface NemsisFieldExtraction {
+  field: string;
+  source: "extracted" | "inferred" | "defaulted" | "skipped";
+  value: unknown;
+  nemsis_path?: string | null;
+  raw?: string | null;
+  notes?: string | null;
+}
+
+interface NemsisResponse {
+  patient: Patient;
+  trace: { extractions: NemsisFieldExtraction[] };
+  results: MatchResult[];
+  latency_ms: number;
+}
+
+const SAMPLE_NEMSIS_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <Header><Source>synthetic-sample</Source></Header>
+  <PatientCareReport>
+    <eRecord>
+      <eRecord.01>SYN-DEMO-HEMORRHAGE</eRecord.01>
+    </eRecord>
+    <ePatient>
+      <ePatient.13>9906003</ePatient.13>
+      <ePatient.15>34</ePatient.15>
+      <ePatient.16>2516001</ePatient.16>
+    </ePatient>
+    <eHistory>
+      <eHistory.06>None</eHistory.06>
+      <eHistory.16>3133003</eHistory.16>
+    </eHistory>
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T13:14:11-05:00</eVitals.01>
+        <eVitals.06>120</eVitals.06>
+        <eVitals.10>104</eVitals.10>
+        <eVitals.23>9</eVitals.23>
+      </eVitalsGroup>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T13:21:43-05:00</eVitals.01>
+        <eVitals.06>82</eVitals.06>
+        <eVitals.10>128</eVitals.10>
+        <eVitals.23>7</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+    <eSituation>
+      <eSituation.02>V43.5XXA</eSituation.02>
+    </eSituation>
+  </PatientCareReport>
+</EMSDataSet>
+`;
+
+function NemsisPanel({ trials }: { trials: Trial[] }) {
+  const [xml, setXml] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<NemsisResponse | null>(null);
+
+  async function run() {
+    setError(null);
+    setData(null);
+    if (!xml.trim()) {
+      setError("paste an XML PCR or click 'use sample'");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch("/api/from-nemsis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ xml }),
+      });
+      const body = (await res.json()) as Record<string, unknown>;
+      if (!res.ok) {
+        setError((body.error as string | undefined) ?? `request failed (${res.status})`);
+        return;
+      }
+      setData(body as unknown as NemsisResponse);
+    } catch {
+      setError("network error reaching /api/from-nemsis");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="mt-4 rounded-lg border border-slate-800 bg-slate-900/40 p-5 fade-in">
+      <p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 mb-2">
+        NEMSIS v3.5 ePCR → ENGINE PATIENT
+      </p>
+      <p className="text-[12px] text-slate-400 leading-relaxed mb-3">
+        NEMSIS v3.5 is the standard prehospital data format used by US EMS (~3000 ePCR
+        vendors). The adapter pulls the high-signal eFields (ePatient.13/15, eVitals.06/10/23,
+        eSituation.02, eHistory.06/16) and surfaces every value with a field-level trace —
+        extracted, inferred, defaulted, or skipped — so a coordinator can see exactly how the
+        Patient was built. <em>v0 mapping; not a clinical-grade extractor.</em>
+      </p>
+
+      <textarea
+        value={xml}
+        onChange={(e) => setXml(e.target.value)}
+        rows={8}
+        spellCheck={false}
+        placeholder="<EMSDataSet xmlns='http://www.nemsis.org'> ... </EMSDataSet>"
+        className="w-full px-3 py-2 rounded border border-slate-800 bg-slate-950 font-mono text-[11px] text-slate-100 focus:outline-none focus:border-slate-500 leading-relaxed"
+      />
+      <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setXml(SAMPLE_NEMSIS_XML)}
+          className="font-mono text-[10px] tracking-wider px-3 py-2 rounded border border-slate-700 text-slate-300 hover:bg-slate-800/40"
+        >
+          USE SAMPLE
+        </button>
+        <button
+          onClick={run}
+          disabled={loading}
+          className="font-mono text-[11px] tracking-wider px-4 py-2 rounded bg-rose-600 hover:bg-rose-500 text-white disabled:opacity-50"
+        >
+          {loading ? "CONVERTING…" : "CONVERT & MATCH"}
+        </button>
+        <span className="font-mono text-[10px] text-slate-500">
+          Synthetic data only. Never paste real PCR data.
+        </span>
+      </div>
+
+      {error && (
+        <p className="mt-3 font-mono text-[11px] text-rose-300 bg-rose-950/30 border border-rose-900/60 rounded p-3">
+          {error}
+        </p>
+      )}
+
+      {data && <NemsisResults data={data} trials={trials} />}
+    </div>
+  );
+}
+
+function NemsisResults({ data, trials }: { data: NemsisResponse; trials: Trial[] }) {
+  const counts = data.trace.extractions.reduce(
+    (acc, e) => ({ ...acc, [e.source]: (acc[e.source as keyof typeof acc] || 0) + 1 }),
+    { extracted: 0, inferred: 0, defaulted: 0, skipped: 0 } as Record<string, number>,
+  );
+  const eligibleCount = data.results.filter((r) => r.eligible).length;
+  const trialFor = (id: string) => trials.find((t) => t.trial_id === id);
+
+  return (
+    <div className="mt-5 fade-in flex flex-col gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <Stat label="Extracted" value={`${counts.extracted}`} sub="from XML" accent="emerald" />
+        <Stat label="Inferred" value={`${counts.inferred}`} sub="by rule" accent="amber" />
+        <Stat label="Defaulted" value={`${counts.defaulted}`} sub="missing in source" />
+        <Stat
+          label="Eligible trials"
+          value={`${eligibleCount} / ${data.results.length}`}
+          sub={`matched in ${data.latency_ms.toFixed(2)} ms`}
+          accent={eligibleCount > 0 ? "emerald" : "amber"}
+        />
+      </div>
+
+      <details className="rounded-md border border-slate-800 bg-slate-950/60 p-3" open>
+        <summary className="font-mono text-[10px] tracking-wider text-slate-400 cursor-pointer hover:text-slate-200">
+          CONVERSION TRACE — {data.trace.extractions.length} fields
+        </summary>
+        <div className="mt-3 overflow-x-auto">
+          <table className="w-full text-[11px] font-mono">
+            <thead>
+              <tr className="text-slate-500">
+                <th className="text-left pr-3 pb-1.5 font-normal">FIELD</th>
+                <th className="text-left pr-3 pb-1.5 font-normal">SOURCE</th>
+                <th className="text-left pr-3 pb-1.5 font-normal">PATH</th>
+                <th className="text-left pr-3 pb-1.5 font-normal">VALUE</th>
+                <th className="text-left pb-1.5 font-normal">NOTES</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.trace.extractions.map((e, i) => (
+                <tr key={i} className="border-t border-slate-900 align-top">
+                  <td className="pr-3 py-1 text-slate-300">{e.field}</td>
+                  <td className="pr-3 py-1">
+                    <span
+                      className={`px-1.5 py-0.5 rounded text-[9px] tracking-wider ${
+                        e.source === "extracted"
+                          ? "bg-emerald-900/60 text-emerald-200"
+                          : e.source === "inferred"
+                            ? "bg-amber-900/60 text-amber-200"
+                            : e.source === "defaulted"
+                              ? "bg-slate-800 text-slate-400"
+                              : "bg-rose-900/60 text-rose-200"
+                      }`}
+                    >
+                      {e.source.toUpperCase()}
+                    </span>
+                  </td>
+                  <td className="pr-3 py-1 text-slate-500">{e.nemsis_path ?? "—"}</td>
+                  <td className="pr-3 py-1 text-slate-200">{formatValue(e.value)}</td>
+                  <td className="py-1 text-slate-500 leading-snug">{e.notes ?? ""}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <div>
+        <p className="font-mono text-[10px] tracking-wider text-slate-500 mb-2">
+          MATCH RESULTS
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {data.results.map((r) => {
+            const trial = trialFor(r.trial_id);
+            const eligible = r.eligible;
+            const conf = Math.round(r.confidence * 100);
+            const reason = !eligible ? firstFailingHardClause(r.trace) : null;
+            return (
+              <div
+                key={r.trial_id}
+                className={`rounded border p-2.5 ${
+                  eligible
+                    ? "border-emerald-800/60 bg-emerald-950/20"
+                    : "border-slate-800 bg-slate-900/40"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <span className="font-mono text-xs text-slate-200">
+                    {trial?.short_name ?? r.trial_id}
+                  </span>
+                  <span
+                    className={`font-mono text-[9px] tracking-wider px-1.5 py-0.5 rounded ${
+                      eligible
+                        ? "bg-emerald-900/60 text-emerald-200"
+                        : "bg-slate-800 text-slate-400"
+                    }`}
+                  >
+                    {eligible ? `ELIGIBLE · ${conf}%` : "EXCLUDED"}
+                  </span>
+                </div>
+                <p className="text-[10px] text-slate-500 font-mono truncate">
+                  {trial?.title ?? r.trial_id}
+                </p>
+                {reason && (
+                  <p className="mt-1 text-[10px] text-rose-300/80 font-mono truncate">
+                    ✗ {reason.clause}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -11,8 +11,14 @@ from traumatrial_match.schema import (
     OPERATORS,
 )
 from traumatrial_match.match import match, match_all
+from traumatrial_match.nemsis import (
+    FieldExtraction,
+    NemsisConversionTrace,
+    NemsisParseError,
+    from_nemsis_xml,
+)
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 __all__ = [
     "Patient",
@@ -25,5 +31,9 @@ __all__ = [
     "OPERATORS",
     "match",
     "match_all",
+    "from_nemsis_xml",
+    "NemsisConversionTrace",
+    "FieldExtraction",
+    "NemsisParseError",
     "__version__",
 ]

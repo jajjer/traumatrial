@@ -59,6 +59,7 @@ for clause in result.trace:
 - **`MatchResult`** — eligibility, confidence, and a complete clause-level reasoning trace.
 - **`match(patient, trial)`** — evaluate one patient against one trial.
 - **`match_all(patient, trials)`** — evaluate against many; sorted eligible-first, confidence desc.
+- **`from_nemsis_xml(xml_str)`** — convert a NEMSIS v3.5 ePCR XML into `(Patient, NemsisConversionTrace)`. The trace records each Patient field as `extracted` / `inferred` / `defaulted` / `skipped` with a one-line reason. v0 mapping covers ~10 high-signal eFields; everything else is honestly defaulted. See `traumatrial_match/nemsis.py`.
 
 ## Operators (8)
 
