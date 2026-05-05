@@ -1,0 +1,17 @@
+{
+  "patient_id": "P-011",
+  "age_years": 12,
+  "sex": "M",
+  "gcs": 6,
+  "sbp_mmhg": 88,
+  "hr_bpm": 132,
+  "mechanism": "blunt_mvc",
+  "trauma_activation_level": 1,
+  "eta_minutes": 4,
+  "pregnancy_status": "not_applicable",
+  "anticoagulant_use": false,
+  "presumed_tbi": true,
+  "presumed_hemorrhage": true,
+  "presumed_intracranial_hemorrhage": true,
+  "spinal_injury_suspected": false
+}

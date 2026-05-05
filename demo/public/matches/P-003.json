@@ -19,6 +19,85 @@
   "results": [
     {
       "patient_id": "P-003",
+      "trial_id": "NCT04588311",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 75",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "gcs eq 3",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "anticoagulant_use eq True",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05437575",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "hr_bpm gte 115",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": 138
+        },
+        {
+          "clause": "eta_minutes gt 0",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 3
+        },
+        {
+          "clause": "age_years lt 18",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        },
+        {
+          "clause": "sbp_mmhg gt 180",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 70
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
       "trial_id": "NCT05449834",
       "eligible": true,
       "confidence": 1.0,
@@ -227,6 +306,495 @@
     },
     {
       "patient_id": "P-003",
+      "trial_id": "NCT06510582",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06531642",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": true
+        },
+        {
+          "clause": "sbp_mmhg lte 90",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 70
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06736860",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 80",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "sbp_mmhg lte 90",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": 70
+        },
+        {
+          "clause": "hr_bpm gte 110",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": 138
+        },
+        {
+          "clause": "presumed_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": true
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06977659",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 65",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": true
+        },
+        {
+          "clause": "sbp_mmhg lt 90",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": 70
+        },
+        {
+          "clause": "gcs lte 8",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT07131475",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 50",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "sex eq 'M'",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "M"
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT07480655",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "mechanism in ['blunt_mvc', 'blunt_other', 'fall', ...]",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "presumed_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": true
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT07556991",
+      "eligible": true,
+      "confidence": 1.0,
+      "trace": [
+        {
+          "clause": "age_years gt 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "anticoagulant_use eq False",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT03992404",
+      "eligible": true,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 85",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05095857",
+      "eligible": true,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT02292589",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT02407028",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 16",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 65",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "gcs gte 3",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "gcs lte 8",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "mechanism in ['gsw', 'stab']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "spinal_injury_suspected eq True",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT03559114",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "gcs lte 12",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "sbp_mmhg gt 210",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 70
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT03582293",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "gcs gte 14",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "anticoagulant_use eq True",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
       "trial_id": "NCT03754114",
       "eligible": false,
       "confidence": 0.0,
@@ -349,6 +917,64 @@
     },
     {
       "patient_id": "P-003",
+      "trial_id": "NCT04499755",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "age_years lt 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        },
+        {
+          "clause": "gcs lte 12",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT04521881",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 50",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        },
+        {
+          "clause": "gcs gte 13",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
       "trial_id": "NCT04995068",
       "eligible": false,
       "confidence": 0.0,
@@ -385,6 +1011,150 @@
     },
     {
       "patient_id": "P-003",
+      "trial_id": "NCT05008926",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05097261",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05166343",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 0",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 17",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "mechanism in ['blunt_mvc', 'blunt_other', 'fall', ...]",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "gsw"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05323149",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs gt 8",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "mechanism in ['gsw', 'stab']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
       "trial_id": "NCT05337618",
       "eligible": false,
       "confidence": 0.0,
@@ -398,6 +1168,243 @@
         },
         {
           "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05446584",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 55",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05482945",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "gcs lte 8",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05616910",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 75",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs gte 9",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "pregnancy_status eq 'pregnant'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05702138",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05782244",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 70",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "sbp_mmhg lt 90",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 70
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05826912",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 65",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs gte 9",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "gcs lte 15",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "mechanism in ['gsw', 'stab']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant']",
           "kind": "exclusion",
           "hard": true,
           "hit": false,
@@ -466,6 +1473,42 @@
           "hard": true,
           "hit": true,
           "patient_value": "gsw"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT05931601",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "sbp_mmhg lt 100",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": 70
+        },
+        {
+          "clause": "presumed_hemorrhage eq True",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": true
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
         }
       ]
     },
@@ -621,6 +1664,242 @@
     },
     {
       "patient_id": "P-003",
+      "trial_id": "NCT06070350",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years lt 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": true
+        },
+        {
+          "clause": "gcs eq 3",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "mechanism in ['burn', 'cardiac_arrest']",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": "gsw"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06073886",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 65",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06253923",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 75",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs gte 3",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "gcs lte 8",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "sbp_mmhg gt 90",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 70
+        },
+        {
+          "clause": "spinal_injury_suspected eq True",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "mechanism in ['gsw', 'stab']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06254469",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 45",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        },
+        {
+          "clause": "pregnancy_status not_in ['pregnant']",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "sbp_mmhg gt 170",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 70
+        },
+        {
+          "clause": "presumed_tbi eq False",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06282965",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs lte 12",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
       "trial_id": "NCT06292585",
       "eligible": false,
       "confidence": 0.0,
@@ -666,6 +1945,617 @@
           "hard": true,
           "hit": false,
           "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06322953",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "anticoagulant_use eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06330935",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years lt 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        },
+        {
+          "clause": "gcs lte 13",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status eq 'pregnant'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "gcs eq 3",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": 15
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06333990",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 65",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06379724",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "mechanism in ['burn']",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06691165",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 19",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 65",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "spinal_injury_suspected eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status eq 'pregnant'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06790095",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 65",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "gcs gte 3",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 15
+        },
+        {
+          "clause": "gcs lte 8",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "spinal_injury_suspected eq True",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06829498",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 11",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 23",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs lt 13",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06836856",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs lte 13",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq False",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06866691",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status eq 'pregnant'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "hr_bpm lt 55",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 138
+        },
+        {
+          "clause": "gcs lt 13",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "spinal_injury_suspected eq True",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06930261",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "age_years lte 65",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs lt 10",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "mechanism in ['gsw', 'stab']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "gsw"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06939335",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT06953674",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "gcs lte 12",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq False",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": true,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT07239908",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "mechanism in ['blunt_mvc', 'blunt_other', 'fall', ...]",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": "gsw"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT07245264",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "age_years gte 18",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": true,
+          "patient_value": 28
+        },
+        {
+          "clause": "presumed_intracranial_hemorrhage eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "pregnancy_status in ['pregnant', 'unknown_could_be_pregnant']",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        },
+        {
+          "clause": "anticoagulant_use eq True",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": false
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT07319208",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "gcs lte 12",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "gcs eq 3",
+          "kind": "exclusion",
+          "hard": false,
+          "hit": false,
+          "patient_value": 15
+        },
+        {
+          "clause": "spinal_injury_suspected eq True",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
+        },
+        {
+          "clause": "mechanism eq 'cardiac_arrest'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "gsw"
+        },
+        {
+          "clause": "pregnancy_status eq 'pregnant'",
+          "kind": "exclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": "not_applicable"
+        }
+      ]
+    },
+    {
+      "patient_id": "P-003",
+      "trial_id": "NCT07373366",
+      "eligible": false,
+      "confidence": 0.0,
+      "trace": [
+        {
+          "clause": "presumed_tbi eq True",
+          "kind": "inclusion",
+          "hard": true,
+          "hit": false,
+          "patient_value": false
         }
       ]
     }

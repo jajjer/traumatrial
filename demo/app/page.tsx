@@ -23,6 +23,11 @@ const PATIENT_IDS = [
   "P-006",
   "P-007",
   "P-008",
+  "P-009",
+  "P-010",
+  "P-011",
+  "P-012",
+  "P-013",
 ];
 
 const MECHANISM_LABEL: Record<string, string> = {
@@ -1098,8 +1103,9 @@ function PortfolioPanel() {
       </p>
       <p className="text-[12px] text-slate-400 leading-relaxed mb-3">
         Paste a list of NCT IDs (one per line, up to 10). Bundled trials are reused; new
-        ones are parsed live through Claude. The matrix below shows which of the 8 personas
-        each trial covers — and which patients have <em>no</em> eligible trial in your portfolio.
+        ones are parsed live through Claude. The matrix below shows which of the bundled
+        personas each trial covers — and which patients have <em>no</em> eligible trial
+        in your portfolio.
       </p>
 
       <textarea

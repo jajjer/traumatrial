@@ -1,0 +1,17 @@
+{
+  "patient_id": "P-012",
+  "age_years": 73,
+  "sex": "F",
+  "gcs": 14,
+  "sbp_mmhg": 142,
+  "hr_bpm": 78,
+  "mechanism": "fall",
+  "trauma_activation_level": 2,
+  "eta_minutes": 11,
+  "pregnancy_status": "not_applicable",
+  "anticoagulant_use": false,
+  "presumed_tbi": true,
+  "presumed_hemorrhage": false,
+  "presumed_intracranial_hemorrhage": true,
+  "spinal_injury_suspected": false
+}
