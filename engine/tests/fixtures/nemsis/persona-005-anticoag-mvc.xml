@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Synthetic NEMSIS v3.5 PCR for persona P-005 (19M, MVC, anticoagulated).
+
+Stress patterns:
+  - Anticoagulant carried as RxNorm CUI nested inside an eHistory.061
+    code element (rivaroxaban = 1114195). Adapter must walk one level
+    deep to find it — top-level text-only matching would miss this.
+  - Mixed med list: rivaroxaban (anticoag, code-coded), Albuterol (inhaler,
+    not anticoag, free text), and "Xarelto 20mg" brand name (would also
+    trigger via substring channel — but RxNorm channel hits first).
+  - Mechanism via NEMSIS native cause code (2120001 = MVC), not ICD-10.
+  - Single eVitalsGroup, all values within range.
+-->
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <PatientCareReport>
+    <eRecord>
+      <eRecord.01>SYN-P005-ANTICOAG</eRecord.01>
+    </eRecord>
+    <ePatient>
+      <ePatient.13>9906003</ePatient.13>
+      <ePatient.15>19</ePatient.15>
+      <ePatient.16>2516001</ePatient.16>
+    </ePatient>
+    <eHistory>
+      <eHistory.06>
+        <eHistory.061>1114195</eHistory.061>
+      </eHistory.06>
+      <eHistory.06>Albuterol HFA 90mcg PRN</eHistory.06>
+      <eHistory.06>Xarelto 20mg PO QD</eHistory.06>
+    </eHistory>
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T19:38:09-05:00</eVitals.01>
+        <eVitals.06>105</eVitals.06>
+        <eVitals.10>96</eVitals.10>
+        <eVitals.23>14</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+    <eSituation>
+      <eSituation.02>2120001</eSituation.02>
+    </eSituation>
+  </PatientCareReport>
+</EMSDataSet>

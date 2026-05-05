@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Adversarial fixture: documents a known false-positive in the eHistory.06
+substring matcher. The patient is NOT on an anticoagulant — the medication
+field carries an allergy note that happens to contain the word "warfarin".
+
+Current adapter behavior: matches the substring and flags
+anticoagulant_use=true. This is a real-world failure mode (NEMSIS doesn't
+mandate a clean med-name field; ePCR vendors put structured codes, free
+text, and allergy lists in eHistory.06 inconsistently).
+
+Hardening direction (out of scope here): parse eHistory.06 entries into
+name+code+status fields, only match on the active-medication subset, and
+fall back to substring only when no code is present. The test attached to
+this fixture asserts the CURRENT (incorrect) behavior so a future fix
+will visibly flip a red bar to green.
+-->
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <PatientCareReport>
+    <eRecord>
+      <eRecord.01>SYN-ADVERSARIAL-SUBSTRING</eRecord.01>
+    </eRecord>
+    <ePatient>
+      <ePatient.13>9906003</ePatient.13>
+      <ePatient.15>40</ePatient.15>
+      <ePatient.16>2516001</ePatient.16>
+    </ePatient>
+    <eHistory>
+      <eHistory.06>Allergy: warfarin (rash, 2012). Currently on aspirin 81mg.</eHistory.06>
+    </eHistory>
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.06>120</eVitals.06>
+        <eVitals.10>80</eVitals.10>
+        <eVitals.23>15</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+    <eSituation>
+      <eSituation.02>W19.XXXA</eSituation.02>
+    </eSituation>
+  </PatientCareReport>
+</EMSDataSet>

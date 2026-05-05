@@ -32,3 +32,4 @@ out/
 .env.local
 .env.*.local
 .gstack/
+.claude/

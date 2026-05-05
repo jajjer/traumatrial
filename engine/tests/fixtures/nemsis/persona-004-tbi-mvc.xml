@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Synthetic NEMSIS v3.5 PCR for persona P-004 (45F, MVC, severe TBI without ICH).
+
+Stress patterns:
+  - Out-of-range vital injected into an EARLIER eVitalsGroup (HR=350).
+    Latest-wins: adapter takes the second group, so the bad value never
+    surfaces in the Patient — but it would surface in trace if reading
+    historic groups, which we don't.
+  - Mechanism via eInjury.01 (not eSituation.02). Adapter falls back to
+    eInjury.01 when eSituation.02 is missing.
+  - Free-text non-anticoagulant medication ("Levetiracetam 750mg"). Clean
+    negative for both substring and RxNorm channels.
+  - Pregnancy explicitly not_pregnant on female patient.
+-->
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <PatientCareReport>
+    <eRecord>
+      <eRecord.01>SYN-P004-TBI</eRecord.01>
+    </eRecord>
+    <ePatient>
+      <ePatient.13>9906001</ePatient.13>
+      <ePatient.15>45</ePatient.15>
+      <ePatient.16>2516001</ePatient.16>
+    </ePatient>
+    <eHistory>
+      <eHistory.06>Levetiracetam 750mg PO BID</eHistory.06>
+      <eHistory.16>3133003</eHistory.16>
+    </eHistory>
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T16:02:11-05:00</eVitals.01>
+        <eVitals.06>118</eVitals.06>
+        <eVitals.10>350</eVitals.10>
+        <eVitals.23>11</eVitals.23>
+      </eVitalsGroup>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T16:09:42-05:00</eVitals.01>
+        <eVitals.06>110</eVitals.06>
+        <eVitals.10>102</eVitals.10>
+        <eVitals.23>9</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+    <eInjury>
+      <eInjury.01>V47.5XXA</eInjury.01>
+    </eInjury>
+  </PatientCareReport>
+</EMSDataSet>

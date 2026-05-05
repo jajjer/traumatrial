@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Synthetic NEMSIS v3.5 PCR for persona P-008 (8M, pediatric MVC, alert + tachycardic).
+
+Stress patterns:
+  - eRecord.01 deliberately ABSENT. The caller passes patient_id=P-008
+    via from_nemsis_xml(..., patient_id="P-008") and the trace records
+    "caller-provided" instead of "extracted".
+  - Age in years (8) but units element omitted entirely. Adapter should
+    treat missing units as years (the spec default 2516001).
+  - eSituation.02 carries an unmapped NEMSIS native cause code
+    ("2120099" — fictional). Adapter falls through to "other" and
+    notes the reason. We then OVERRIDE via eInjury.01 = V43.5XXA, which
+    is the order in which this adapter resolves mechanism: eSituation.02
+    wins if present, so this fixture surfaces a real-world trap — the EMS
+    crew filled eSituation.02 with a non-standard code, and the schema
+    fails through to "other" rather than scanning eInjury.01.
+  - eHistory.06 mentions "pediatric multivitamin" — clean negative for
+    the anticoag substring matcher.
+-->
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <PatientCareReport>
+    <ePatient>
+      <ePatient.13>9906003</ePatient.13>
+      <ePatient.15>8</ePatient.15>
+    </ePatient>
+    <eHistory>
+      <eHistory.06>Pediatric multivitamin chewable</eHistory.06>
+    </eHistory>
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T15:20:14-05:00</eVitals.01>
+        <eVitals.06>96</eVitals.06>
+        <eVitals.10>118</eVitals.10>
+        <eVitals.23>14</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+    <eSituation>
+      <eSituation.02>2120099</eSituation.02>
+    </eSituation>
+    <eInjury>
+      <eInjury.01>V43.5XXA</eInjury.01>
+    </eInjury>
+  </PatientCareReport>
+</EMSDataSet>
