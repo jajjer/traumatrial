@@ -366,3 +366,68 @@ def test_trace_covers_every_patient_field() -> None:
     fields_on_patient = set(patient.model_dump().keys())
     missing = fields_on_patient - fields_in_trace
     assert not missing, f"Patient fields with no trace row: {missing}"
+
+
+# ---------- end-to-end: realistic ePCR → eligible trials ----------
+
+
+def test_realistic_polytrauma_round_trip_to_corpus() -> None:
+    """A realistic, multi-section NEMSIS export should parse cleanly,
+    correctly pick the LATEST eVitals (deterioration), ignore the
+    eDispatch/eResponse/eScene/eMedications/eProcedures/eNarrative noise
+    a real ePCR carries, and surface a meaningful number of eligible
+    trials when matched against the bundled corpus.
+
+    The point of this test is the round-trip — adapter + matcher together
+    on a realistic input. Per-field extraction rules are covered elsewhere."""
+    xml = _load("realistic-mva-polytrauma.xml")
+    patient, trace = from_nemsis_xml(xml)
+
+    # Multi-section noise must not bleed into the Patient.
+    assert patient.patient_id == "ANON-MVA-2026-0517"
+    assert patient.age_years == 38
+    assert patient.sex == "M"
+
+    # Latest eVitalsGroup wins — initial GCS 13 must NOT have been picked.
+    assert patient.gcs == 8
+    assert patient.sbp_mmhg == 78
+    assert patient.hr_bpm == 132
+
+    # ICD-10 V44.5XXA → blunt_mvc via prefix match
+    assert patient.mechanism == "blunt_mvc"
+
+    # eHistory.06 carries lisinopril + acetaminophen — must NOT trip the
+    # anticoagulant heuristic via substring match.
+    assert patient.anticoagulant_use is False
+
+    # Polytrauma flags all true from physiology + mechanism.
+    assert patient.presumed_tbi is True
+    assert patient.presumed_hemorrhage is True
+    assert patient.presumed_intracranial_hemorrhage is True
+    assert patient.spinal_injury_suspected is True
+    assert patient.trauma_activation_level == 1
+
+    # Trace should have substantial real signal, not just defaults.
+    assert trace.extracted_count >= 6, (
+        f"realistic export should yield ≥6 extracted fields; got {trace.extracted_count}"
+    )
+
+    # End-to-end: this profile should land eligible for a meaningful
+    # number of TBI / hemorrhage / polytrauma trials. We assert ≥5 so
+    # the threshold isn't fragile against single-trial corpus tweaks;
+    # the actual count today is 33 of 61.
+    trials_dir = Path(__file__).resolve().parent.parent / "trials"
+    trials = load_trials(trials_dir)
+    results = match_all(patient, trials)
+    eligible = [r for r in results if r.eligible]
+    assert len(eligible) >= 5, (
+        f"polytrauma profile should match ≥5 trials; got {len(eligible)}"
+    )
+
+    # TROOP (whole blood for hemorrhage, age >=15, hemorrhage) must be in
+    # the eligible set — it's the canonical trial this profile targets.
+    eligible_ids = {r.trial_id for r in eligible}
+    assert "NCT05638581" in eligible_ids, (
+        f"TROOP (NCT05638581) should be eligible for polytrauma w/ hemorrhage; "
+        f"got eligible={sorted(eligible_ids)}"
+    )

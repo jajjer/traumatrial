@@ -112,6 +112,16 @@ This generates the static match payloads consumed by the Next.js demo in `../dem
 python scripts/precompute.py
 ```
 
+## End-to-end round trip from a NEMSIS ePCR
+
+Take a NEMSIS v3.5 PatientCareReport XML in, get a structured Patient out, match it against the bundled corpus, and print the full reasoning to stdout. This is the script you point a research coordinator at when they ask "what does this engine actually do with one of our exports?"
+
+```bash
+python scripts/demo_round_trip.py tests/fixtures/nemsis/realistic-mva-polytrauma.xml
+```
+
+The output has three sections: the parsed Patient, a field-by-field conversion trace (every value labelled `extracted` / `inferred` / `defaulted`), and the eligible-trial list with EFIC flags and skipped-criteria counts. The bundled `realistic-mva-polytrauma.xml` is a synthetic, multi-section ePCR (eDispatch / eResponse / eScene / eVitals progression / eHistory / eMedications / eProcedures / eNarrative / eDisposition) — a polytrauma adult with deteriorating vitals — and it currently surfaces 33 eligible trials.
+
 ## Auto-import a trial from clinicaltrials.gov
 
 Watch a real trial become structured rules in 10 seconds. Fetches the trial from clinicaltrials.gov, sends the inclusion/exclusion text to Claude with our schema as the contract, validates the response with pydantic, and writes a `engine/trials/NCT….json`. If a criterion can't be expressed in our 8-operator vocabulary, it goes into `_metadata.skipped_criteria` instead of being silently dropped.
