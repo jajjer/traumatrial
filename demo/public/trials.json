@@ -1,21 +1,5 @@
 [
   {
-    "trial_id": "NCT02292589",
-    "short_name": "tDCS/PPCS",
-    "title": "Brain Stimulation for Mild Traumatic Brain Injury",
-    "requires_efic": false,
-    "phase": "PHASE2",
-    "inclusion": [
-      {
-        "field": "presumed_tbi",
-        "op": "eq",
-        "value": true,
-        "hard": true
-      }
-    ],
-    "exclusion": []
-  },
-  {
     "trial_id": "NCT02407028",
     "short_name": "HOBIT",
     "title": "Hyperbaric Oxygen Brain Injury Treatment Trial",
@@ -78,7 +62,24 @@
         "value": true,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Marshall CT score >1 required for GCS 7-8 or alcohol level >200 mg/dl: CT scoring and lab values are not available in the schema.",
+        "First hyperbaric oxygen treatment must be initiated within 8 hours of admission (non-surgical) or 14 hours (surgical): treatment initiation timing and surgical status are not in the schema.",
+        "First hyperbaric oxygen treatment cannot be initiated within 24 hours of injury: treatment initiation timing relative to injury is not in the schema.",
+        "GCS of 3 with mid-position and non-reactive pupils bilaterally (4mm): pupil reactivity and position are not available fields in the schema.",
+        "Penetrating head injury: gsw and stab are used as proxies in the exclusion rules but may not cover all penetrating head injury cases (e.g., impalement).",
+        "Pre-existing neurologic disease with confounding residual neurologic deficits: prior medical history fields are not in the schema.",
+        "Fixed coagulopathy: coagulation status is not in the schema.",
+        "Severe hypoxia: oxygenation/SpO2 values are not in the schema.",
+        "Cardiopulmonary resuscitation performed: cardiac arrest / CPR history is not an available field in the schema.",
+        "Coma suspected to be due to primarily non-TBI causes: clinical judgment criterion not expressible in the schema.",
+        "Any contraindications to the study intervention (hyperbaric oxygen): contraindication details are not in the schema.",
+        "Unstable acute spinal cord injury: spinal_injury_suspected captures suspicion but not instability or acuity; encoded as soft exclusion proxy only."
+      ]
+    }
   },
   {
     "trial_id": "NCT03559114",
@@ -122,7 +123,26 @@
         "value": 210,
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion ii): GCS 9-12 patients require ICU admission, ICB on initial CT, AND mechanical ventilation or increased ICB on repeat CT \u2014 no schema fields for ICU admission, CT findings, or ventilation status.",
+        "Inclusion iii): First dose must be given within 3 calendar days of injury \u2014 temporal logic relative to injury time cannot be expressed with available fields.",
+        "Exclusion i): Known hypersensitivity to Dalteparin/LMWH/heparin/pork products \u2014 no allergy/hypersensitivity field in schema.",
+        "Exclusion ii): Known history of heparin-induced thrombocytopenia or positive in vitro platelet-aggregation test \u2014 no prior medical history or lab result fields in schema.",
+        "Exclusion iii): Known septic endocarditis \u2014 no prior medical history field in schema.",
+        "Exclusion iv): Uncontrollable active bleeding \u2014 no field for active bleeding status in schema.",
+        "Exclusion v): Known major blood clotting disorders \u2014 no coagulation disorder history field in schema.",
+        "Exclusion vi): Known acute gastroduodenal ulcer with active bleeding \u2014 no GI history field in schema.",
+        "Exclusion viii): Known diabetic or hemorrhagic retinopathy \u2014 no ophthalmologic history field in schema.",
+        "Exclusion ix): Anticipated inability to receive sequential compression device on at least one lower extremity \u2014 no field for extremity injury or SCD eligibility in schema.",
+        "Exclusion x): Confounding factor explaining poor GCS (e.g., drug toxicity, seizure) \u2014 no field for alternative GCS etiology in schema.",
+        "Exclusion xi): Known irreversible coagulopathies \u2014 no coagulopathy history field in schema.",
+        "Exclusion xiii): Patient weight <45 kg or >120 kg \u2014 no weight field in schema.",
+        "Exclusion xiv): Not expected to survive more than 48 hours from admission \u2014 no survival prognosis field in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT03582293",
@@ -151,7 +171,26 @@
         "value": true,
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "CT-confirmed chronic subdural hematoma (cSDH): requires imaging/diagnostic result not available in schema.",
+        "mNIHSS score <=4 and stable neurological deficit: neurological scoring fields not in schema.",
+        "Primary surgical treatment triggers (medically intractable headache, midline shift >10mm, imminent death within 24 hours): clinical/imaging parameters not in schema.",
+        "Structural causes for subdural haemorrhage (arachnoid cysts, cortical vascular malformations, cranial surgery <1 year): prior medical history and imaging findings not in schema.",
+        "Aneurysmal subarachnoid haemorrhage: specific diagnosis/history field not in schema.",
+        "Active treatment for deep vein thrombosis, pulmonary embolism or cerebral thrombosis: anticoagulant_use captures anticoagulants but not the specific indication or distinction from secondary prophylaxis.",
+        "Active intravascular clotting or disseminated intravascular coagulation: lab/clinical diagnosis not in schema.",
+        "Known hypersensitivity or allergy to TXA or its ingredients: allergy history not in schema.",
+        "History of blood coagulation disorder (hypercoagulability disorder): prior medical history not in schema.",
+        "History of severe renal impairment (eGFR <30 ml/min or serum creatinine >150 \u03bcmol/L): lab values not in schema.",
+        "History of anaemia (haemoglobin <6 mmol/L): lab values not in schema.",
+        "History of convulsions: prior medical history not in schema.",
+        "History of inability to safely swallow oral medication: functional history not in schema.",
+        "Inability to obtain informed consent including language barrier: consent/administrative criterion not in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT03754114",
@@ -210,7 +249,30 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Glasgow Coma Scale motor score < 6 if endotracheally intubated: requires a separate GCS motor subscore field and conditional intubation status, neither of which exist in the schema.",
+        "Evidence of intracranial trauma on CT scan: requires imaging/diagnostic result field not in the schema.",
+        "Able to place intracranial probes and randomize within 6 hours of arrival at enrolling hospital: requires temporal/procedural logic not expressible in the schema.",
+        "Able to place intracranial probes and randomize within 12 hours from injury: requires time-from-injury field not in the schema.",
+        "Non-survivable injury (exclusion): requires clinical judgment field not in the schema.",
+        "Bilaterally absent pupillary response in the absence of paralytic medication (exclusion): requires neurological exam field not in the schema.",
+        "Contraindication to the placement of intracranial probes (exclusion): requires procedural contraindication field not in the schema.",
+        "Treatment of brain tissue oxygen values prior to randomization (exclusion): requires prior treatment history field not in the schema.",
+        "Planned use of devices which may unblind treating physicians to brain tissue hypoxia (exclusion): requires planned device use field not in the schema.",
+        "Systemic sepsis at screening (exclusion): requires infection/sepsis diagnosis field not in the schema.",
+        "Refractory hypotension (exclusion): 'refractory' implies treatment-resistant status beyond a simple SBP threshold, which cannot be fully expressed in the schema.",
+        "Refractory systemic hypoxia (exclusion): requires oxygenation status field not in the schema.",
+        "PaO2/FiO2 ratio < 150 (exclusion): requires arterial blood gas lab values not in the schema.",
+        "Known pre-existing neurologic disease with confounding residual neurological deficits (exclusion): requires prior medical history field not in the schema.",
+        "Known inability to perform activities of daily living without assistance prior to injury (exclusion): requires functional status history field not in the schema.",
+        "Known active drug or alcohol dependence that would interfere with physiological response (exclusion): requires substance use history field not in the schema.",
+        "Prisoner (exclusion): requires legal/custody status field not in the schema.",
+        "On EFIC Opt-Out list as indicated by a bracelet or medical alert (exclusion): requires consent registry/opt-out status field not in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT03992404",
@@ -248,7 +310,29 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Diagnosis of lower limb spasticity caused by stroke or traumatic brain injury: no schema field for spasticity diagnosis or stroke history.",
+        "Disabling ankle flexor spasticity presenting as pes equinus or pes equinovarus: no schema field for spasticity type or foot deformity.",
+        "Modified Ashworth Scale-Bohannon score of 2 or 3 in ankle plantar flexor: no schema field for MAS score.",
+        "Minimum passive range of motion in ankle (10\u00b0 dorsiflexion and 20\u00b0 plantarflexion): no schema field for range of motion.",
+        "At least 4 months since last botulinum neurotoxin injection: no schema field for prior BoNT injection history.",
+        "Anticoagulation therapy with aPTT \u2264 80 seconds or INR \u2264 2.5: no schema fields for aPTT or INR lab values (anticoagulant_use is present but cannot encode the lab thresholds).",
+        "Generalized disorders of muscle activity (myasthenia gravis, Lambert Eaton syndrome, ALS) or peripheral neuromuscular dysfunction: no schema field for neuromuscular diagnoses.",
+        "Bilateral lower limb paresis/paralysis/spasticity or tetraparesis/paralysis/spasticity: no schema field for laterality or paresis type.",
+        "Body weight < 50 kg: no schema field for body weight.",
+        "Severe atrophy of the target limb muscles: no schema field for muscle atrophy.",
+        "Previous, ongoing, or planned intrathecal baclofen treatment: no schema field for prior or planned treatments.",
+        "Previous, ongoing, or planned surgical intervention, alcohol/phenol block, or muscle afferent block in target limb: no schema field for prior procedures.",
+        "Physiotherapy or orthoses/splints initiated less than 4 weeks before screening or expected to change: no schema field for rehabilitation history.",
+        "Current or planned parenteral drugs interfering with neuromuscular transmission within 2 weeks prior to screening: no schema field for specific medication history.",
+        "Infection or inflammation at injection sites: no schema field for local infection status.",
+        "Presence or history of aspiration pneumonia, recurrent lower respiratory tract infections, or compromised respiratory function: no schema field for respiratory history.",
+        "Breast feeding exclusion: no schema field for lactation status."
+      ]
+    }
   },
   {
     "trial_id": "NCT04117672",
@@ -270,7 +354,16 @@
         "hard": true
       }
     ],
-    "exclusion": []
+    "exclusion": [],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Clinical indication for insertion of intracranial pressure monitor, intracerebral oxygen pressure monitor and microdialysis catheter: requires clinical assessment not available in schema.",
+        "Consultation with relatives or consent from guardians: consent process criterion, not expressible as a patient data field.",
+        "Known egg yolk allergy: allergy history field does not exist in schema.",
+        "Unilateral or bilateral fixed and dilated pupil after initial operative intervention: pupil exam finding field does not exist in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT04217551",
@@ -339,7 +432,15 @@
         "hard": true
       }
     ],
-    "exclusion": []
+    "exclusion": [],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Moderate and severe TBI classification: GCS cutoff for 'moderate' (9-12) and 'severe' (3-8) is partially encoded via gcs <= 12, but the upper bound of 'moderate' vs. 'severe' distinction and exact GCS thresholds used by the trial are not fully specified in the criteria text.",
+        "Underlying CNS disorders: Cannot be expressed because there is no field in the schema for pre-existing neurological or CNS conditions.",
+        "Pediatric age lower bound: The exact minimum age for 'children' is not specified in the criteria, so no lower age bound rule is encoded."
+      ]
+    }
   },
   {
     "trial_id": "NCT04521881",
@@ -367,7 +468,19 @@
         "hard": true
       }
     ],
-    "exclusion": []
+    "exclusion": [],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "History or evidence of head injury (e.g. laceration, bruise, swelling or pain in head or face): no schema field captures physical exam findings on the head/face.",
+        "Has one or more of: impaired consciousness (loss of consciousness, amnesia, confusion), nausea or vomiting: no schema fields exist for amnesia, confusion, nausea, or vomiting as discrete symptoms.",
+        "Within 3 hours of injury: temporal logic relative to injury time cannot be expressed with the available fields and operators.",
+        "Do not include if injury time interval cannot be estimated (e.g. unwitnessed fall, patient found on floor): requires knowledge of witness status and ability to confirm injury time, which are not schema fields.",
+        "Not living in a nursing home, mental health institution, or prison: no schema field captures residential or custodial status.",
+        "Patient will be conveyed to or is admitted to a participating hospital: logistical/site criterion not expressible in the schema.",
+        "TXA not clearly indicated (e.g. major bleeding) or contraindicated (e.g. suspected stroke): medication indication/contraindication logic and stroke suspicion are not schema fields."
+      ]
+    }
   },
   {
     "trial_id": "NCT04588311",
@@ -411,7 +524,29 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "< 24 hours since primary traumatic injury (temporal criterion relative to injury time; no injury_time field in schema).",
+        "Invasively mechanically ventilated (no ventilation_status field in schema).",
+        "Expected to stay in ICU \u2265 48 hours (no predicted_icu_los field in schema).",
+        "Haemoglobin not exceeding ULN reference range (no hemoglobin field in schema).",
+        "Informed consent from legal surrogate (consent/legal process criterion; not a patient data field).",
+        "GCS = 3 exclusion is encoded, but the additional qualifier 'fixed dilated pupils' cannot be expressed (no pupil_response field in schema).",
+        "Recent history of DVT, PE or other thromboembolic event within previous 12 months (no thromboembolic_history field; anticoagulant_use partially covers concomitant anticoagulant treatment).",
+        "Chronic hypercoagulable disorder including known malignancy (no coagulation_disorder or malignancy field in schema).",
+        "Treatment with EPO in the last 30 days (no prior_epo_treatment field in schema).",
+        "First dose of study drug unable to be given within 24 hours of primary injury (operational/logistical criterion; no field in schema).",
+        "Lactation or 3 months postpartum (no lactation or postpartum field in schema).",
+        "Expected to die imminently (< 24 hours) (no imminent_death_expected field in schema).",
+        "Known sensitivity to mammalian cell derived products (no allergy/sensitivity field in schema).",
+        "Known contraindication to epoetin alfa (no drug-specific contraindication field in schema).",
+        "End stage renal failure receiving chronic dialysis (no renal_failure or dialysis field in schema).",
+        "Severe pre-existing physical or mental disability or severe co-morbidity (no disability or comorbidity field in schema).",
+        "Treating physician believes randomisation not in patient's best interest (clinical judgment criterion; not encodable in schema)."
+      ]
+    }
   },
   {
     "trial_id": "NCT04995068",
@@ -485,7 +620,33 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion #2 (subarachnoid hemorrhage without other life-threatening injury): subarachnoid hemorrhage is not a distinct field; presumed_tbi partially covers TBI but not SAH specifically.",
+        "Inclusion #3 (patients under sedation with opioid agonists for less than 24 hours): sedation status and opioid administration duration are not available fields.",
+        "Inclusion #4 (expected duration of invasive mechanical ventilation and sedation \u226548 hours): mechanical ventilation status and expected duration are not available fields.",
+        "Inclusion #5 (intracranial pressure monitoring): ICP monitoring status is not an available field.",
+        "Inclusion #6 (enteral feeding by oro/nasogastric tube): enteral feeding status is not an available field.",
+        "Inclusion #7 (affiliated or beneficiary of the French social security system): administrative/insurance status is not an available field.",
+        "Exclusion #1 (opioids received for more than 24 hours): opioid administration duration is not an available field.",
+        "Exclusion #2 (refractory intracranial hypertension requiring therapy other than analgo-sedation): ICP therapy status is not an available field.",
+        "Exclusion #3 (acute or chronic renal failure with creatinine clearance <60 ml/min): renal function/creatinine clearance is not an available field.",
+        "Exclusion #4 (known or suspected acute gastrointestinal obstruction): GI obstruction status is not an available field.",
+        "Exclusion #5 (risk of digestive perforation including peptic ulcer, Crohn's disease, Ogilvie syndrome, diverticulitis, GI tumor, ovarian cancer, peritoneal metastasis, recent abdominal trauma): medical history and GI risk factors are not available fields.",
+        "Exclusion #6 (concomitant treatment with strong/moderate CYP3A4 inhibitors or strong inducers): medication history is not an available field.",
+        "Exclusion #7 (concomitant treatment with VEGF inhibitor): medication history is not an available field.",
+        "Exclusion #8 (allergy to Naloxegol or its excipients): allergy history is not an available field.",
+        "Exclusion #9 (recent myocardial infarction within 6 months, symptomatic congestive cardiovascular disease, QT \u2265500 msec): cardiac history and ECG values are not available fields.",
+        "Exclusion #10 (medical decision for rapid palliative care): palliative care status is not an available field.",
+        "Exclusion #11 (breastfeeding): breastfeeding status is not an available field.",
+        "Exclusion #12 (Child Pugh C stage cirrhosis): liver disease severity is not an available field.",
+        "Exclusion #13 (patient under legal protection or deprived of liberty): legal status is not an available field.",
+        "Exclusion #14 (another life-threatening injury): multi-trauma/life-threatening injury status is not an available field.",
+        "Exclusion #15 (history of clinically important alterations of the blood-brain barrier including brain tumors, metastasis, CNS inflammatory pathologies, active MS, advanced Alzheimer's): neurological history is not an available field."
+      ]
+    }
   },
   {
     "trial_id": "NCT05095857",
@@ -523,7 +684,22 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Admitted to NICU with diagnosis of TBI, aSAH, or ICH: schema has presumed_tbi and presumed_intracranial_hemorrhage but no field for aneurysmal subarachnoid haemorrhage specifically; partially encoded via available bool fields.",
+        "Planned for surgery with a supratentorial craniotomy or craniectomy: no schema field for planned surgical procedure type.",
+        "Expected to continue sedation and mechanical ventilation after surgery: no schema field for post-operative sedation or ventilation status.",
+        "Neither patient nor next of kin understand Danish or English: no schema field for language comprehension.",
+        "Known allergy to S-ketamine: no schema field for drug allergies.",
+        "Wake-up call to occur immediately after surgery: no schema field for post-operative sedation plan.",
+        "Active anti-psychotic treatment before admission: no schema field for prior medication use.",
+        "Current abuse of ketamine: no schema field for substance abuse history.",
+        "Decision to withdraw active treatment: no schema field for goals-of-care or treatment withdrawal status.",
+        "ICH secondary to a known brain tumour at the time of inclusion: no schema field for aetiology of intracranial haemorrhage or brain tumour history."
+      ]
+    }
   },
   {
     "trial_id": "NCT05097261",
@@ -555,7 +731,24 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Admitted to the ICU: no ICU admission field exists in the schema.",
+        "Within 72 hours after admission to the initial hospital with ICP monitoring in place: requires temporal logic and a specific ICP monitoring field not in the schema.",
+        "Requiring sedation: no sedation requirement field exists in the schema.",
+        "Imminent or actual brain death upon inclusion: no brain death status field exists in the schema.",
+        "Allergy or intolerance to the study medication (ketamine): no allergy/medication intolerance field exists in the schema.",
+        "Pre-existing neurocognitive disorders or pre-existing congenital or non-congenital brain dysfunction: no prior medical history field exists in the schema.",
+        "Inability to obtain informed consent: no consent capacity field exists in the schema.",
+        "Inclusion in a conflicting interventional RCT: no concurrent trial enrollment field exists in the schema.",
+        "Therapy restriction code upon inclusion: no code status or therapy restriction field exists in the schema.",
+        "Porphyria: no diagnosis/medical history field exists in the schema.",
+        "Glaucoma: no diagnosis/medical history field exists in the schema.",
+        "Lactation status: no lactation field exists in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT05166343",
@@ -599,7 +792,15 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Must be receiving at least 1 minute of CPR by trained first responders (police, fire, or paramedic services) \u2014 no schema field exists for CPR duration or responder type.",
+        "Age lower bound of '1 day' cannot be distinguished from age_years=0 which also covers newborns under 1 day; the sub-year age granularity is not supported by the integer age_years field.",
+        "Exclusion of OHCA due to 'obvious traumatic event' is partially covered by the mechanism exclusion list, but the schema's cardiac_arrest mechanism on inclusion and the overlap with traumatic mechanisms cannot be fully disambiguated when trauma precipitates cardiac arrest."
+      ]
+    }
   },
   {
     "trial_id": "NCT05323149",
@@ -652,7 +853,18 @@
         "value": "cardiac_arrest",
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Non-penetrating TBI onset within 8 hours: temporal 'time since injury' logic cannot be expressed with available schema fields.",
+        "Isolated TBI (no other significant injuries): no schema field exists to confirm injury isolation.",
+        "Mild or moderate TBI severity classification: GCS > 8 partially captures this but severity label cannot be fully encoded.",
+        "Patients with coagulopathies: no coagulopathy or clotting disorder field exists in the schema (anticoagulant_use is a partial proxy but not equivalent).",
+        "Renal failure patients: no renal function or lab value field exists in the schema.",
+        "Patient refusal to participate: consent status cannot be encoded in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT05337618",
@@ -678,7 +890,17 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion (1): Clinical indication for emergency craniotomy with dural opening \u2014 requires surgical plan/indication data not available in schema.",
+        "Inclusion (1): Within 72 hours post-trauma \u2014 requires temporal logic (time since injury) not available in schema.",
+        "Exclusion (1): Persistent bilateral non-reactive pupils or other evidence of non-survivable injury \u2014 requires neurological exam findings not available in schema.",
+        "Exclusion (2): Decompressive craniectomy to treat refractory ICP subsequent to diffuse injury \u2014 requires surgical history and ICP management data not available in schema.",
+        "Exclusion (3): Co-enrollment in another therapeutic TBI trial \u2014 requires enrollment status in other trials, not available in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT05437575",
@@ -713,23 +935,23 @@
         "value": 180,
         "hard": true
       }
-    ]
-  },
-  {
-    "trial_id": "NCT05446584",
-    "short_name": "PATH",
-    "title": "Pathways Relating Amnestic MCI to a Mild Traumatic Brain Injury History",
-    "requires_efic": false,
-    "phase": "PHASE2",
-    "inclusion": [
-      {
-        "field": "age_years",
-        "op": "gte",
-        "value": 55,
-        "hard": true
-      }
     ],
-    "exclusion": []
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Transport after injury to a participating PAIN Trauma center: cannot be expressed with available schema fields (no field for participating center affiliation).",
+        "Shock Index (SI) \u22650.9: SI is a derived value (HR/SBP) requiring compound arithmetic logic not supported by the schema operators; HR \u2265115 is partially encoded as a soft inclusion rule.",
+        "Intravenous pain medication indicated (CPOT\u22652, NRS\u22655): pain scale scores (CPOT, NRS) are not available schema fields.",
+        "No IV access exclusion: IV access status is not an available schema field.",
+        "Females <50 years of age exclusion: requires a compound condition combining sex=F AND age<50, which cannot be expressed as a single rule in the schema without risking incorrect exclusion of males; no compound boolean logic is supported.",
+        "Advanced airway management prior to first dose administration: airway management status is not an available schema field.",
+        "Known allergy to fentanyl citrate or ketamine hydrochloride: allergy history is not an available schema field.",
+        "Known prisoner: prisoner status is not an available schema field.",
+        "Objection to study voiced by subject or family member at scene: consent/objection status is not an available schema field.",
+        "Pain treatment contraindicated by local protocol: local protocol contraindication is not an available schema field.",
+        "Wearing a 'NO PAIN STUDY' bracelet: opt-out bracelet status is not an available schema field."
+      ]
+    }
   },
   {
     "trial_id": "NCT05449834",
@@ -758,7 +980,20 @@
         "value": "pregnant",
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Activation of local MHP and/or Transfusion of Emergency Blood Products: no schema field for massive hemorrhage protocol activation or emergency blood product transfusion.",
+        "FIBTEM A5 \u2264 10mm or TEG FF A5 \u2264 15mm or FibC \u2264 2 g/l: no schema fields for viscoelastic hemostatic assay results or fibrinogen concentration lab values.",
+        "Injury judged incompatible with survival: no schema field for clinician survival prognosis.",
+        "Randomisation unable to occur within 6 hours of presentation to hospital: temporal/logistical criterion not expressible with available schema fields.",
+        "Known genetic or drug induced coagulation disorder: no schema field for genetic coagulation disorders; anticoagulant_use covers only drug-induced anticoagulation partially, but the criterion is broader (any coagulation disorder) so it is skipped entirely to avoid partial misrepresentation.",
+        "Known objection to blood products: no schema field for patient advance directives or blood product refusal.",
+        "Dedicated prior fibrinogen replacement: no schema field for prior fibrinogen administration.",
+        "Participation in a competing study: no schema field for concurrent trial enrollment."
+      ]
+    }
   },
   {
     "trial_id": "NCT05482945",
@@ -796,7 +1031,24 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "ICU admission after resuscitation from witnessed non-traumatic OHCA of presumably cardiac etiology with shockable rhythm: no schema fields for witnessed status, OHCA setting, cardiac etiology, or presenting rhythm type.",
+        "Unconsciousness after return of spontaneous circulation (ROSC): GCS used as proxy but ROSC status is not a schema field.",
+        "Duration of CPR \u2264 40 minutes: no schema field for CPR duration.",
+        "Initiation of study intervention \u2264 4 hours from ROSC: no schema field for time-from-ROSC.",
+        "Stable SaO2 \u2265 94% with FiO2 of 30%: no schema fields for oxygen saturation or FiO2.",
+        "Non-witnessed cardiac arrest (exclusion): no schema field for witnessed status.",
+        "Cardiac arrest of traumatic origin or non-cardiac cause (exclusion): partially covered by mechanism=cardiac_arrest inclusion but traumatic origin sub-distinction not fully expressible.",
+        "Non-shockable presenting rhythm (PEA and asystole) exclusion: no schema field for cardiac rhythm.",
+        "Female of childbearing potential defined as younger than 50 years (exclusion): age-sex compound criterion not fully expressible; pregnancy_status exclusion partially covers this.",
+        "Known terminal illness (exclusion): no schema field for terminal illness.",
+        "Pre-cardiac arrest cerebral performance category (CPC) \u2265 3 (exclusion): no schema field for CPC.",
+        "Participation in another clinical trial (exclusion): no schema field for concurrent trial enrollment."
+      ]
+    }
   },
   {
     "trial_id": "NCT05616910",
@@ -843,7 +1095,25 @@
         "value": true,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "GCS 13-15 with an abnormal imaging scan: the conditional imaging requirement cannot be expressed with available fields and operators.",
+        "Radiologic findings indicative of primarily diffuse TBI: requires imaging interpretation not available in the schema.",
+        "Severe cardiac dysfunction (e.g. elevation of pulmonary edema on chest xray, large elevation of cardiac enzymes): requires cardiac/lab fields not in the schema.",
+        "Large focal injury (subdural hematoma, epidural hematoma, intraparenchymal hematoma, >30mL aggregate volume): requires imaging volume measurement not in the schema.",
+        "Need for immediate neurosurgical intervention: requires clinical decision field not in the schema.",
+        "Pre-existing disabling psychiatric or neurological disorders such as cortical stroke, brain tumor, disabling multiple sclerosis, dementia, and severe TBI: requires prior medical history fields not in the schema.",
+        "Known intracranial vessel disease: requires prior medical history fields not in the schema.",
+        "Acute Respiratory Distress Syndrome (ARDS) or pre-existing pulmonary hypertension: requires respiratory/cardiac diagnosis fields not in the schema.",
+        "Cardiopulmonary resuscitation or cardioversion at admission: requires resuscitation status field not in the schema.",
+        "Chronic Kidney Disease (GFR <60mL/min/1.73m2): requires lab/renal function fields not in the schema.",
+        "Respiratory Infection: requires clinical diagnosis fields not in the schema.",
+        "Prisoners or patients in police custody: requires custody status field not in the schema.",
+        "Possible drug interactions (nitric oxide donors: prilocaine, sodium nitroprusside, nitroglycerin): requires current medication fields not in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT05634109",
@@ -887,7 +1157,28 @@
         "value": "cardiac_arrest",
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "More than 4 hours from trauma to hospital admission: requires temporal/time-from-injury field not in schema.",
+        "More than 2 hours from hospital admission to randomization: requires time-from-admission field not in schema.",
+        "Transfusion of more than one packed red blood cell unit prior to randomization: requires prior transfusion count field not in schema.",
+        "Patients who have undergone surgery (laparotomy, thoracotomy, or sternotomy) before hospital admission: requires prior surgical history field not in schema.",
+        "In-extremis patients with devastating injuries (expected to die within 60 minutes): requires clinical prognosis/expected survival field not in schema.",
+        "Blood group other than O or A and positive Rh factor: requires blood type/Rh factor field not in schema.",
+        "Severe traumatic brain injury in which neurosurgical intervention is futile (partial decapitation, massive intracranial hemorrhage, or transcranial gunshot wounds): requires nuanced TBI severity/futility assessment beyond available boolean fields.",
+        "Burns over 20% of the total body surface area: requires burn TBSA percentage field not in schema.",
+        "Suspected airway burn: requires airway burn field not in schema.",
+        "CPR for more than 5 minutes before randomization: requires CPR duration field not in schema; mechanism=cardiac_arrest used as a proxy for pre-arrival CPR exclusion only.",
+        "Do not resuscitate order: requires DNR/advance directive field not in schema.",
+        "Incarcerated/prisoners: requires legal/custody status field not in schema.",
+        "Patient or legal representative who refuse to participate: requires consent status field not in schema.",
+        "Candidate for massive transfusion (ABC Score >= 2 or physician discretion): ABC score is a composite clinical score not directly representable in schema fields.",
+        "Concurrent availability of whole blood or blood component therapy: requires resource/inventory availability field not in schema.",
+        "Trauma activation level rule used as partial proxy for hemorrhagic shock trauma code activation, but the schema does not distinguish hemorrhagic shock specifically."
+      ]
+    }
   },
   {
     "trial_id": "NCT05638581",
@@ -969,7 +1260,29 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "TBI definition requiring LOC, PTA, or objective neurological findings: no schema field captures clinical TBI diagnostic criteria.",
+        "Less than 6 months post injury at time of consent: no schema field for time-since-injury.",
+        "Weight less than 298 pounds and height less than 6'2\": no schema fields for weight or height.",
+        "Intact skin (no open lesions/bandages) in harness contact area: no schema field for skin integrity.",
+        "Able to walk ten feet with assistance of not more than two people and/or bracing: no schema field for ambulatory function.",
+        "Impaired walking speed of less than 1.4 meters/second: no schema field for gait speed.",
+        "Ability to follow directions/standardized instructions: no schema field for cognitive compliance.",
+        "Completing or have completed initial inpatient rehabilitation for TBI: no schema field for rehabilitation status.",
+        "O-Log score of at least 20: no schema field for O-Log orientation score.",
+        "Medically cleared for HIST by a physician: no schema field for physician clearance status.",
+        "Uncontrolled cardiopulmonary, metabolic, or infectious disorder: no schema fields for these comorbidities.",
+        "History of orthopedic or additional neurological disorder limiting motor function before TBI: no schema field for prior medical history.",
+        "Any reason in investigator opinion that would interfere with study protocol (e.g., behavioral concerns): no schema field for investigator judgment.",
+        "Uncontrolled seizure disorder: no schema field for seizure history or control status.",
+        "Lactating females: no schema field for lactation status.",
+        "Current participation in any other interventional trials: no schema field for concurrent trial enrollment.",
+        "History of untreated or poorly controlled psychiatric condition (depression, schizophrenia, bipolar disorder): no schema field for psychiatric history."
+      ]
+    }
   },
   {
     "trial_id": "NCT05782244",
@@ -1013,7 +1326,46 @@
         "value": 90,
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Provision of signed and dated informed consent form (administrative/procedural requirement, no schema field).",
+        "Stated willingness to comply with all study procedures (administrative/procedural requirement, no schema field).",
+        "Defense Enrollment Eligibility Reporting System (DEERS) eligibility at WRNMMC (site-specific administrative criterion, no schema field).",
+        "History of TBI greater than 6 months and less than 25 years prior to enrollment per 2023 ACRM criteria (requires temporal history and diagnostic criteria detail not in schema).",
+        "Chronic persistent post-concussive symptoms with Rivermead Post-Concussion Symptom Questionnaire score >1 on at least 3 items (requires symptom questionnaire score not in schema).",
+        "Glasgow Outcome Scale-Extended (GOSE) between 5-7 (GOSE is not a schema field; distinct from GCS).",
+        "Ability to take oral medication and adhere to study intervention regimen (functional/compliance criterion, no schema field).",
+        "Ability to participate in and complete MRI including CVR challenges and 4-week treatment period (procedural/functional criterion, no schema field).",
+        "Adequate hearing and vision based on self-report and examiner's observation (sensory assessment criterion, no schema field).",
+        "Current/ongoing use of organic nitrate vasodilators or riociguat within past month (medication history, no schema field).",
+        "Current/ongoing use of ritonavir within past month (medication history, no schema field).",
+        "Current/ongoing use of erythromycin, ketoconazole, or itraconazole within past month (medication history, no schema field).",
+        "Current/ongoing use of cimetidine within past month (medication history, no schema field).",
+        "Current resting hypotension BP < 90/50 mmHg: diastolic component (DBP < 50) cannot be expressed as schema only has sbp_mmhg; SBP < 90 encoded.",
+        "Current severe renal insufficiency (lab/clinical diagnosis, no schema field).",
+        "Current hepatic cirrhosis (medical history/diagnosis, no schema field).",
+        "Current cardiac failure or coronary artery disease causing unstable angina (medical history/diagnosis, no schema field).",
+        "Retinitis pigmentosa (medical history/diagnosis, no schema field).",
+        "Known hypersensitivity or allergy to sildenafil or its components (allergy history, no schema field).",
+        "History of melanoma or suspicious skin lesions for melanoma (medical history/diagnosis, no schema field).",
+        "Daily therapy with a PDE5 inhibitor within the month prior to consent (medication history, no schema field).",
+        "History of penetrating TBI (specific TBI subtype history, no schema field).",
+        "History of disabling neurological or psychiatric disorder not related to TBI (medical history/diagnosis, no schema field).",
+        "Active substance abuse or dependence during the past 6 months (substance use history, no schema field).",
+        "Estimated preinjury intellectual level \u226470 based on educational and vocational history (cognitive/intellectual assessment, no schema field).",
+        "Inability to understand written and spoken English in the opinion of the investigator (language/cognitive criterion, no schema field).",
+        "Current inclusion in another interventional trial (enrollment status, no schema field).",
+        "Metal implants that would interfere with MR imaging procedures (implant history, no schema field).",
+        "History of priapism (medical history, no schema field).",
+        "Breastfeeding women (lactation status, no schema field).",
+        "Actively suicidal based on clinician assessment or PHQ-9/CSSRS scores (psychiatric assessment/questionnaire scores, no schema field).",
+        "Hypertension requiring treatment with more than two antihypertensive drugs (medication count/treatment history, no schema field).",
+        "Hyperlipidemia requiring treatment with more than one lipid lowering drug (medication count/treatment history, no schema field).",
+        "Diabetes mellitus requiring medical treatment with insulin (medical history/treatment, no schema field)."
+      ]
+    }
   },
   {
     "trial_id": "NCT05826912",
@@ -1077,7 +1429,33 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion #2: First dose must be within 24 hours of injury \u2014 temporal logic relative to injury time cannot be expressed with available fields.",
+        "Inclusion #2: Non-penetrating head injury warranting head CT per ACEP/CDC clinical policy \u2014 injury type specificity and clinical policy logic not expressible in schema (mechanism field only partially captures this; penetrating mechanisms excluded separately).",
+        "Inclusion #4: Specific neuroimaging findings (subarachnoid hemorrhage, contusion, subdural hematoma, petechial hemorrhage, intraventricular hemorrhage) on CT \u2014 no imaging-finding field exists beyond presumed_intracranial_hemorrhage, which is used as a proxy.",
+        "Inclusion #5: Initial GFAP blood level >100 pg/ml and \u226415,000 pg/ml \u2014 lab value field not available in schema.",
+        "Inclusion #6: Persons of childbearing potential must use adequate birth control \u2014 contraceptive compliance cannot be expressed in schema.",
+        "Inclusion #7: No MRI contraindications \u2014 no imaging contraindication field exists in schema.",
+        "Inclusion #8-10: Informed consent, language ability, and study compliance willingness \u2014 administrative/consent criteria not expressible in schema.",
+        "Exclusion #1: Isolated epidural hematoma \u2014 specific neuroimaging diagnosis not available as a schema field.",
+        "Exclusion #2: Pre-existing disabling developmental, neurologic, psychiatric, or medical disorder causing functional disability, or imminent death \u2014 no prior medical history or clinical prognosis fields in schema.",
+        "Exclusion #3: Current enrollment in another interventional study \u2014 no schema field for concurrent trial enrollment.",
+        "Exclusion #4: Currently breastfeeding or planning pregnancy in next 6 months \u2014 breastfeeding and future pregnancy intent not expressible in schema.",
+        "Exclusion #5: Current incarceration or in custody \u2014 no schema field for legal/custody status.",
+        "Exclusion #6: Currently prescribed one of the investigational products or contraindicated drugs prior to injury \u2014 no medication history field in schema.",
+        "Exclusion #7: Hypersensitivity or intolerance to investigational products \u2014 no allergy/hypersensitivity field in schema.",
+        "Exclusion #8: Renal dysfunction (CrCl or eGFR <60 mL/min/1.73m\u00b2) \u2014 no renal function lab field in schema.",
+        "Exclusion #9: Acute liver disease or hepatic dysfunction (ALT/AST >3x ULN) \u2014 no liver function lab field in schema.",
+        "Exclusion #10: Hemodynamic instability per physician clinical judgment \u2014 composite clinical judgment criterion; sbp_mmhg and hr_bpm exist but specific thresholds are not defined in the criterion.",
+        "Exclusion #11: Inability to swallow investigational product capsule \u2014 no swallowing ability field in schema.",
+        "Exclusion #12: Unable/unwilling to consume animal byproducts, gelatin allergy, or religious beliefs prohibiting gelatin \u2014 no dietary/religious preference field in schema.",
+        "Exclusion #13: Intolerance to small amounts of lactose \u2014 no lactose intolerance field in schema.",
+        "Exclusion #14: Low likelihood of follow-up or study compliance per investigator judgment \u2014 administrative/discretionary criterion not expressible in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT05889650",
@@ -1142,7 +1520,28 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Pupils symmetric and bilaterally reactive (no pupil reactivity field in schema)",
+        "Midline shift \u22645mm at the level of foramen of Monro on admission or post-operative brain CT (no imaging/midline shift field in schema)",
+        "Patent (complete or partial) quadrigeminal cisterns on admission or post-operative brain CT (no cistern patency field in schema)",
+        "First randomization and intervention may be commenced within 24 hours of injury (temporal logic relative to injury time not expressible in schema)",
+        "ELD safety score \u22655 (no ELD safety score field in schema)",
+        "Cisterns on CT completely effaced (no cistern patency field in schema)",
+        "GCS 3 with dilated and fixed pupils (compound criterion requiring pupil exam data not in schema; GCS lte 8 inclusion already encodes the GCS portion)",
+        "Uncal or tonsillar herniation on admission or post-operative brain CT (no herniation field in schema)",
+        "Temporal lobe contusions with effaced ipsilateral cisterns (no imaging finding fields in schema)",
+        "Primary hemicraniectomy (no surgical history field in schema)",
+        "Prisoners (no incarceration status field in schema)",
+        "Patients previously lacking capacity to consent or with advanced directives to forego aggressive care (no legal/capacity field in schema)",
+        "Pre-existing conditions affecting functional status or life expectancy to less than 1 year (no comorbidity or life expectancy field in schema)",
+        "Coagulopathy or thrombocytopenia <50,000 as contraindication for ELD (no coagulation or platelet count field in schema)",
+        "Severe spinal deformity as contraindication for ELD (no spinal deformity field in schema)",
+        "Posterior fossa hemorrhage (no anatomic hemorrhage location field in schema)"
+      ]
+    }
   },
   {
     "trial_id": "NCT05931601",
@@ -1180,7 +1579,23 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Signs or suspicion of hypotension/shock defined via MAP < 65 mmHg: MAP is not an available field in the schema.",
+        "Lactate > 2.0 mmol/L combined with SBP/MAP thresholds: lactate is not an available field in the schema.",
+        "Physician-defined blood pressure threshold for individual patient: requires clinical judgment not expressible in schema fields.",
+        "Received at least 500ml of IV fluid before study inclusion within the first 4 hours of ED arrival: fluid administration volume and timing are not available fields.",
+        "Clinical Frailty Score (CFS) \u22644 (or \u22655 with ICU eligibility confirmed): CFS is not an available field in the schema.",
+        "Cardiogenic or anaphylactic shock suspected by treating physician: no schema field distinguishes these shock subtypes (only hemorrhagic is partially covered by presumed_hemorrhage).",
+        "Neurogenic shock suspected by treating physician: no schema field for neurogenic shock subtype.",
+        "Patient deemed terminally ill or with severe co-morbidity resulting in non-eligibility for ICU admittance: no schema field for terminal illness or ICU eligibility status.",
+        "Known allergy to noradrenaline: medication allergy history is not an available field in the schema.",
+        "Fertile women breastfeeding excluded: breastfeeding status is not an available field in the schema.",
+        "Fertile women < 60 years with positive urine/plasma hCG excluded: hCG test result is not an available field; pregnancy_status partially covers this but cannot encode the age-based fertility qualifier or hCG confirmation."
+      ]
+    }
   },
   {
     "trial_id": "NCT05958342",
@@ -1230,7 +1645,24 @@
         "value": "fall",
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion 1A (prehospital/in-hospital): The OR logic combining SBP \u2264 90 + HR \u2265 108 versus SBP \u2264 70 alone cannot be expressed as a single rule; only SBP \u2264 90 is encoded as a hard inclusion, and the HR \u2265 108 tachycardia sub-condition is partially skipped.",
+        "Inclusion 2: Blood/blood component transfusion initiated or deemed clinically indicated within 60 minutes of arrival cannot be expressed with available fields.",
+        "Inclusion 3: Clinical team deems OR for major hemorrhage control indicated within 60 minutes of arrival cannot be expressed with available fields.",
+        "Inclusion 4: Anticipated ICU admission cannot be expressed with available fields.",
+        "Exclusion 1: Wearing a NO CAVALIER opt-out bracelet cannot be expressed with available fields.",
+        "Exclusion 3: 'Isolated fall from standing' is a specific sub-type of fall mechanism; the schema only has 'fall' as a mechanism enum, so the 'isolated' and 'from standing' qualifiers cannot be captured \u2014 encoded as soft exclusion on mechanism=fall.",
+        "Exclusion 4: Known prisoner status cannot be expressed with available fields.",
+        "Exclusion 6: Traumatic arrest with >5 minutes of CPR without return of vital signs cannot be fully expressed; cardiac_arrest mechanism is available but the CPR duration and ROSC conditions are not.",
+        "Exclusion 7: Brain matter exposed or penetrating brain injury cannot be precisely expressed with available fields (presumed_tbi is a partial proxy but does not distinguish penetrating/exposed brain injury).",
+        "Exclusion 8: Isolated drowning or hanging victims cannot be expressed with available fields (no matching mechanism enum values).",
+        "Exclusion 9: Objection to study voiced by subject or family member cannot be expressed with available fields.",
+        "Exclusion 10: Inability to obtain IV/IO access cannot be expressed with available fields."
+      ]
+    }
   },
   {
     "trial_id": "NCT06062628",
@@ -1274,7 +1706,20 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Placement of intracranial monitor for ICP and brain tissue oxygenation measurement: no schema field exists for device/monitor placement status.",
+        "Documented allergy to ketamine: no schema field exists for medication allergies.",
+        "Any episode of non-sinus tachycardia: no schema field exists for cardiac rhythm classification.",
+        "Documented history of schizophrenia: no schema field exists for psychiatric history.",
+        "Diastolic blood pressure > 120: no schema field exists for diastolic blood pressure.",
+        "Documented episode(s) of ICP elevations >25 mm Hg sustained greater than 5 minutes within 24 hours: no schema field exists for ICP values or temporal ICP history.",
+        "Episodes of PbtO2 <15 mmHg: no schema field exists for brain tissue oxygenation values.",
+        "Currently breast-feeding: no schema field exists for lactation status."
+      ]
+    }
   },
   {
     "trial_id": "NCT06062888",
@@ -1321,7 +1766,27 @@
         "value": true,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion #3: Cerebral trauma confirmed on CT with BIG 3 radiographic findings \u2014 requires imaging/radiology data not available in schema.",
+        "Inclusion #4: Wallet examined and no power of attorney related to blood product administration identified \u2014 requires legal document check not in schema.",
+        "Exclusion #1: Known history of adverse reaction to plasma products \u2014 requires prior medical history not in schema.",
+        "Exclusion #2: Known history of congestive heart failure, renal failure, liver failure, or severe respiratory dysfunction requiring home supplemental oxygen \u2014 requires prior medical history not in schema.",
+        "Exclusion #3: Persons who are currently incarcerated \u2014 requires incarceration status not in schema.",
+        "Exclusion #4: Persons with inadequate venous access \u2014 requires physical exam finding not in schema.",
+        "Exclusion #5: Treatment cannot start within 1 hour of arrival at the hospital \u2014 requires temporal/logistical data not in schema.",
+        "Exclusion #6: Time of injury is unknown \u2014 requires injury time data not in schema.",
+        "Exclusion #7: Non-survivable injuries in the estimation of the attending trauma and/or neurosurgeon \u2014 requires clinical judgment field not in schema.",
+        "Exclusion #8: Interfacility transfers \u2014 requires transfer origin data not in schema.",
+        "Exclusion #9: Class 3 hemorrhagic shock \u2014 requires hemorrhagic shock classification not directly available; partially related to presumed_hemorrhage but shock class cannot be determined from schema fields alone.",
+        "Exclusion #10: Known DNR orders prior to randomization \u2014 requires advance directive status not in schema.",
+        "Exclusion #11: Persons who refuse administration of blood products \u2014 requires patient consent/refusal status not in schema.",
+        "Exclusion #12: Persons with a research opt-out bracelet \u2014 requires opt-out status not in schema.",
+        "Exclusion #13: Persons who require FFP for any other indication (e.g., reversal of coagulopathy) \u2014 requires clinical indication data not in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06065046",
@@ -1377,7 +1842,31 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Admission within \u226424 hours after traumatic brain injury: requires temporal logic (time from injury to admission) not available in schema.",
+        "CT scans demonstrate intracerebral hemorrhage/contusions: imaging confirmation cannot be expressed with available fields.",
+        "Closed head injury (inclusion) / Open head injury (exclusion): no open/closed head injury field in schema.",
+        "Admission without infections: no infection status field in schema.",
+        "Signed and dated informed consent: consent process cannot be expressed in schema.",
+        "Time of head injury cannot be reliably assessed (exclusion): temporal reliability of injury time cannot be expressed in schema.",
+        "Candidate for immediate surgical intervention due to severe extracranial injury (exclusion): surgical candidacy field not in schema.",
+        "Parturition within previous 30 days or active lactation (exclusion): postpartum/lactation status not in schema.",
+        "Use of Janus kinase inhibitors (exclusion): specific medication use not in schema.",
+        "Pre-traumatic dementia or disability (exclusion): prior medical history field not in schema.",
+        "Severe liver, kidney disease, or malignancy with life expectancy less than 14 days (exclusion): comorbidity and life expectancy fields not in schema.",
+        "Severe pulmonary infection (exclusion): infection/pulmonary status not in schema.",
+        "Severe or acute heart failure (exclusion): cardiac comorbidity field not in schema.",
+        "Severe infections within previous 30 days (exclusion): infection history field not in schema.",
+        "History of myocardial infarction (exclusion): prior cardiac history field not in schema.",
+        "Known sensitivity to baricitinib (exclusion): drug allergy/sensitivity field not in schema.",
+        "Severe decreases in neutrophil, lymphocyte, platelet counts or hemoglobin (exclusion): lab values not in schema.",
+        "Severe liver and kidney dysfunction (exclusion): organ function lab values not in schema.",
+        "Currently participating in other interventional clinical trials (exclusion): trial enrollment status not in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06070350",
@@ -1424,7 +1913,29 @@
         ],
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "MTP activation for confirmed or suspected active life-threatening traumatic bleeding: no schema field for MTP activation status.",
+        "Hypotension for age (<5th percentile): sbp_mmhg cannot be evaluated against age-specific percentile thresholds.",
+        "Tachycardia for age (>95th percentile): hr_bpm cannot be evaluated against age-specific percentile thresholds.",
+        "At least 2 of 3 bleeding criteria required (hypotension, tachycardia, exam findings): compound multi-field boolean logic cannot be expressed in the schema.",
+        "Traumatic injury with exam findings consistent with severe bleeding (e.g., penetrating injury, hemothorax, distended abdomen, amputation): requires clinical exam findings not available as schema fields.",
+        "Devastating TBI not expected to survive (e.g., transhemispheric GSW with herniation, GCS 3 with fixed/dilated pupils): the fixed/dilated pupils and herniation sub-criteria cannot be expressed; GCS=3 alone is only a soft proxy.",
+        "MTP activated but no blood products given: no schema field for blood product administration.",
+        "ED thoracotomy performed or >5 consecutive minutes of CPR prior to randomization: no schema fields for these procedures.",
+        "Known prisoners as defined in protocol: no schema field for prisoner status.",
+        "Known ward of the state: no schema field for legal guardianship status.",
+        "Isolated hanging or drowning: no schema field for these mechanisms; 'burn' and 'cardiac_arrest' were used as partial proxies for the burn exclusion only.",
+        "Previous enrollment in MATIC-2: no schema field for prior trial enrollment.",
+        "Prior study opt-out with bracelet: no schema field for opt-out status.",
+        "Prehospital or pre-enrollment use of TXA (TXA/Placebo domain): no schema field for prior TXA administration.",
+        "Greater than 3 hours since time of injury (TXA/Placebo domain): no schema field for time since injury.",
+        "History of seizure after the injury event (TXA/Placebo domain): no schema field for post-injury seizure history.",
+        "Known allergy or hypersensitivity to TXA (TXA/Placebo domain): no schema field for drug allergies."
+      ]
+    }
   },
   {
     "trial_id": "NCT06073886",
@@ -1462,7 +1973,21 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Mild TBI defined by WHO criteria in the last 12 months: temporal criterion (within 12 months of injury) cannot be expressed with available schema fields or operators.",
+        "High burden of post-concussive symptoms (Rivermead Post-Concussion Symptoms Questionnaire score >=20): requires a clinical assessment score not available in the schema.",
+        "Objective neurologic deficits: no schema field captures neurologic deficit status.",
+        "Ongoing or prolonged (>3 months) post-concussive symptoms from a prior mTBI within 2 years of the index injury: requires prior injury history and temporal logic not available in the schema.",
+        "History of transcranial magnetic stimulation (TMS) therapy: requires prior treatment history not available in the schema.",
+        "Contraindications for TMS or MRI (e.g., metallic implant, pacemaker): requires implant/device history not available in the schema.",
+        "Severe mental, physical, or medical problems (liver/kidney/heart disease, uncontrolled diabetes or hypertension, malignancy, psychosis, previous seizure): requires medical history fields not available in the schema.",
+        "Active alcohol or illicit drug abuse: requires substance use history not available in the schema.",
+        "Inability to speak and read English: requires language ability assessment not available in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06253923",
@@ -1533,7 +2058,33 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion #2: TBI confirmed by CT scan or MRI \u2014 presumed_tbi is used as a proxy but imaging confirmation cannot be verified from schema fields.",
+        "Inclusion #3: Trauma sustained between 72 hours and 1 week prior \u2014 temporal/time-since-injury field not available in schema.",
+        "Inclusion #4: Abbreviated Injury Score (AIS) \u2264 2 \u2014 AIS field not available in schema.",
+        "Inclusion #5: Admitted to acute care no less than 2 days prior to randomization \u2014 admission duration field not available in schema.",
+        "Inclusion #7: Unable to consistently follow commands or engage in functional communication per CRS-R score \u2014 CRS-R field not available in schema.",
+        "Inclusion #8: At least one reactive pupil \u2014 pupil reactivity field not available in schema.",
+        "Inclusion #9: Must have a Legally Authorized Representative able to provide consent \u2014 consent/LAR field not available in schema.",
+        "Inclusion #10: Stable ICP at investigator discretion and PaO2 > 60 mmHg \u2014 ICP and PaO2 fields not available in schema.",
+        "Exclusion #1: Life expectancy less than 24 hours \u2014 prognosis/life expectancy field not available in schema.",
+        "Exclusion #4: Bilaterally fixed dilated pupils \u2014 pupil reactivity field not available in schema.",
+        "Exclusion #5: History of medical/psychiatric disorder or severe concomitant disease interfering with assessment \u2014 medical history fields not available in schema.",
+        "Exclusion #6: Poorly controlled seizure more than one per month \u2014 seizure history/frequency field not available in schema.",
+        "Exclusion #7: Prior history of status epilepticus \u2014 medical history field not available in schema.",
+        "Exclusion #8: Prior treatment with or sensitivity to amantadine HCl or amantadine \u2014 medication history/allergy field not available in schema.",
+        "Exclusion #9a-e: Screening lab values (ANC, hemoglobin, platelets, liver enzymes, eGFR) outside normal range \u2014 lab value fields not available in schema.",
+        "Exclusion #10: Treatment with investigational drug, CNS stimulant, or dopamine antagonist/agonist within 4 weeks \u2014 medication history field not available in schema.",
+        "Exclusion #11: History of NYHA Class 3 or 4 Congestive Heart Failure within last 5 years \u2014 cardiac history field not available in schema.",
+        "Exclusion #12: Females who are nursing or planning to become pregnant \u2014 nursing status and future pregnancy intent not available in schema (pregnant/unknown covered by exclusion rule).",
+        "Exclusion #13: Any other clinically significant medical condition as determined by investigator \u2014 subjective investigator judgment not encodable in schema.",
+        "Exclusion #14: Prolonged QT interval \u2014 ECG/QT interval field not available in schema.",
+        "Exclusion #15: Treatment with systemic anticholinergic medication within 1 week prior to screening \u2014 medication history field not available in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06254469",
@@ -1578,7 +2129,46 @@
         "value": false,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Diagnosis of MCI due to suspected CTE (age >45) or AD (age >50): conditional age thresholds based on diagnosis type cannot be expressed with available schema fields.",
+        "Participants must have a trial partner with frequent interaction (>3-4 times/week): no schema field for social/caregiver support.",
+        "Informed consent from participant or legally acceptable representative: no schema field for consent capacity.",
+        "Female participants must be surgically sterilized or post-menopausal or have a negative serum pregnancy test: partial pregnancy exclusion encoded; menopausal/sterilization status not in schema.",
+        "Willingness to comply with trial procedures, communicate with trial personnel, and undergo longitudinal follow-up: no schema field for patient willingness.",
+        "CDR global score of 0.5: no schema field for Clinical Dementia Rating.",
+        "Diagnostic criteria for possible traumatic encephalopathy syndrome (symptom persistence >2 years, repetitive head trauma, progressive course, delayed onset, cognitive/behavioral/motor features): no schema fields for these clinical diagnoses.",
+        "Diagnosis of MCI due to suspected AD per NIA-AA guidelines: no schema field for AD diagnosis.",
+        "Documented memory decline with gradual onset for at least 1 year: no schema field for longitudinal cognitive history.",
+        "MMSE-2 score of 22-30 (inclusive) at Screening Visit: no schema field for MMSE score.",
+        "Biomarker positive based on predefined plasma p-tau cutoff: no schema field for biomarker lab values.",
+        "Modified Hachinski Ischemic Score <4: no schema field for this score.",
+        "Cognitive deficits not occurring exclusively in context of delirium: no schema field for delirium status.",
+        "Cognitive deficits not better explained by another mental disorder or medical condition: no schema field for psychiatric/medical history.",
+        "Stable dosage of AchEI and/or memantine for at least 4 months prior to Screening Visit: no schema field for medication history.",
+        "Healthy volunteer inclusion criteria (medically healthy, age within 3 years of MCI participants, no cognitive impairment, no first-degree family history of early-onset AD, MMSE-2 \u226527): no schema fields for health status, relative age matching, cognitive assessment, or family history.",
+        "Breastfeeding exclusion: no schema field for breastfeeding status.",
+        "Unable to remain still for imaging or intolerance of neuropsychological/PET scan studies: no schema field for imaging tolerance.",
+        "History of stroke, TIA, seizures, or head/neck conditions within 12 months affecting circulation or image interpretation: no schema field for medical history or temporal conditions.",
+        "Preexisting major neurologic or physical illness (e.g., multiple sclerosis, diabetes, cancer): no schema field for comorbid conditions.",
+        "Psychiatric disorder (mania, schizophrenia, anxiety, depression with GDS \u226510) interfering with trial procedures: no schema field for psychiatric diagnoses or GDS score.",
+        "Condition or circumstance interfering with data collection quality: no schema field for this investigator judgment.",
+        "History of significant prescription/non-prescription drug or alcohol abuse: no schema field for substance abuse history.",
+        "Previously received F-18 FNT or any investigational product within past 30 days: no schema field for prior investigational drug exposure.",
+        "History of allergic reactions to albumin, or severe anemia or cardiac failure: no schema field for allergy or cardiac failure history.",
+        "Diastolic BP >100 mmHg exclusion: no schema field for diastolic blood pressure.",
+        "Any use of benzodiazepines within 24 hours prior to all trial visits: no schema field for recent medication use.",
+        "Plan to take ibuprofen or naproxen within 5 days before PET scan: no schema field for planned medication use.",
+        "Received radioactive drugs or scans within previous month or 10 half-lives: no schema field for prior imaging/radioactive drug exposure.",
+        "Implants contraindicated for MRI or history of claustrophobia in MRI: no schema field for implant status or claustrophobia.",
+        "History of CT/MRI findings such as mass lesions or brain infection unrelated to trial: no schema field for prior imaging findings.",
+        "Participated in another clinical trial for investigational agent within 90 days: no schema field for prior trial participation.",
+        "Monoclonal antibody treatment within previous 180 days: no schema field for prior biologic treatment.",
+        "Plan to receive aducanumab, lecanemab, or other approved Early AD treatments during trial: no schema field for planned treatments."
+      ]
+    }
   },
   {
     "trial_id": "NCT06282965",
@@ -1622,7 +2212,24 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Traumatically induced head injury from external force: partially covered by presumed_tbi but mechanism specificity (external force to head) cannot be fully expressed with available fields.",
+        "Clinical diagnosis of acute intracranial lesion based on neuroradiologist CT report: requires imaging/radiology report data not available in schema.",
+        "Moderate TBI defined as loss of consciousness 30 min\u201324 hours with GCS 9\u201312; Severe TBI defined as LOC >24 hours with GCS \u22649: loss-of-consciousness duration is not a schema field.",
+        "Enrollment within 48 hours of TBI: temporal criterion (time since injury) cannot be expressed with available schema fields.",
+        "Time of injury cannot be determined (exclusion): temporal/administrative criterion not representable in schema.",
+        "Neurosurgery within the last 30 days (exclusion): prior surgical history is not a schema field.",
+        "History of neurodegenerative disease or disorder including dementia, Parkinson's, MS, seizure disorder, or brain tumors (exclusion): prior medical history not available in schema.",
+        "Contraindication to MRI (exclusion): imaging contraindication is not a schema field.",
+        "Lactating female (exclusion): lactation status is not a schema field.",
+        "Female of childbearing potential or sexually active male unwilling to use birth control (exclusion): contraceptive compliance is not a schema field.",
+        "Participation in another clinical study involving investigational product within 30 days (exclusion): prior trial participation is not a schema field.",
+        "Investigator opinion of unsuitability (exclusion): subjective investigator judgment cannot be encoded in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06292585",
@@ -1710,7 +2317,25 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion 1: Informed consent and ability to comply cannot be expressed with available schema fields.",
+        "Inclusion 2 (partial): 'traumatic intracranial haemorrhage in the past 1 week' \u2014 temporal constraint (within 1 week of injury) cannot be expressed in the schema.",
+        "Inclusion 3: Specific OAC type (DOAC or VKA/Warfarin) and indication (AF or VTE) cannot be expressed with available schema fields.",
+        "Inclusion 4: CHA2DS2VASc score threshold (\u22652 in men, \u22653 in women) is a composite clinical score not available as a schema field.",
+        "Exclusion 1: Chronic subdural haematoma subtype cannot be distinguished from other intracranial haemorrhage types in the schema.",
+        "Exclusion 2: Mechanical heart valve history is not a schema field.",
+        "Exclusion 3: Plan to start/restart anti-platelet therapy within 12 weeks is not a schema field.",
+        "Exclusion 4: Abbreviated Injury Scale score for non-head regions >3 cannot be expressed with available schema fields.",
+        "Exclusion 6: Hypersensitivity or contraindication to DOAC is not a schema field.",
+        "Exclusion 7: Bleeding severity making DOAC restart unsafe at 1 week cannot be expressed with available schema fields.",
+        "Exclusion 8: Clinical reason to restart DOAC before 4 weeks or complete within 12 weeks cannot be expressed with available schema fields.",
+        "Exclusion 9: Concomitant p-gp and CYP3A4 inducers/inhibitors use is not a schema field.",
+        "Exclusion 10: Indication to stay on VKA rather than switching to DOAC (e.g., severe renal impairment) cannot be expressed with available schema fields."
+      ]
+    }
   },
   {
     "trial_id": "NCT06330935",
@@ -1763,7 +2388,21 @@
         "value": 3,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Time of admission within 3 hours of injury: temporal/time-of-injury logic cannot be expressed with available schema fields.",
+        "GCS score of 3 with bilateral unresponsive pupils: the pupil response component cannot be expressed in the schema; only GCS=3 is partially encoded as a soft exclusion.",
+        "Known bleeding/clotting disorders: no schema field exists for bleeding or clotting disorder history.",
+        "Known seizure disorders: no schema field exists for seizure disorder history.",
+        "Known history of severe renal impairment: no schema field exists for renal function or history.",
+        "Unknown time of injury: temporal/time-of-injury metadata cannot be expressed with available schema fields.",
+        "Prior TXA for current injury: no schema field exists for prior medication administration.",
+        "Known venous or arterial thrombosis: no schema field exists for thrombosis history.",
+        "Intracranial haemorrhage confirmed on cranial CT scan: imaging confirmation cannot be expressed with available schema fields (presumed_intracranial_hemorrhage used as proxy)."
+      ]
+    }
   },
   {
     "trial_id": "NCT06333990",
@@ -1801,7 +2440,24 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion 1: Veteran status cannot be expressed with available schema fields.",
+        "Inclusion 2: mTBI diagnosis specifics (loss of consciousness, altered consciousness, posttraumatic amnesia), PCS symptoms on NSI, and requirement that 6+ months elapsed since injury cannot be expressed with available schema fields.",
+        "Inclusion 3: Requirement of being stable on at least three CNS active psychotropic medications cannot be expressed with available schema fields.",
+        "Inclusion 4: PTSD Checklist for DSM-5 (PCL-5) score \u226525 cannot be expressed with available schema fields.",
+        "Exclusion 1: Moderate or severe TBI or major neurocognitive disorder (dementia) cannot be distinguished from mild TBI using available schema fields.",
+        "Exclusion 2: DSM-5 criteria for schizophrenia, bipolar disorder, schizoaffective disorder, or recent inpatient hospitalization cannot be expressed with available schema fields.",
+        "Exclusion 3: Current antipsychotic or prohibited medication use cannot be expressed with available schema fields.",
+        "Exclusion 4: Known intolerance to quetiapine or clinically unstable cardiac, pulmonary, hepatic, renal, hematological, endocrinological conditions, diabetes, severe sleep apnea, or seizure disorder cannot be expressed with available schema fields.",
+        "Exclusion 5: Substance use disorder requiring medication treatment or medical detoxification or inpatient hospitalization within 6 months cannot be expressed with available schema fields.",
+        "Exclusion 6: Suicidal ideation (CSSRS type 4 or 5), homicidal ideation with intent/plan, or suicidal behavior within specified timeframes cannot be expressed with available schema fields.",
+        "Exclusion 7: Cardiac arrhythmia or QTc interval \u2265470 ms cannot be expressed with available schema fields.",
+        "Exclusion 8: Lactating women and those of childbearing potential not using reliable contraception cannot be fully expressed; only pregnant/unknown pregnancy status is encoded."
+      ]
+    }
   },
   {
     "trial_id": "NCT06379724",
@@ -1835,7 +2491,27 @@
         "value": true,
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "English or Spanish speaking: language is not a field in the schema.",
+        "Flame or scald burn injury (inclusion): burn sub-type/cause cannot be distinguished within the allowed 'burn' mechanism enum.",
+        "<=10% total body surface area (TBSA) partial thickness: TBSA percentage is not a field in the schema.",
+        "<=5% total body surface area (TBSA) deep partial or full thickness: TBSA percentage and burn depth are not fields in the schema.",
+        "Skin graft harvested at 1/12 inch depth, meshed 1:1 or pie crusted: surgical/procedural detail is not a field in the schema.",
+        ">10% total body surface area (TBSA) partial thickness burn (exclusion): TBSA percentage is not a field in the schema.",
+        ">5% total body surface area (TBSA) surgical area of burn injury (exclusion): TBSA percentage and burn depth are not fields in the schema.",
+        "Traumatic or chemical burn mechanism (exclusion): burn sub-type cannot be distinguished within the allowed mechanism enum; 'burn' enum value does not differentiate flame/scald from traumatic/chemical.",
+        "Patients on immunosuppression: medication/treatment history is not a field in the schema.",
+        "Uncontrolled diabetes: medical history/lab values are not fields in the schema.",
+        "Known diagnosis of peripheral vascular disease or diagnosis at time of injury: medical history is not a field in the schema.",
+        "Patients with acquired defective color vision: medical history is not a field in the schema.",
+        "Patients with subarachnoid hemorrhage: subarachnoid hemorrhage is a specific subtype not directly mappable to presumed_intracranial_hemorrhage without ambiguity; partially encoded as presumed_intracranial_hemorrhage exclusion.",
+        "Patients with active intravascular clotting or known hypersensitivity reactions to tranexamic acid: coagulation status and drug hypersensitivity are not fields in the schema.",
+        "Inability to give informed consent: consent capacity is not a field in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06495294",
@@ -1904,7 +2580,30 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Radiographic evidence of chronic subdural hematoma (persistence >10 days, mixed density blood, subdural membranes): no imaging or temporal fields in schema.",
+        "Can obtain informed consent and HIPAA authorization: procedural/consent criterion, not expressible as a patient field.",
+        "Breastfeeding or unwilling to practice contraception: no breastfeeding or contraception fields in schema.",
+        "Concomitant intracranial pathology other than subdural hematoma (e.g., intracranial malignancy): no field for specific intracranial pathology type.",
+        "Known hypersensitivity to bevacizumab: no allergy/hypersensitivity fields in schema.",
+        "Radiographic evidence of mass effect: no imaging finding fields in schema.",
+        "Focal neurological deficits attributed to subdural hematoma: no neurological deficit fields in schema.",
+        "Craniotomy or burr hole procedures performed in preceding two weeks prior to onset of subdural hematoma: no surgical history or temporal fields in schema.",
+        "Secondary causes apart from trauma for chronic subdural hematoma (vascular abnormality or tumor): no etiology classification fields in schema.",
+        "Emergent surgical evacuation required: no field for surgical urgency in schema.",
+        "Non-convexity chronic subdural hematoma: no anatomical location fields in schema.",
+        "Coagulation abnormalities (platelet count <100,000 and/or INR <1.5): no lab value fields in schema.",
+        "Known contraindications for angiography or contrast allergy: no allergy or procedure contraindication fields in schema.",
+        "Known active systemic infection or sepsis: no infection status fields in schema.",
+        "Contraindication to anesthetic agents for conscious sedation/MAC: no anesthesia contraindication fields in schema.",
+        "Life expectancy less than six months due to comorbid terminal conditions: no prognosis or comorbidity fields in schema.",
+        "Premorbid modified Rankin score (mRS) of 5 or greater: no mRS or functional status fields in schema.",
+        "Concurrent participation in another research protocol for experimental therapy: no enrollment status fields in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06531642",
@@ -1948,7 +2647,19 @@
         "value": "cardiac_arrest",
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Hemorrhagic shock criterion requiring (SBP \u2264 90 AND HR \u2265 108) OR (SBP \u2264 70): compound OR logic across two fields cannot be expressed in the schema; only SBP \u2264 90 is encoded as a partial approximation.",
+        "Patients known to be actively on renal replacement therapy: no renal replacement therapy field exists in the schema.",
+        "Patients deemed to have expected survival of less than 24 hours: no survival prognosis field exists in the schema.",
+        "History of PPI sensitivity or allergy: no allergy/medication history field exists in the schema.",
+        "Patients already enrolled in other trials that do not allow co-enrollment: no trial enrollment field exists in the schema.",
+        "Patients presenting with ongoing GI bleeding requiring higher dose GI prophylaxis: no GI bleeding field exists in the schema.",
+        "Prisoners excluded as a vulnerable population: no incarceration status field exists in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06691165",
@@ -1983,7 +2694,21 @@
         "value": "pregnant",
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Living with a chronic cervical (at or above T1) spinal cord injury of at least one year: no schema field captures injury chronicity, specific spinal level, or duration of injury.",
+        "Are fluent in English: no schema field captures language fluency.",
+        "High-cervical injuries requiring ventilator assistance to breathe will be excluded: no schema field captures ventilator dependency or specific injury level.",
+        "Unhealed fracture, contracture, or pressure sore that might interfere with protocol completion: no schema field captures wound or musculoskeletal status.",
+        "Additional concurrent neurological conditions (e.g., multiple sclerosis, Parkinson disease, stroke or brain injury): no schema field captures comorbid neurological diagnoses.",
+        "Uncontrolled cardiovascular or pulmonary disease: no schema field captures cardiovascular or pulmonary disease status.",
+        "Severe neuropathic pain: no schema field captures pain status.",
+        "Severe recurrent autonomic dysreflexia: no schema field captures autonomic dysreflexia history.",
+        "History of seizure disorders: no schema field captures seizure history."
+      ]
+    }
   },
   {
     "trial_id": "NCT06736860",
@@ -2039,7 +2764,21 @@
         "value": "cardiac_arrest",
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Trauma ISS score between 16 and 50: ISS score is not an available patient field in the schema.",
+        "Receiving a 1 g TXA push within 3 hours of injury with push completed within 10 minutes of arrival: requires temporal/treatment administration logic not expressible in the schema.",
+        "Signing the informed consent form: administrative/procedural criterion not expressible in the schema.",
+        "Coagulation abnormalities due to co-morbid hematologic or autoimmune diseases: requires prior medical history/lab fields not available in the schema.",
+        "Inability to establish venous or intraosseous access: requires a clinical assessment field not available in the schema.",
+        "Traumatic cardiac arrest for more than 5 minutes: the schema can flag cardiac_arrest mechanism but cannot encode duration of arrest.",
+        "Failure of cardiopulmonary resuscitation: requires a clinical outcome/status field not available in the schema.",
+        "Penetrating brain injury: no field distinguishes penetrating brain injury specifically; mechanism field does not have a dedicated penetrating brain injury enum value.",
+        "Drowning or hanging: no matching mechanism enum values exist in the schema for drowning or hanging."
+      ]
+    }
   },
   {
     "trial_id": "NCT06790095",
@@ -2095,7 +2834,40 @@
         "value": true,
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion #2: Requires presentation within 24 hours of head injury and clinical decision to obtain non-contrast cranial CT \u2014 temporal logic and clinical decision not expressible in schema.",
+        "Inclusion #4: Evidence of contusion and/or traumatic axonal microvascular injury (TAMVI) on cranial CT \u2014 no imaging findings field in schema.",
+        "Inclusion #5: Initial GFAP blood level >1000 pg/mL and \u226415000 pg/mL \u2014 lab value field not in schema.",
+        "Inclusion #6: Ability to undergo MRI with no contraindications \u2014 no MRI eligibility field in schema.",
+        "Inclusion #7: Legally Authorized Representative willing and able to provide informed consent \u2014 consent/LAR availability not in schema.",
+        "Inclusion #8: Participant/LAR able to read, speak, and understand English or Spanish \u2014 language field not in schema.",
+        "Exclusion #1: Isolated epidural hematoma \u2014 no imaging diagnosis field in schema.",
+        "Exclusion #2: Bilaterally fixed dilated pupils in absence of paralytic medications or evidence of herniation on cranial CT \u2014 no pupil exam or herniation field in schema.",
+        "Exclusion #3: Pre-existing disabling developmental, neurologic, psychiatric, or medical disorder causing functional disability, or imminent death \u2014 no prior medical history or prognosis field in schema.",
+        "Exclusion #4: Order for comfort care placed prior to enrollment \u2014 no goals-of-care field in schema.",
+        "Exclusion #5: Current enrollment in another interventional study \u2014 no enrollment status field in schema.",
+        "Exclusion #6: Currently breastfeeding or planning to become pregnant in the next 6 months \u2014 partially encoded (pregnant/unknown_could_be_pregnant), but breastfeeding and future pregnancy planning cannot be expressed in schema.",
+        "Exclusion #7: Current incarceration or in custody \u2014 no legal status field in schema.",
+        "Exclusion #8: On psychiatric hold (e.g., 5150, 5250) \u2014 no psychiatric hold field in schema.",
+        "Exclusion #9: Ongoing pre-injury therapy with investigational product, immunosuppressive therapy, or contraindicated medications \u2014 no medication history field in schema.",
+        "Exclusion #10: Allergy or anaphylactic reaction history to CsA or cremophor \u2014 no allergy history field in schema.",
+        "Exclusion #11: Severe polytrauma or previous conditions precluding study activities \u2014 no polytrauma severity field in schema.",
+        "Exclusion #12: Spinal cord injury grade A\u2013D on ASIA Impairment Scale \u2014 schema only captures suspected spinal injury (bool), not confirmed ASIA grade; encoded as spinal_injury_suspected exclusion as closest approximation but ASIA grading specificity is lost.",
+        "Exclusion #13: Primary diagnosis of ischemic or hemorrhagic stroke \u2014 no stroke diagnosis field in schema.",
+        "Exclusion #14: BMI >35 \u2014 no BMI field in schema.",
+        "Exclusion #15: Hemodynamic instability per physician clinical judgement \u2014 no hemodynamic instability field in schema.",
+        "Exclusion #16: Renal dysfunction defined by CrCl/eGFR <60 mL/min/1.73m2 or creatine kinase >5000 IU/L \u2014 no renal function or lab value fields in schema.",
+        "Exclusion #17: Hepatic disease or elevated ALT/AST >3x upper limit of normal \u2014 no liver function or lab value fields in schema.",
+        "Exclusion #18: Serious chronic viral or fungal infection history \u2014 no infection history field in schema.",
+        "Exclusion #19: Active mycobacterial infection or anti-tuberculous treatment \u2014 no infection or medication field in schema.",
+        "Exclusion #20: History of HIV, hepatitis B surface antigen, or hepatitis C virus antibody \u2014 no infectious disease history field in schema.",
+        "Exclusion #21: Significant disease or disorder at investigator discretion \u2014 no investigator judgement field in schema.",
+        "Exclusion #22: Low likelihood of follow-up or study compliance at investigator discretion \u2014 no compliance assessment field in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06829498",
@@ -2139,7 +2911,24 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion #2: Minimum weight of 40kg \u2014 no weight field in schema.",
+        "Inclusion #3: Meeting concussion criteria per American Congress of Rehabilitative Medicine \u2014 no structured concussion-diagnosis field in schema.",
+        "Inclusion #4: Present within 4 days of injury \u2014 temporal/time-since-injury logic not supported by schema.",
+        "Inclusion #5: Post-menarchal females must have a negative urine pregnancy test and use acceptable contraception \u2014 menarchal status and contraception method not in schema.",
+        "Inclusion #6: Informed consent requirements for minors vs. adults \u2014 consent/guardian logic not in schema.",
+        "Exclusion #1 (partial): TBI requiring hospital admission or neurosurgical intervention \u2014 only GCS threshold is encoded; admission/surgical requirement fields not in schema.",
+        "Exclusion #2: Prior concussion or TBI within 90 days \u2014 prior injury history and temporal logic not in schema.",
+        "Exclusion #3: Known or family history of maple syrup urine disease \u2014 medical/family history fields not in schema.",
+        "Exclusion #4: Investigational drug use within 30 days prior to enrollment \u2014 medication history and temporal logic not in schema.",
+        "Exclusion #5: Hypersensitivity to any ingredient in active or placebo products \u2014 allergy/hypersensitivity fields not in schema.",
+        "Exclusion #6 (partial): Planning to become pregnant during study or breastfeeding \u2014 future pregnancy intent and breastfeeding status not in schema.",
+        "Exclusion #7: Non-English speaking participants or parent/guardian \u2014 language fields not in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06836856",
@@ -2168,7 +2957,19 @@
         "value": false,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion: TBI must be detected on CT scan with moderate/severe classification \u2014 CT imaging result and injury severity classification are not available fields in the schema.",
+        "Inclusion: Patients must either have no other injuries or only minor injuries (mild IPFF, mild lung contusion, hemothorax/pneumothorax without hypoxia/tachypnea/respiratory distress, simple limb fractures) \u2014 associated injury type and severity are not available fields in the schema.",
+        "Exclusion: Patients on pre-injury beta-blocker therapy \u2014 prior medication use is not an available field in the schema.",
+        "Exclusion: Patients with any bronchospastic conditions \u2014 prior medical history/comorbidities are not available fields in the schema.",
+        "Exclusion: Patients with active acute coronary syndrome \u2014 prior medical history/comorbidities are not available fields in the schema.",
+        "Exclusion: TBI with GCS \u2264 13 with associated major injuries (moderate/marked IPFF requiring laparotomy, moderate/marked lung contusion/pneumothorax/hemothorax with hypoxia/tachypnea, compound fractures, open faciomaxillary trauma) \u2014 associated injury type and severity are not available fields in the schema.",
+        "Exclusion: Persistent shock defined as SBP < 100 mmHg, base deficit > 4, or oliguria, or HR < 60 bpm after more than one week of admission \u2014 the temporal qualifier 'after more than one week of admission' cannot be expressed in the schema; base deficit and oliguria are not available fields."
+      ]
+    }
   },
   {
     "trial_id": "NCT06866691",
@@ -2215,7 +3016,27 @@
         "value": true,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Diagnosis of traumatic brain injury: severe, moderate, or mild with high-risk imaging features \u2014 severity grading and imaging features are not available in the schema.",
+        "Seizure prophylaxis with one of the two study drugs within 24 hours of initial injury \u2014 temporal/treatment timing logic cannot be expressed with available fields.",
+        "Patients admitted into the trauma team service \u2014 admission service type is not a schema field.",
+        "Enrolled in another interventional drug study \u2014 trial enrollment status is not a schema field.",
+        "Any active, witnessed, or unable to rule out seizure prior to prophylaxis initiation \u2014 seizure history/status is not a schema field.",
+        "Received antiseizure medication (ASM) prior to randomization \u2014 prior medication use is not a schema field.",
+        "History of seizures \u2014 prior medical history field not available in schema.",
+        "On anti-epileptic medications for seizures or other indications prior to admission \u2014 prior medication use is not a schema field.",
+        "Documented history of alcohol withdrawal with CIWA-Ar or mMINDS requiring treatment \u2014 alcohol withdrawal history and clinical scale scores are not schema fields.",
+        "Spinal cord injury confirmed by radiographic imaging at cervical (C1-C8) or thoracic (T1-T12) levels \u2014 imaging confirmation and spinal level specificity cannot be expressed; spinal_injury_suspected used as a soft proxy only.",
+        "History of bradycardia or permanent pacemaker \u2014 medical history fields are not available in schema; HR < 55 bpm encoded as a proxy but the 'for > 5 min not on medications that cause bradycardia' qualifier cannot be expressed.",
+        "End-stage renal disease (ESRD) \u2014 prior medical history/lab values not available in schema.",
+        "Death, withdrawal of life support, or transfer to hospice within 24 hours \u2014 disposition/outcome fields are not available in schema.",
+        "Patient incarcerated \u2014 incarceration status is not a schema field.",
+        "Patient with GCS of 15 or LAR unable to provide informed consent, or unable to read and understand specified languages \u2014 consent capacity and language comprehension are not schema fields; GCS 15 exclusion conflicts with inclusion logic and cannot be cleanly encoded."
+      ]
+    }
   },
   {
     "trial_id": "NCT06930261",
@@ -2268,7 +3089,31 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Affiliated with or beneficiary of a social security system \u2014 no schema field for insurance/social security affiliation.",
+        "Signed informed consent provided by participant or trusted representative \u2014 consent process cannot be encoded in schema fields.",
+        "TBI occurring within the last 30 days \u2014 temporal criterion (time since injury) not expressible with available fields.",
+        "Motor score (M) < 6 at hospital admission \u2014 GCS motor subscore is not a separate schema field; only total GCS is available.",
+        "Sedative treatments discontinued for more than 48 hours \u2014 medication/treatment history field not available in schema.",
+        "Clinically stable (no hemodynamic, respiratory, or metabolic instability requiring specific interventions) \u2014 composite clinical stability criterion not directly encodable; partially related to sbp_mmhg/hr_bpm but requires clinical judgment beyond simple thresholds.",
+        "TBI-COMA Group: no recovery of consciousness at inclusion (GCS < 10 with M < 6) \u2014 subgroup stratification by consciousness recovery status and motor subscore not encodable.",
+        "TBI-REC Group: recovery of consciousness evidenced by simple command-following (GCS \u2265 10 with M = 6) at inclusion \u2014 subgroup stratification by command-following and motor subscore not encodable.",
+        "Healthy Controls matched by age (\u00b1 2 years) and sex to TBI-COMA patients \u2014 matching logic for control group cannot be expressed in per-patient schema rules.",
+        "Contraindications to MRI \u2014 no schema field for MRI contraindications.",
+        "Known allergy to the PET radiotracer or its excipients \u2014 no schema field for drug allergies.",
+        "History of conditions affecting the dopaminergic system \u2014 no schema field for prior medical history.",
+        "Individuals under legal protection measures \u2014 no schema field for legal status.",
+        "Current treatment with dopaminergic agonists or antagonists \u2014 no schema field for current medications.",
+        "Coma due to causes other than TBI \u2014 partially encoded via presumed_tbi and mechanism exclusion of penetrating trauma, but non-TBI coma etiologies (e.g., metabolic, anoxic) cannot be fully enumerated.",
+        "Decompressive craniectomy resulting in anatomical alterations incompatible with standardized image analysis (e.g., midline shift > 2 cm) \u2014 no schema field for surgical history or imaging findings.",
+        "Healthy Controls only: women of childbearing potential without effective contraception \u2014 subgroup-specific criterion and contraception status not encodable in schema.",
+        "Healthy Controls only: women unwilling to maintain effective contraception during the 30-day study period \u2014 patient willingness/compliance criterion not encodable in schema.",
+        "Breastfeeding women excluded \u2014 no schema field for breastfeeding status."
+      ]
+    }
   },
   {
     "trial_id": "NCT06939335",
@@ -2300,7 +3145,20 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "CPR Administration by ALS team: no schema field exists for EMS crew level or CPR administration status.",
+        "Intubation and Ventilation: no schema field exists to indicate whether the patient has been successfully intubated and ventilated during resuscitation.",
+        "Traumatic cardiac arrest (including drowning, penetrating/blunt injury, burns): mechanism field captures some trauma types but 'drowning' is not an allowed enum value, and the criterion requires excluding cardiac arrest caused by any of these mechanisms \u2014 partially expressible but cannot cleanly exclude all listed sub-types without risking incorrect exclusions; skipped in full to avoid incomplete logic.",
+        "Immediate ROSC before intubation: no schema field exists for timing of ROSC relative to intubation.",
+        "Mechanical ventilation prior to arrest for reasons other than the arrest: no schema field exists for pre-existing mechanical ventilation status.",
+        "DNR or advanced directive orders: no schema field exists for code status or advance directives.",
+        "Failure to intubate: no schema field exists for intubation success/failure status.",
+        "Enrollment in other interventional clinical trials: no schema field exists for concurrent trial enrollment."
+      ]
+    }
   },
   {
     "trial_id": "NCT06953674",
@@ -2329,7 +3187,19 @@
         "value": false,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Head CT with skull fracture(s) and/or hemorrhage(s) (>1cm in any single dimension): requires imaging findings not available in the schema.",
+        "Reported mechanism of trauma: partially covered by the 'mechanism' field but the criterion only requires that a mechanism is documented, not a specific value \u2014 no meaningful rule can be encoded.",
+        "Severe visceral trauma dictating mortality (visceral injury severity score > brain injury severity score): requires injury severity scores not available in the schema.",
+        "Non-survivable brain injury based on the treating physician's judgment: requires a clinical judgment field not available in the schema.",
+        "Emergent visceral operative intervention before complete trauma assessment: requires procedural/temporal data not available in the schema.",
+        "Concern for ruptured intracranial vascular malformation: requires a specific diagnosis field not available in the schema.",
+        "Patients who are transferred from another facility: requires a transfer/origin field not available in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT06977659",
@@ -2379,7 +3249,27 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion #2a/2b: Significant bleeding evidence (exsanguinous external bleeding \u2265500 ml, FAST positive, hemothorax, CT bleeding) \u2014 no schema field for bleeding volume, FAST result, or imaging findings; partially covered by presumed_hemorrhage.",
+        "Inclusion #3a: Mean arterial pressure < 65 mmHg \u2014 no MAP field in schema.",
+        "Inclusion #3a: Decrease in blood pressure from baseline > 30 mmHg \u2014 no baseline BP comparison field in schema.",
+        "Inclusion #3b: Capillary refill time > 2 seconds \u2014 no schema field for capillary refill.",
+        "Inclusion #3b: Base excess < -6 mEq/L \u2014 no schema field for base excess.",
+        "Inclusion #3b: Lactate level > 2 mmol/L \u2014 no schema field for lactate.",
+        "Exclusion #1: Prehospital CPR or CPR at trauma bay \u2014 no schema field for CPR history; cardiac_arrest mechanism is not equivalent.",
+        "Exclusion #2: Persistent shock for more than 12 hours prior to randomization \u2014 no schema field for shock duration.",
+        "Exclusion #4: Traumatic limb injury with acute limb ischemia \u2014 no schema field for limb ischemia.",
+        "Exclusion #5: History of limb ischemia, chronic heart disease, chronic lung disease, or chronic renal disease \u2014 no schema field for prior medical history.",
+        "Exclusion #7: Documented DNR order or declined life-sustaining intervention \u2014 no schema field for code status.",
+        "Exclusion #8: Allergy to norepinephrine or contraindications (peripheral vascular thrombosis, mesenteric thrombosis, fatal tachyarrhythmia) \u2014 no schema field for drug allergies or vascular conditions.",
+        "Exclusion #9: Current use of ergotamine, MAOIs, or TCAs \u2014 no schema field for medication use.",
+        "Exclusion #10: Prior vasopressor administration before randomization \u2014 no schema field for prior vasopressor use.",
+        "Exclusion #11: Weight less than 30 kg \u2014 no schema field for patient weight."
+      ]
+    }
   },
   {
     "trial_id": "NCT07131475",
@@ -2414,7 +3304,21 @@
         "value": true,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Active-duty Navy SEAL Service Member: no schema field exists for military branch, unit, or occupational specialty.",
+        "Early career SEAL (0-2 years) or mid-late career SEAL (10-15 years): no schema field exists for career stage or years of service.",
+        "History of moderate or severe TBI: the schema's presumed_tbi bool cannot distinguish severity or historical diagnosis; partially encoded as a soft exclusion but severity and historical nature cannot be captured.",
+        "History of major neurological disorder: no schema field exists for prior neurological history.",
+        "Untreated or unstable severe psychiatric condition: no schema field exists for psychiatric history or treatment status.",
+        "Current severe medical condition that requires long-term treatment: no schema field exists for chronic medical conditions or treatment requirements.",
+        "Any condition that may cause undue risk or logistical contraindication: too vague and general to encode in the schema.",
+        "MRI contraindication: no schema field exists for imaging contraindications.",
+        "PET contraindication: no schema field exists for imaging contraindications."
+      ]
+    }
   },
   {
     "trial_id": "NCT07239908",
@@ -2452,7 +3356,20 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Patients must have received resuscitative care specifically from the Siriraj Emergency Medical Services Center (SiEMS) \u2014 no schema field for EMS agency or transport origin.",
+        "Patients must have achieved return of spontaneous circulation (ROSC) prior to hospital arrival \u2014 no schema field for ROSC status.",
+        "Patients must be subsequently transported to the Emergency Department of Siriraj Hospital \u2014 no schema field for destination facility.",
+        "Exclusion of ROSC patients whose legally authorized representative declined vasopressor administration \u2014 no schema field for surrogate consent or treatment refusal.",
+        "Exclusion of ROSC patients who had not undergone endotracheal intubation and whose representative declined intubation \u2014 no schema field for intubation status or surrogate consent.",
+        "Exclusion of ROSC patients without rearrest whose representative declined further investigations after ED arrival \u2014 no schema field for rearrest status or surrogate consent.",
+        "Exclusion of patients whose legally authorized representative declined study participation \u2014 no schema field for consent status.",
+        "Exclusion of patients without an available legally authorized representative \u2014 no schema field for surrogate availability."
+      ]
+    }
   },
   {
     "trial_id": "NCT07245264",
@@ -2490,7 +3407,26 @@
         "value": true,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion #1: Symptomatic CSDH confirmed on CT/MRI measuring >10mm thickness \u2014 no imaging measurement or CSDH-specific diagnosis field in schema.",
+        "Inclusion #3: Scheduled for single or double burr hole evacuation \u2014 no surgical scheduling field in schema.",
+        "Inclusion #4: No contraindication for TXA \u2014 no TXA contraindication field in schema.",
+        "Exclusion #1: Mechanical heart valve \u2014 no cardiac device history field in schema.",
+        "Exclusion #2: Newly diagnosed (last 12 months) pulmonary embolism, myocardial infarction, or strong indication for antithrombotic treatment \u2014 no diagnosis history or temporal logic in schema.",
+        "Exclusion #3: Intracranial surgery within last 6 months \u2014 no surgical history or temporal logic in schema.",
+        "Exclusion #4: Woman <40 years (partially encoded as pregnancy exclusion; the age-based sex restriction for women under 40 cannot be expressed without a combined sex+age rule).",
+        "Exclusion #5: Participation in any other clinical trial \u2014 no trial enrollment field in schema.",
+        "Exclusion #6: Life expectancy of less than one year \u2014 no prognosis or life expectancy field in schema.",
+        "Exclusion #7: Modified Rankin Scale score of 4 or 5 before hematoma \u2014 no functional independence scale field in schema.",
+        "Exclusion #8: Unfit for participation for any other reason as evaluated by the including physician \u2014 subjective clinical judgment, not encodable.",
+        "Exclusion #9: Severe renal impairment (eGFR <30 ml/min or serum creatinine >150 \u03bcmol/L) \u2014 no renal function lab fields in schema.",
+        "Exclusion #10: Known hypersensitivity or allergy to TXA \u2014 no allergy/hypersensitivity field in schema.",
+        "Exclusion #11: Inability to obtain informed consent \u2014 no consent capacity field in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT07319208",
@@ -2537,23 +3473,25 @@
         "value": "pregnant",
         "hard": true
       }
-    ]
-  },
-  {
-    "trial_id": "NCT07373366",
-    "short_name": "Assessment of Noninvasive Neuromodulation in a Group of Traumatic Brain Injured Patients and Healthy Volunteers",
-    "title": "Assessment of Noninvasive Neuromodulation in a Group of Traumatic Brain Injured Patients and Healthy Volunteers",
-    "requires_efic": true,
-    "phase": "PHASE2",
-    "inclusion": [
-      {
-        "field": "presumed_tbi",
-        "op": "eq",
-        "value": true,
-        "hard": true
-      }
     ],
-    "exclusion": []
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Patient admitted to intensive care unit: no ICU admission field in schema.",
+        "Intracranial pressure (ICP) monitoring based on attending physician's clinical judgment: no ICP monitoring field in schema.",
+        "Inclusion during the first 12 hours after ICP monitoring placement: temporal/procedural criterion not expressible with available fields.",
+        "Informed and signed consent: administrative/consent criterion not expressible in schema.",
+        "National health insurance: administrative criterion not expressible in schema.",
+        "GCS = 3 with persistent abnormal pupillary reactivity despite urgent therapy: pupillary reactivity is not a schema field; GCS = 3 alone encoded as soft exclusion without the pupillary reactivity qualifier.",
+        "Imminent death and do-not-resuscitate orders: no DNR or prognosis field in schema.",
+        "Severe cardiac insufficiency: no cardiac function field in schema.",
+        "Severe chronic renal insufficiency: no renal function field in schema.",
+        "Severe hepatic insufficiency (oedema-ascitic decompensation or Child-Pugh class C cirrhosis): no hepatic function field in schema.",
+        "High risk of follow-up difficulties after ICU discharge: social/logistical criterion not expressible in schema.",
+        "Patients under court protection: legal status criterion not expressible in schema.",
+        "Patient who does not speak French: language criterion not expressible in schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT07480655",
@@ -2600,7 +3538,20 @@
         ],
         "hard": true
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Poly-trauma patients (multiple injuries): no multi-injury or ISS field exists in the schema to verify polytrauma definition.",
+        "Shock States (inclusion): no blood pressure threshold or shock classification field captures this criterion precisely; sbp_mmhg could partially proxy but the criterion is broader than a single vital sign.",
+        "Any Chest trauma (exclusion): no chest-injury or body-region field exists in the schema.",
+        "Patients with obstructive and restrictive lung disease (exclusion): no prior pulmonary history field exists in the schema.",
+        "Obstructive sleep apnea (exclusion): no prior medical history field exists in the schema.",
+        "Septic shock (exclusion): no infection or sepsis classification field exists in the schema.",
+        "Patients who will require readmission within 48 h after step-down from the ICU (exclusion): requires prospective/temporal outcome data not available at enrollment.",
+        "Patients who will need extra-corporeal membrane oxygenation support (exclusion): no ECMO requirement field exists in the schema."
+      ]
+    }
   },
   {
     "trial_id": "NCT07556991",
@@ -2623,6 +3574,16 @@
         "value": false,
         "hard": false
       }
-    ]
+    ],
+    "_metadata": {
+      "source": "clinicaltrials.gov",
+      "skipped_criteria": [
+        "Inclusion: surgical treatment of chronic subdural hematoma \u2014 no schema field exists for surgical procedure or diagnosis of chronic subdural hematoma.",
+        "Exclusion: prior or current antibiotic treatment \u2014 no schema field exists for antibiotic use or treatment history.",
+        "Exclusion: infection \u2014 no schema field exists for active or prior infection status.",
+        "Exclusion: recurrent chronic subdural hematoma \u2014 no schema field exists for recurrence of a prior diagnosis.",
+        "Exclusion: conservatively treated chronic subdural hematoma \u2014 no schema field exists for treatment modality or chronic subdural hematoma diagnosis."
+      ]
+    }
   }
 ]

@@ -6,9 +6,9 @@ the engine's output. Field names in Rule.field must be members of PATIENT_FIELDS
 
 from __future__ import annotations
 
-from typing import Any, Literal, Union
+from typing import Any, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 Mechanism = Literal[
     "blunt_mvc",
@@ -199,8 +199,19 @@ def _check_scalar_for_field(field: str, value: Any, meta: dict[str, Any]) -> Non
             )
 
 
+class TrialMetadata(BaseModel):
+    """Provenance + honesty: where the trial came from and what its source
+    criteria text contains that the engine couldn't encode. Surfacing this
+    is what lets a coordinator trust the engine's "eligible" answer."""
+
+    source: Optional[str] = None
+    skipped_criteria: list[str] = Field(default_factory=list)
+
+
 class Trial(BaseModel):
     """A clinical trial's structured eligibility rules."""
+
+    model_config = ConfigDict(populate_by_name=True)
 
     trial_id: str = Field(description="NCT ID")
     short_name: str
@@ -209,6 +220,7 @@ class Trial(BaseModel):
     phase: str = Field(default="?")
     inclusion: list[Rule] = Field(default_factory=list)
     exclusion: list[Rule] = Field(default_factory=list)
+    metadata: Optional[TrialMetadata] = Field(default=None, alias="_metadata")
 
 
 class ClauseTrace(BaseModel):
