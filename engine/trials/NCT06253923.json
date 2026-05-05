@@ -1,0 +1,97 @@
+{
+  "trial_id": "NCT06253923",
+  "short_name": "IV",
+  "title": "Study to Assess the Safety of Amantadine Hydrochloride (HCl) Intravenous (IV) Solution (MR-301) in Patients With Severe Traumatic Brain Injury (TBI).",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 75,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 3,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "sbp_mmhg",
+      "op": "gt",
+      "value": 90,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "spinal_injury_suspected",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "gsw",
+        "stab"
+      ],
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion #2: TBI confirmed by CT scan or MRI \u2014 presumed_tbi is used as a proxy but imaging confirmation cannot be verified from schema fields.",
+      "Inclusion #3: Trauma sustained between 72 hours and 1 week prior \u2014 temporal/time-since-injury field not available in schema.",
+      "Inclusion #4: Abbreviated Injury Score (AIS) \u2264 2 \u2014 AIS field not available in schema.",
+      "Inclusion #5: Admitted to acute care no less than 2 days prior to randomization \u2014 admission duration field not available in schema.",
+      "Inclusion #7: Unable to consistently follow commands or engage in functional communication per CRS-R score \u2014 CRS-R field not available in schema.",
+      "Inclusion #8: At least one reactive pupil \u2014 pupil reactivity field not available in schema.",
+      "Inclusion #9: Must have a Legally Authorized Representative able to provide consent \u2014 consent/LAR field not available in schema.",
+      "Inclusion #10: Stable ICP at investigator discretion and PaO2 > 60 mmHg \u2014 ICP and PaO2 fields not available in schema.",
+      "Exclusion #1: Life expectancy less than 24 hours \u2014 prognosis/life expectancy field not available in schema.",
+      "Exclusion #4: Bilaterally fixed dilated pupils \u2014 pupil reactivity field not available in schema.",
+      "Exclusion #5: History of medical/psychiatric disorder or severe concomitant disease interfering with assessment \u2014 medical history fields not available in schema.",
+      "Exclusion #6: Poorly controlled seizure more than one per month \u2014 seizure history/frequency field not available in schema.",
+      "Exclusion #7: Prior history of status epilepticus \u2014 medical history field not available in schema.",
+      "Exclusion #8: Prior treatment with or sensitivity to amantadine HCl or amantadine \u2014 medication history/allergy field not available in schema.",
+      "Exclusion #9a-e: Screening lab values (ANC, hemoglobin, platelets, liver enzymes, eGFR) outside normal range \u2014 lab value fields not available in schema.",
+      "Exclusion #10: Treatment with investigational drug, CNS stimulant, or dopamine antagonist/agonist within 4 weeks \u2014 medication history field not available in schema.",
+      "Exclusion #11: History of NYHA Class 3 or 4 Congestive Heart Failure within last 5 years \u2014 cardiac history field not available in schema.",
+      "Exclusion #12: Females who are nursing or planning to become pregnant \u2014 nursing status and future pregnancy intent not available in schema (pregnant/unknown covered by exclusion rule).",
+      "Exclusion #13: Any other clinically significant medical condition as determined by investigator \u2014 subjective investigator judgment not encodable in schema.",
+      "Exclusion #14: Prolonged QT interval \u2014 ECG/QT interval field not available in schema.",
+      "Exclusion #15: Treatment with systemic anticholinergic medication within 1 week prior to screening \u2014 medication history field not available in schema."
+    ]
+  }
+}

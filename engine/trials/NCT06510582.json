@@ -1,0 +1,49 @@
+{
+  "trial_id": "NCT06510582",
+  "short_name": "CHAI",
+  "title": "Chronic Subdural Hematoma Treatment With Intra-Arterial Bevacizumab Injection",
+  "requires_efic": false,
+  "phase": "PHASE1",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Radiographic evidence of chronic subdural hematoma (persistence >10 days, mixed density blood, subdural membranes): no imaging or temporal fields in schema.",
+      "Can obtain informed consent and HIPAA authorization: procedural/consent criterion, not expressible as a patient field.",
+      "Breastfeeding or unwilling to practice contraception: no breastfeeding or contraception fields in schema.",
+      "Concomitant intracranial pathology other than subdural hematoma (e.g., intracranial malignancy): no field for specific intracranial pathology type.",
+      "Known hypersensitivity to bevacizumab: no allergy/hypersensitivity fields in schema.",
+      "Radiographic evidence of mass effect: no imaging finding fields in schema.",
+      "Focal neurological deficits attributed to subdural hematoma: no neurological deficit fields in schema.",
+      "Craniotomy or burr hole procedures performed in preceding two weeks prior to onset of subdural hematoma: no surgical history or temporal fields in schema.",
+      "Secondary causes apart from trauma for chronic subdural hematoma (vascular abnormality or tumor): no etiology classification fields in schema.",
+      "Emergent surgical evacuation required: no field for surgical urgency in schema.",
+      "Non-convexity chronic subdural hematoma: no anatomical location fields in schema.",
+      "Coagulation abnormalities (platelet count <100,000 and/or INR <1.5): no lab value fields in schema.",
+      "Known contraindications for angiography or contrast allergy: no allergy or procedure contraindication fields in schema.",
+      "Known active systemic infection or sepsis: no infection status fields in schema.",
+      "Contraindication to anesthetic agents for conscious sedation/MAC: no anesthesia contraindication fields in schema.",
+      "Life expectancy less than six months due to comorbid terminal conditions: no prognosis or comorbidity fields in schema.",
+      "Premorbid modified Rankin score (mRS) of 5 or greater: no mRS or functional status fields in schema.",
+      "Concurrent participation in another research protocol for experimental therapy: no enrollment status fields in schema."
+    ]
+  }
+}

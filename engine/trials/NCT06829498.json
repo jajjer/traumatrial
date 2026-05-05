@@ -1,0 +1,61 @@
+{
+  "trial_id": "NCT06829498",
+  "short_name": "BCAAs in Concussion 2.0",
+  "title": "BCAAs in Concussion 2.0",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 11,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 23,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "gcs",
+      "op": "lt",
+      "value": 13,
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion #2: Minimum weight of 40kg \u2014 no weight field in schema.",
+      "Inclusion #3: Meeting concussion criteria per American Congress of Rehabilitative Medicine \u2014 no structured concussion-diagnosis field in schema.",
+      "Inclusion #4: Present within 4 days of injury \u2014 temporal/time-since-injury logic not supported by schema.",
+      "Inclusion #5: Post-menarchal females must have a negative urine pregnancy test and use acceptable contraception \u2014 menarchal status and contraception method not in schema.",
+      "Inclusion #6: Informed consent requirements for minors vs. adults \u2014 consent/guardian logic not in schema.",
+      "Exclusion #1 (partial): TBI requiring hospital admission or neurosurgical intervention \u2014 only GCS threshold is encoded; admission/surgical requirement fields not in schema.",
+      "Exclusion #2: Prior concussion or TBI within 90 days \u2014 prior injury history and temporal logic not in schema.",
+      "Exclusion #3: Known or family history of maple syrup urine disease \u2014 medical/family history fields not in schema.",
+      "Exclusion #4: Investigational drug use within 30 days prior to enrollment \u2014 medication history and temporal logic not in schema.",
+      "Exclusion #5: Hypersensitivity to any ingredient in active or placebo products \u2014 allergy/hypersensitivity fields not in schema.",
+      "Exclusion #6 (partial): Planning to become pregnant during study or breastfeeding \u2014 future pregnancy intent and breastfeeding status not in schema.",
+      "Exclusion #7: Non-English speaking participants or parent/guardian \u2014 language fields not in schema."
+    ]
+  }
+}

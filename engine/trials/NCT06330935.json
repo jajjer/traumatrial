@@ -1,0 +1,67 @@
+{
+  "trial_id": "NCT06330935",
+  "short_name": "Evaluating the Effect of Tranexamic Acid on the Clinical Outcomes in Patients With Traumatic Brain Injury",
+  "title": "Evaluating the Effect of Tranexamic Acid on the Clinical Outcomes in Patients With Traumatic Brain Injury",
+  "requires_efic": true,
+  "phase": "PHASE1",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "lt",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 13,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "eq",
+      "value": "pregnant",
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "eq",
+      "value": 3,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Time of admission within 3 hours of injury: temporal/time-of-injury logic cannot be expressed with available schema fields.",
+      "GCS score of 3 with bilateral unresponsive pupils: the pupil response component cannot be expressed in the schema; only GCS=3 is partially encoded as a soft exclusion.",
+      "Known bleeding/clotting disorders: no schema field exists for bleeding or clotting disorder history.",
+      "Known seizure disorders: no schema field exists for seizure disorder history.",
+      "Known history of severe renal impairment: no schema field exists for renal function or history.",
+      "Unknown time of injury: temporal/time-of-injury metadata cannot be expressed with available schema fields.",
+      "Prior TXA for current injury: no schema field exists for prior medication administration.",
+      "Known venous or arterial thrombosis: no schema field exists for thrombosis history.",
+      "Intracranial haemorrhage confirmed on cranial CT scan: imaging confirmation cannot be expressed with available schema fields (presumed_intracranial_hemorrhage used as proxy)."
+    ]
+  }
+}

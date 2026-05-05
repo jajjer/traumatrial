@@ -1,0 +1,33 @@
+{
+  "trial_id": "NCT07556991",
+  "short_name": "iSDH",
+  "title": "Prospective Clinical Investigation on Infection as a Cause of Chronic Subdural Hematoma.",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gt",
+      "value": 18,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "anticoagulant_use",
+      "op": "eq",
+      "value": false,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion: surgical treatment of chronic subdural hematoma \u2014 no schema field exists for surgical procedure or diagnosis of chronic subdural hematoma.",
+      "Exclusion: prior or current antibiotic treatment \u2014 no schema field exists for antibiotic use or treatment history.",
+      "Exclusion: infection \u2014 no schema field exists for active or prior infection status.",
+      "Exclusion: recurrent chronic subdural hematoma \u2014 no schema field exists for recurrence of a prior diagnosis.",
+      "Exclusion: conservatively treated chronic subdural hematoma \u2014 no schema field exists for treatment modality or chronic subdural hematoma diagnosis."
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "trial_id": "NCT07373366",
+  "short_name": "Assessment of Noninvasive Neuromodulation in a Group of Traumatic Brain Injured Patients and Healthy Volunteers",
+  "title": "Assessment of Noninvasive Neuromodulation in a Group of Traumatic Brain Injured Patients and Healthy Volunteers",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "DAI (diffuse axonal injury) diagnostic requirement: no schema field exists for specific TBI subtype diagnosis.",
+      "Consent with next of kin: consent/legal authorization status is not a patient data field in the schema.",
+      "Open TBI exclusion: no schema field distinguishes open vs. closed TBI.",
+      "History of chronic neurological conditions: prior medical history fields are not available in the schema."
+    ]
+  }
+}

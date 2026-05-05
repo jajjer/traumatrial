@@ -1,0 +1,45 @@
+{
+  "trial_id": "NCT06939335",
+  "short_name": "Lazarus-PEEP",
+  "title": "The Application of Positive End-Expiratory Pressure in Out-of-Hospital Cardiac Arrest: The Lazarus-PEEP Trial.",
+  "requires_efic": true,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "CPR Administration by ALS team: no schema field exists for EMS crew level or CPR administration status.",
+      "Intubation and Ventilation: no schema field exists to indicate whether the patient has been successfully intubated and ventilated during resuscitation.",
+      "Traumatic cardiac arrest (including drowning, penetrating/blunt injury, burns): mechanism field captures some trauma types but 'drowning' is not an allowed enum value, and the criterion requires excluding cardiac arrest caused by any of these mechanisms \u2014 partially expressible but cannot cleanly exclude all listed sub-types without risking incorrect exclusions; skipped in full to avoid incomplete logic.",
+      "Immediate ROSC before intubation: no schema field exists for timing of ROSC relative to intubation.",
+      "Mechanical ventilation prior to arrest for reasons other than the arrest: no schema field exists for pre-existing mechanical ventilation status.",
+      "DNR or advanced directive orders: no schema field exists for code status or advance directives.",
+      "Failure to intubate: no schema field exists for intubation success/failure status.",
+      "Enrollment in other interventional clinical trials: no schema field exists for concurrent trial enrollment."
+    ]
+  }
+}

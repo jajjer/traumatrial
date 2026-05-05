@@ -1,0 +1,51 @@
+{
+  "trial_id": "NCT05437575",
+  "short_name": "PAIN",
+  "title": "Prehospital Analgesia INtervention Trial (PAIN)",
+  "requires_efic": true,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "hr_bpm",
+      "op": "gte",
+      "value": 115,
+      "hard": false
+    },
+    {
+      "field": "eta_minutes",
+      "op": "gt",
+      "value": 0,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "age_years",
+      "op": "lt",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "sbp_mmhg",
+      "op": "gt",
+      "value": 180,
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Transport after injury to a participating PAIN Trauma center: cannot be expressed with available schema fields (no field for participating center affiliation).",
+      "Shock Index (SI) \u22650.9: SI is a derived value (HR/SBP) requiring compound arithmetic logic not supported by the schema operators; HR \u2265115 is partially encoded as a soft inclusion rule.",
+      "Intravenous pain medication indicated (CPOT\u22652, NRS\u22655): pain scale scores (CPOT, NRS) are not available schema fields.",
+      "No IV access exclusion: IV access status is not an available schema field.",
+      "Females <50 years of age exclusion: requires a compound condition combining sex=F AND age<50, which cannot be expressed as a single rule in the schema without risking incorrect exclusion of males; no compound boolean logic is supported.",
+      "Advanced airway management prior to first dose administration: airway management status is not an available schema field.",
+      "Known allergy to fentanyl citrate or ketamine hydrochloride: allergy history is not an available schema field.",
+      "Known prisoner: prisoner status is not an available schema field.",
+      "Objection to study voiced by subject or family member at scene: consent/objection status is not an available schema field.",
+      "Pain treatment contraindicated by local protocol: local protocol contraindication is not an available schema field.",
+      "Wearing a 'NO PAIN STUDY' bracelet: opt-out bracelet status is not an available schema field."
+    ]
+  }
+}

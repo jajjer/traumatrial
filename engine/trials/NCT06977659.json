@@ -1,0 +1,70 @@
+{
+  "trial_id": "NCT06977659",
+  "short_name": "ENTHeS",
+  "title": "Early Norepinephrine in Trauma Patients With Hemorrhagic Shock",
+  "requires_efic": true,
+  "phase": "PHASE1",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "sbp_mmhg",
+      "op": "lt",
+      "value": 90,
+      "hard": false
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion #2a/2b: Significant bleeding evidence (exsanguinous external bleeding \u2265500 ml, FAST positive, hemothorax, CT bleeding) \u2014 no schema field for bleeding volume, FAST result, or imaging findings; partially covered by presumed_hemorrhage.",
+      "Inclusion #3a: Mean arterial pressure < 65 mmHg \u2014 no MAP field in schema.",
+      "Inclusion #3a: Decrease in blood pressure from baseline > 30 mmHg \u2014 no baseline BP comparison field in schema.",
+      "Inclusion #3b: Capillary refill time > 2 seconds \u2014 no schema field for capillary refill.",
+      "Inclusion #3b: Base excess < -6 mEq/L \u2014 no schema field for base excess.",
+      "Inclusion #3b: Lactate level > 2 mmol/L \u2014 no schema field for lactate.",
+      "Exclusion #1: Prehospital CPR or CPR at trauma bay \u2014 no schema field for CPR history; cardiac_arrest mechanism is not equivalent.",
+      "Exclusion #2: Persistent shock for more than 12 hours prior to randomization \u2014 no schema field for shock duration.",
+      "Exclusion #4: Traumatic limb injury with acute limb ischemia \u2014 no schema field for limb ischemia.",
+      "Exclusion #5: History of limb ischemia, chronic heart disease, chronic lung disease, or chronic renal disease \u2014 no schema field for prior medical history.",
+      "Exclusion #7: Documented DNR order or declined life-sustaining intervention \u2014 no schema field for code status.",
+      "Exclusion #8: Allergy to norepinephrine or contraindications (peripheral vascular thrombosis, mesenteric thrombosis, fatal tachyarrhythmia) \u2014 no schema field for drug allergies or vascular conditions.",
+      "Exclusion #9: Current use of ergotamine, MAOIs, or TCAs \u2014 no schema field for medication use.",
+      "Exclusion #10: Prior vasopressor administration before randomization \u2014 no schema field for prior vasopressor use.",
+      "Exclusion #11: Weight less than 30 kg \u2014 no schema field for patient weight."
+    ]
+  }
+}

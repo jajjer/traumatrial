@@ -1,0 +1,57 @@
+{
+  "trial_id": "NCT07245264",
+  "short_name": "RATATA",
+  "title": "Adjuvant Tranexamic Acid (TXA) Versus Surgery Alone for Adult Patients With Chronic Subdural Hematoma (CSDH)",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "anticoagulant_use",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion #1: Symptomatic CSDH confirmed on CT/MRI measuring >10mm thickness \u2014 no imaging measurement or CSDH-specific diagnosis field in schema.",
+      "Inclusion #3: Scheduled for single or double burr hole evacuation \u2014 no surgical scheduling field in schema.",
+      "Inclusion #4: No contraindication for TXA \u2014 no TXA contraindication field in schema.",
+      "Exclusion #1: Mechanical heart valve \u2014 no cardiac device history field in schema.",
+      "Exclusion #2: Newly diagnosed (last 12 months) pulmonary embolism, myocardial infarction, or strong indication for antithrombotic treatment \u2014 no diagnosis history or temporal logic in schema.",
+      "Exclusion #3: Intracranial surgery within last 6 months \u2014 no surgical history or temporal logic in schema.",
+      "Exclusion #4: Woman <40 years (partially encoded as pregnancy exclusion; the age-based sex restriction for women under 40 cannot be expressed without a combined sex+age rule).",
+      "Exclusion #5: Participation in any other clinical trial \u2014 no trial enrollment field in schema.",
+      "Exclusion #6: Life expectancy of less than one year \u2014 no prognosis or life expectancy field in schema.",
+      "Exclusion #7: Modified Rankin Scale score of 4 or 5 before hematoma \u2014 no functional independence scale field in schema.",
+      "Exclusion #8: Unfit for participation for any other reason as evaluated by the including physician \u2014 subjective clinical judgment, not encodable.",
+      "Exclusion #9: Severe renal impairment (eGFR <30 ml/min or serum creatinine >150 \u03bcmol/L) \u2014 no renal function lab fields in schema.",
+      "Exclusion #10: Known hypersensitivity or allergy to TXA \u2014 no allergy/hypersensitivity field in schema.",
+      "Exclusion #11: Inability to obtain informed consent \u2014 no consent capacity field in schema."
+    ]
+  }
+}

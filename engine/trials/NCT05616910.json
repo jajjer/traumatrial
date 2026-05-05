@@ -1,0 +1,65 @@
+{
+  "trial_id": "NCT05616910",
+  "short_name": "Inhaled Nitric Oxide for Microvascular Dysfunction in Traumatic Brain Injury",
+  "title": "Inhaled Nitric Oxide for Microvascular Dysfunction in Traumatic Brain Injury",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 75,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 9,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "eq",
+      "value": "pregnant",
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "GCS 13-15 with an abnormal imaging scan: the conditional imaging requirement cannot be expressed with available fields and operators.",
+      "Radiologic findings indicative of primarily diffuse TBI: requires imaging interpretation not available in the schema.",
+      "Severe cardiac dysfunction (e.g. elevation of pulmonary edema on chest xray, large elevation of cardiac enzymes): requires cardiac/lab fields not in the schema.",
+      "Large focal injury (subdural hematoma, epidural hematoma, intraparenchymal hematoma, >30mL aggregate volume): requires imaging volume measurement not in the schema.",
+      "Need for immediate neurosurgical intervention: requires clinical decision field not in the schema.",
+      "Pre-existing disabling psychiatric or neurological disorders such as cortical stroke, brain tumor, disabling multiple sclerosis, dementia, and severe TBI: requires prior medical history fields not in the schema.",
+      "Known intracranial vessel disease: requires prior medical history fields not in the schema.",
+      "Acute Respiratory Distress Syndrome (ARDS) or pre-existing pulmonary hypertension: requires respiratory/cardiac diagnosis fields not in the schema.",
+      "Cardiopulmonary resuscitation or cardioversion at admission: requires resuscitation status field not in the schema.",
+      "Chronic Kidney Disease (GFR <60mL/min/1.73m2): requires lab/renal function fields not in the schema.",
+      "Respiratory Infection: requires clinical diagnosis fields not in the schema.",
+      "Prisoners or patients in police custody: requires custody status field not in the schema.",
+      "Possible drug interactions (nitric oxide donors: prilocaine, sodium nitroprusside, nitroglycerin): requires current medication fields not in the schema."
+    ]
+  }
+}

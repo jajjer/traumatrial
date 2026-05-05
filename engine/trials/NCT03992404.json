@@ -1,0 +1,60 @@
+{
+  "trial_id": "NCT03992404",
+  "short_name": "PATTERN",
+  "title": "Study to Compare the Efficacy and Safety of NT 201 (Botulinum Toxin) With Placebo for the Treatment of Lower Limb Spasticity Caused by Stroke or Traumatic Brain Injury",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 85,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Diagnosis of lower limb spasticity caused by stroke or traumatic brain injury: no schema field for spasticity diagnosis or stroke history.",
+      "Disabling ankle flexor spasticity presenting as pes equinus or pes equinovarus: no schema field for spasticity type or foot deformity.",
+      "Modified Ashworth Scale-Bohannon score of 2 or 3 in ankle plantar flexor: no schema field for MAS score.",
+      "Minimum passive range of motion in ankle (10\u00b0 dorsiflexion and 20\u00b0 plantarflexion): no schema field for range of motion.",
+      "At least 4 months since last botulinum neurotoxin injection: no schema field for prior BoNT injection history.",
+      "Anticoagulation therapy with aPTT \u2264 80 seconds or INR \u2264 2.5: no schema fields for aPTT or INR lab values (anticoagulant_use is present but cannot encode the lab thresholds).",
+      "Generalized disorders of muscle activity (myasthenia gravis, Lambert Eaton syndrome, ALS) or peripheral neuromuscular dysfunction: no schema field for neuromuscular diagnoses.",
+      "Bilateral lower limb paresis/paralysis/spasticity or tetraparesis/paralysis/spasticity: no schema field for laterality or paresis type.",
+      "Body weight < 50 kg: no schema field for body weight.",
+      "Severe atrophy of the target limb muscles: no schema field for muscle atrophy.",
+      "Previous, ongoing, or planned intrathecal baclofen treatment: no schema field for prior or planned treatments.",
+      "Previous, ongoing, or planned surgical intervention, alcohol/phenol block, or muscle afferent block in target limb: no schema field for prior procedures.",
+      "Physiotherapy or orthoses/splints initiated less than 4 weeks before screening or expected to change: no schema field for rehabilitation history.",
+      "Current or planned parenteral drugs interfering with neuromuscular transmission within 2 weeks prior to screening: no schema field for specific medication history.",
+      "Infection or inflammation at injection sites: no schema field for local infection status.",
+      "Presence or history of aspiration pneumonia, recurrent lower respiratory tract infections, or compromised respiratory function: no schema field for respiratory history.",
+      "Breast feeding exclusion: no schema field for lactation status."
+    ]
+  }
+}

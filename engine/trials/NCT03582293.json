@@ -1,0 +1,48 @@
+{
+  "trial_id": "NCT03582293",
+  "short_name": "TORCH",
+  "title": "Tranexamic Acid to Prevent OpeRation in Chronic Subdural Hematoma",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 14,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "anticoagulant_use",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "CT-confirmed chronic subdural hematoma (cSDH): requires imaging/diagnostic result not available in schema.",
+      "mNIHSS score <=4 and stable neurological deficit: neurological scoring fields not in schema.",
+      "Primary surgical treatment triggers (medically intractable headache, midline shift >10mm, imminent death within 24 hours): clinical/imaging parameters not in schema.",
+      "Structural causes for subdural haemorrhage (arachnoid cysts, cortical vascular malformations, cranial surgery <1 year): prior medical history and imaging findings not in schema.",
+      "Aneurysmal subarachnoid haemorrhage: specific diagnosis/history field not in schema.",
+      "Active treatment for deep vein thrombosis, pulmonary embolism or cerebral thrombosis: anticoagulant_use captures anticoagulants but not the specific indication or distinction from secondary prophylaxis.",
+      "Active intravascular clotting or disseminated intravascular coagulation: lab/clinical diagnosis not in schema.",
+      "Known hypersensitivity or allergy to TXA or its ingredients: allergy history not in schema.",
+      "History of blood coagulation disorder (hypercoagulability disorder): prior medical history not in schema.",
+      "History of severe renal impairment (eGFR <30 ml/min or serum creatinine >150 \u03bcmol/L): lab values not in schema.",
+      "History of anaemia (haemoglobin <6 mmol/L): lab values not in schema.",
+      "History of convulsions: prior medical history not in schema.",
+      "History of inability to safely swallow oral medication: functional history not in schema.",
+      "Inability to obtain informed consent including language barrier: consent/administrative criterion not in schema."
+    ]
+  }
+}

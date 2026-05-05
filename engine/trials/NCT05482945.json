@@ -1,0 +1,55 @@
+{
+  "trial_id": "NCT05482945",
+  "short_name": "CPAr",
+  "title": "CardioPulmonary Resuscitation With Argon (CPAr) Trial",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": false
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "ICU admission after resuscitation from witnessed non-traumatic OHCA of presumably cardiac etiology with shockable rhythm: no schema fields for witnessed status, OHCA setting, cardiac etiology, or presenting rhythm type.",
+      "Unconsciousness after return of spontaneous circulation (ROSC): GCS used as proxy but ROSC status is not a schema field.",
+      "Duration of CPR \u2264 40 minutes: no schema field for CPR duration.",
+      "Initiation of study intervention \u2264 4 hours from ROSC: no schema field for time-from-ROSC.",
+      "Stable SaO2 \u2265 94% with FiO2 of 30%: no schema fields for oxygen saturation or FiO2.",
+      "Non-witnessed cardiac arrest (exclusion): no schema field for witnessed status.",
+      "Cardiac arrest of traumatic origin or non-cardiac cause (exclusion): partially covered by mechanism=cardiac_arrest inclusion but traumatic origin sub-distinction not fully expressible.",
+      "Non-shockable presenting rhythm (PEA and asystole) exclusion: no schema field for cardiac rhythm.",
+      "Female of childbearing potential defined as younger than 50 years (exclusion): age-sex compound criterion not fully expressible; pregnancy_status exclusion partially covers this.",
+      "Known terminal illness (exclusion): no schema field for terminal illness.",
+      "Pre-cardiac arrest cerebral performance category (CPC) \u2265 3 (exclusion): no schema field for CPC.",
+      "Participation in another clinical trial (exclusion): no schema field for concurrent trial enrollment."
+    ]
+  }
+}

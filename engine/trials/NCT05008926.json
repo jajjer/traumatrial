@@ -1,0 +1,58 @@
+{
+  "trial_id": "NCT05008926",
+  "short_name": "NIPA",
+  "title": "The NIPA Study Naloxegol Administration to Prevent Opioids Induced Gastrointestinal Motility Disturbance in Brain Injured PAtients",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion #2 (subarachnoid hemorrhage without other life-threatening injury): subarachnoid hemorrhage is not a distinct field; presumed_tbi partially covers TBI but not SAH specifically.",
+      "Inclusion #3 (patients under sedation with opioid agonists for less than 24 hours): sedation status and opioid administration duration are not available fields.",
+      "Inclusion #4 (expected duration of invasive mechanical ventilation and sedation \u226548 hours): mechanical ventilation status and expected duration are not available fields.",
+      "Inclusion #5 (intracranial pressure monitoring): ICP monitoring status is not an available field.",
+      "Inclusion #6 (enteral feeding by oro/nasogastric tube): enteral feeding status is not an available field.",
+      "Inclusion #7 (affiliated or beneficiary of the French social security system): administrative/insurance status is not an available field.",
+      "Exclusion #1 (opioids received for more than 24 hours): opioid administration duration is not an available field.",
+      "Exclusion #2 (refractory intracranial hypertension requiring therapy other than analgo-sedation): ICP therapy status is not an available field.",
+      "Exclusion #3 (acute or chronic renal failure with creatinine clearance <60 ml/min): renal function/creatinine clearance is not an available field.",
+      "Exclusion #4 (known or suspected acute gastrointestinal obstruction): GI obstruction status is not an available field.",
+      "Exclusion #5 (risk of digestive perforation including peptic ulcer, Crohn's disease, Ogilvie syndrome, diverticulitis, GI tumor, ovarian cancer, peritoneal metastasis, recent abdominal trauma): medical history and GI risk factors are not available fields.",
+      "Exclusion #6 (concomitant treatment with strong/moderate CYP3A4 inhibitors or strong inducers): medication history is not an available field.",
+      "Exclusion #7 (concomitant treatment with VEGF inhibitor): medication history is not an available field.",
+      "Exclusion #8 (allergy to Naloxegol or its excipients): allergy history is not an available field.",
+      "Exclusion #9 (recent myocardial infarction within 6 months, symptomatic congestive cardiovascular disease, QT \u2265500 msec): cardiac history and ECG values are not available fields.",
+      "Exclusion #10 (medical decision for rapid palliative care): palliative care status is not an available field.",
+      "Exclusion #11 (breastfeeding): breastfeeding status is not an available field.",
+      "Exclusion #12 (Child Pugh C stage cirrhosis): liver disease severity is not an available field.",
+      "Exclusion #13 (patient under legal protection or deprived of liberty): legal status is not an available field.",
+      "Exclusion #14 (another life-threatening injury): multi-trauma/life-threatening injury status is not an available field.",
+      "Exclusion #15 (history of clinically important alterations of the blood-brain barrier including brain tumors, metastasis, CNS inflammatory pathologies, active MS, advanced Alzheimer's): neurological history is not an available field."
+    ]
+  }
+}

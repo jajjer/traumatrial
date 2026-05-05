@@ -1,0 +1,52 @@
+{
+  "trial_id": "NCT06073886",
+  "short_name": "Personalized Brain Stimulation to Treat Chronic Concussive Symptoms",
+  "title": "Personalized Brain Stimulation to Treat Chronic Concussive Symptoms",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Mild TBI defined by WHO criteria in the last 12 months: temporal criterion (within 12 months of injury) cannot be expressed with available schema fields or operators.",
+      "High burden of post-concussive symptoms (Rivermead Post-Concussion Symptoms Questionnaire score >=20): requires a clinical assessment score not available in the schema.",
+      "Objective neurologic deficits: no schema field captures neurologic deficit status.",
+      "Ongoing or prolonged (>3 months) post-concussive symptoms from a prior mTBI within 2 years of the index injury: requires prior injury history and temporal logic not available in the schema.",
+      "History of transcranial magnetic stimulation (TMS) therapy: requires prior treatment history not available in the schema.",
+      "Contraindications for TMS or MRI (e.g., metallic implant, pacemaker): requires implant/device history not available in the schema.",
+      "Severe mental, physical, or medical problems (liver/kidney/heart disease, uncontrolled diabetes or hypertension, malignancy, psychosis, previous seizure): requires medical history fields not available in the schema.",
+      "Active alcohol or illicit drug abuse: requires substance use history not available in the schema.",
+      "Inability to speak and read English: requires language ability assessment not available in the schema."
+    ]
+  }
+}

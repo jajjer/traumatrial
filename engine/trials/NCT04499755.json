@@ -1,0 +1,36 @@
+{
+  "trial_id": "NCT04499755",
+  "short_name": "Efficacy of Nucleo CMP Forte in Traumatic Brain Injury in Pediatrics",
+  "title": "Efficacy of Nucleo CMP Forte in Traumatic Brain Injury in Pediatrics",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lt",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 12,
+      "hard": true
+    }
+  ],
+  "exclusion": [],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Moderate and severe TBI classification: GCS cutoff for 'moderate' (9-12) and 'severe' (3-8) is partially encoded via gcs <= 12, but the upper bound of 'moderate' vs. 'severe' distinction and exact GCS thresholds used by the trial are not fully specified in the criteria text.",
+      "Underlying CNS disorders: Cannot be expressed because there is no field in the schema for pre-existing neurological or CNS conditions.",
+      "Pediatric age lower bound: The exact minimum age for 'children' is not specified in the criteria, so no lower age bound rule is encoded."
+    ]
+  }
+}

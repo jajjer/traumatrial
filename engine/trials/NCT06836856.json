@@ -1,0 +1,41 @@
+{
+  "trial_id": "NCT06836856",
+  "short_name": "Evaluating the Impact of Adjuvant Use of Beta Blockers on Clinical Outcomes in Patients With Traumatic Brain Injury",
+  "title": "Evaluating the Impact of Adjuvant Use of Beta Blockers on Clinical Outcomes in Patients With Traumatic Brain Injury",
+  "requires_efic": false,
+  "phase": "PHASE1",
+  "inclusion": [
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 13,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": false,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion: TBI must be detected on CT scan with moderate/severe classification \u2014 CT imaging result and injury severity classification are not available fields in the schema.",
+      "Inclusion: Patients must either have no other injuries or only minor injuries (mild IPFF, mild lung contusion, hemothorax/pneumothorax without hypoxia/tachypnea/respiratory distress, simple limb fractures) \u2014 associated injury type and severity are not available fields in the schema.",
+      "Exclusion: Patients on pre-injury beta-blocker therapy \u2014 prior medication use is not an available field in the schema.",
+      "Exclusion: Patients with any bronchospastic conditions \u2014 prior medical history/comorbidities are not available fields in the schema.",
+      "Exclusion: Patients with active acute coronary syndrome \u2014 prior medical history/comorbidities are not available fields in the schema.",
+      "Exclusion: TBI with GCS \u2264 13 with associated major injuries (moderate/marked IPFF requiring laparotomy, moderate/marked lung contusion/pneumothorax/hemothorax with hypoxia/tachypnea, compound fractures, open faciomaxillary trauma) \u2014 associated injury type and severity are not available fields in the schema.",
+      "Exclusion: Persistent shock defined as SBP < 100 mmHg, base deficit > 4, or oliguria, or HR < 60 bpm after more than one week of admission \u2014 the temporal qualifier 'after more than one week of admission' cannot be expressed in the schema; base deficit and oliguria are not available fields."
+    ]
+  }
+}

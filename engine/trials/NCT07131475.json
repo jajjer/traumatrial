@@ -1,0 +1,49 @@
+{
+  "trial_id": "NCT07131475",
+  "short_name": "Precision Biomarkers to Detect Brain Injury in Active-Duty United States Special Operations Forces With Repeated Blast Exposure",
+  "title": "Precision Biomarkers to Detect Brain Injury in Active-Duty United States Special Operations Forces With Repeated Blast Exposure",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 50,
+      "hard": true
+    },
+    {
+      "field": "sex",
+      "op": "eq",
+      "value": "M",
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Active-duty Navy SEAL Service Member: no schema field exists for military branch, unit, or occupational specialty.",
+      "Early career SEAL (0-2 years) or mid-late career SEAL (10-15 years): no schema field exists for career stage or years of service.",
+      "History of moderate or severe TBI: the schema's presumed_tbi bool cannot distinguish severity or historical diagnosis; partially encoded as a soft exclusion but severity and historical nature cannot be captured.",
+      "History of major neurological disorder: no schema field exists for prior neurological history.",
+      "Untreated or unstable severe psychiatric condition: no schema field exists for psychiatric history or treatment status.",
+      "Current severe medical condition that requires long-term treatment: no schema field exists for chronic medical conditions or treatment requirements.",
+      "Any condition that may cause undue risk or logistical contraindication: too vague and general to encode in the schema.",
+      "MRI contraindication: no schema field exists for imaging contraindications.",
+      "PET contraindication: no schema field exists for imaging contraindications."
+    ]
+  }
+}

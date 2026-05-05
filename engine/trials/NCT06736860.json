@@ -1,0 +1,70 @@
+{
+  "trial_id": "NCT06736860",
+  "short_name": "Tranexamic Acid in Patients With Traumatic Bleeding Based on Dynamic Monitoring of Thromboelastography",
+  "title": "Tranexamic Acid in Patients With Traumatic Bleeding Based on Dynamic Monitoring of Thromboelastography",
+  "requires_efic": false,
+  "phase": "PHASE4",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 80,
+      "hard": true
+    },
+    {
+      "field": "sbp_mmhg",
+      "op": "lte",
+      "value": 90,
+      "hard": false
+    },
+    {
+      "field": "hr_bpm",
+      "op": "gte",
+      "value": 110,
+      "hard": false
+    },
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Trauma ISS score between 16 and 50: ISS score is not an available patient field in the schema.",
+      "Receiving a 1 g TXA push within 3 hours of injury with push completed within 10 minutes of arrival: requires temporal/treatment administration logic not expressible in the schema.",
+      "Signing the informed consent form: administrative/procedural criterion not expressible in the schema.",
+      "Coagulation abnormalities due to co-morbid hematologic or autoimmune diseases: requires prior medical history/lab fields not available in the schema.",
+      "Inability to establish venous or intraosseous access: requires a clinical assessment field not available in the schema.",
+      "Traumatic cardiac arrest for more than 5 minutes: the schema can flag cardiac_arrest mechanism but cannot encode duration of arrest.",
+      "Failure of cardiopulmonary resuscitation: requires a clinical outcome/status field not available in the schema.",
+      "Penetrating brain injury: no field distinguishes penetrating brain injury specifically; mechanism field does not have a dedicated penetrating brain injury enum value.",
+      "Drowning or hanging: no matching mechanism enum values exist in the schema for drowning or hanging."
+    ]
+  }
+}

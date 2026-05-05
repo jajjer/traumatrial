@@ -1,0 +1,90 @@
+{
+  "trial_id": "NCT05826912",
+  "short_name": "APT-TBI-01",
+  "title": "Multi-Arm Multi-Stage Adaptive Platform Trial (APT) for the Acute Treatment of Traumatic Brain Injury",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 9,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 15,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "gsw",
+        "stab"
+      ],
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion #2: First dose must be within 24 hours of injury \u2014 temporal logic relative to injury time cannot be expressed with available fields.",
+      "Inclusion #2: Non-penetrating head injury warranting head CT per ACEP/CDC clinical policy \u2014 injury type specificity and clinical policy logic not expressible in schema (mechanism field only partially captures this; penetrating mechanisms excluded separately).",
+      "Inclusion #4: Specific neuroimaging findings (subarachnoid hemorrhage, contusion, subdural hematoma, petechial hemorrhage, intraventricular hemorrhage) on CT \u2014 no imaging-finding field exists beyond presumed_intracranial_hemorrhage, which is used as a proxy.",
+      "Inclusion #5: Initial GFAP blood level >100 pg/ml and \u226415,000 pg/ml \u2014 lab value field not available in schema.",
+      "Inclusion #6: Persons of childbearing potential must use adequate birth control \u2014 contraceptive compliance cannot be expressed in schema.",
+      "Inclusion #7: No MRI contraindications \u2014 no imaging contraindication field exists in schema.",
+      "Inclusion #8-10: Informed consent, language ability, and study compliance willingness \u2014 administrative/consent criteria not expressible in schema.",
+      "Exclusion #1: Isolated epidural hematoma \u2014 specific neuroimaging diagnosis not available as a schema field.",
+      "Exclusion #2: Pre-existing disabling developmental, neurologic, psychiatric, or medical disorder causing functional disability, or imminent death \u2014 no prior medical history or clinical prognosis fields in schema.",
+      "Exclusion #3: Current enrollment in another interventional study \u2014 no schema field for concurrent trial enrollment.",
+      "Exclusion #4: Currently breastfeeding or planning pregnancy in next 6 months \u2014 breastfeeding and future pregnancy intent not expressible in schema.",
+      "Exclusion #5: Current incarceration or in custody \u2014 no schema field for legal/custody status.",
+      "Exclusion #6: Currently prescribed one of the investigational products or contraindicated drugs prior to injury \u2014 no medication history field in schema.",
+      "Exclusion #7: Hypersensitivity or intolerance to investigational products \u2014 no allergy/hypersensitivity field in schema.",
+      "Exclusion #8: Renal dysfunction (CrCl or eGFR <60 mL/min/1.73m\u00b2) \u2014 no renal function lab field in schema.",
+      "Exclusion #9: Acute liver disease or hepatic dysfunction (ALT/AST >3x ULN) \u2014 no liver function lab field in schema.",
+      "Exclusion #10: Hemodynamic instability per physician clinical judgment \u2014 composite clinical judgment criterion; sbp_mmhg and hr_bpm exist but specific thresholds are not defined in the criterion.",
+      "Exclusion #11: Inability to swallow investigational product capsule \u2014 no swallowing ability field in schema.",
+      "Exclusion #12: Unable/unwilling to consume animal byproducts, gelatin allergy, or religious beliefs prohibiting gelatin \u2014 no dietary/religious preference field in schema.",
+      "Exclusion #13: Intolerance to small amounts of lactose \u2014 no lactose intolerance field in schema.",
+      "Exclusion #14: Low likelihood of follow-up or study compliance per investigator judgment \u2014 administrative/discretionary criterion not expressible in schema."
+    ]
+  }
+}

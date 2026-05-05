@@ -1,0 +1,54 @@
+{
+  "trial_id": "NCT05702138",
+  "short_name": "B-HIST",
+  "title": "High Intensity Step Training After Traumatic Brain Injury",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "TBI definition requiring LOC, PTA, or objective neurological findings: no schema field captures clinical TBI diagnostic criteria.",
+      "Less than 6 months post injury at time of consent: no schema field for time-since-injury.",
+      "Weight less than 298 pounds and height less than 6'2\": no schema fields for weight or height.",
+      "Intact skin (no open lesions/bandages) in harness contact area: no schema field for skin integrity.",
+      "Able to walk ten feet with assistance of not more than two people and/or bracing: no schema field for ambulatory function.",
+      "Impaired walking speed of less than 1.4 meters/second: no schema field for gait speed.",
+      "Ability to follow directions/standardized instructions: no schema field for cognitive compliance.",
+      "Completing or have completed initial inpatient rehabilitation for TBI: no schema field for rehabilitation status.",
+      "O-Log score of at least 20: no schema field for O-Log orientation score.",
+      "Medically cleared for HIST by a physician: no schema field for physician clearance status.",
+      "Uncontrolled cardiopulmonary, metabolic, or infectious disorder: no schema fields for these comorbidities.",
+      "History of orthopedic or additional neurological disorder limiting motor function before TBI: no schema field for prior medical history.",
+      "Any reason in investigator opinion that would interfere with study protocol (e.g., behavioral concerns): no schema field for investigator judgment.",
+      "Uncontrolled seizure disorder: no schema field for seizure history or control status.",
+      "Lactating females: no schema field for lactation status.",
+      "Current participation in any other interventional trials: no schema field for concurrent trial enrollment.",
+      "History of untreated or poorly controlled psychiatric condition (depression, schizophrenia, bipolar disorder): no schema field for psychiatric history."
+    ]
+  }
+}

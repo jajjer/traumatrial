@@ -1,0 +1,51 @@
+{
+  "trial_id": "NCT07239908",
+  "short_name": "RE-ARREST",
+  "title": "Resuscitation Enhancement to Avoid Rearrest Through Evidence-based Strategies in Prehospital Post-resuscitation Care",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "blunt_mvc",
+        "blunt_other",
+        "fall",
+        "gsw",
+        "stab",
+        "blast",
+        "burn",
+        "crush"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Patients must have received resuscitative care specifically from the Siriraj Emergency Medical Services Center (SiEMS) \u2014 no schema field for EMS agency or transport origin.",
+      "Patients must have achieved return of spontaneous circulation (ROSC) prior to hospital arrival \u2014 no schema field for ROSC status.",
+      "Patients must be subsequently transported to the Emergency Department of Siriraj Hospital \u2014 no schema field for destination facility.",
+      "Exclusion of ROSC patients whose legally authorized representative declined vasopressor administration \u2014 no schema field for surrogate consent or treatment refusal.",
+      "Exclusion of ROSC patients who had not undergone endotracheal intubation and whose representative declined intubation \u2014 no schema field for intubation status or surrogate consent.",
+      "Exclusion of ROSC patients without rearrest whose representative declined further investigations after ED arrival \u2014 no schema field for rearrest status or surrogate consent.",
+      "Exclusion of patients whose legally authorized representative declined study participation \u2014 no schema field for consent status.",
+      "Exclusion of patients without an available legally authorized representative \u2014 no schema field for surrogate availability."
+    ]
+  }
+}

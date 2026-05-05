@@ -1,0 +1,52 @@
+{
+  "trial_id": "NCT05166343",
+  "short_name": "PRIME",
+  "title": "POHCA Resuscitation: Evaluation of IM Epinephrine",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 0,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 17,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "blunt_mvc",
+        "blunt_other",
+        "fall",
+        "gsw",
+        "stab",
+        "blast",
+        "burn",
+        "crush"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Must be receiving at least 1 minute of CPR by trained first responders (police, fire, or paramedic services) \u2014 no schema field exists for CPR duration or responder type.",
+      "Age lower bound of '1 day' cannot be distinguished from age_years=0 which also covers newborns under 1 day; the sub-year age granularity is not supported by the integer age_years field.",
+      "Exclusion of OHCA due to 'obvious traumatic event' is partially covered by the mechanism exclusion list, but the schema's cardiac_arrest mechanism on inclusion and the overlap with traumatic mechanisms cannot be fully disambiguated when trauma precipitates cardiac arrest."
+    ]
+  }
+}
