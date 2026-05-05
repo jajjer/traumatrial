@@ -1,0 +1,65 @@
+{
+  "trial_id": "NCT07319208",
+  "short_name": "COSMOS-TBI",
+  "title": "Efficacy of Early Continuous Infusion of HSS on the Neurological Outcome at 6 Months in TBI Patients.",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 12,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "gcs",
+      "op": "eq",
+      "value": 3,
+      "hard": false
+    },
+    {
+      "field": "spinal_injury_suspected",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "eq",
+      "value": "pregnant",
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Patient admitted to intensive care unit: no ICU admission field in schema.",
+      "Intracranial pressure (ICP) monitoring based on attending physician's clinical judgment: no ICP monitoring field in schema.",
+      "Inclusion during the first 12 hours after ICP monitoring placement: temporal/procedural criterion not expressible with available fields.",
+      "Informed and signed consent: administrative/consent criterion not expressible in schema.",
+      "National health insurance: administrative criterion not expressible in schema.",
+      "GCS = 3 with persistent abnormal pupillary reactivity despite urgent therapy: pupillary reactivity is not a schema field; GCS = 3 alone encoded as soft exclusion without the pupillary reactivity qualifier.",
+      "Imminent death and do-not-resuscitate orders: no DNR or prognosis field in schema.",
+      "Severe cardiac insufficiency: no cardiac function field in schema.",
+      "Severe chronic renal insufficiency: no renal function field in schema.",
+      "Severe hepatic insufficiency (oedema-ascitic decompensation or Child-Pugh class C cirrhosis): no hepatic function field in schema.",
+      "High risk of follow-up difficulties after ICU discharge: social/logistical criterion not expressible in schema.",
+      "Patients under court protection: legal status criterion not expressible in schema.",
+      "Patient who does not speak French: language criterion not expressible in schema."
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "trial_id": "NCT04521881",
+  "short_name": "CRASH-4",
+  "title": "Clinical Randomisation of an Anti-fibrinolytic in Symptomatic Mild Head Injury in Older Adults",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 50,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 13,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "History or evidence of head injury (e.g. laceration, bruise, swelling or pain in head or face): no schema field captures physical exam findings on the head/face.",
+      "Has one or more of: impaired consciousness (loss of consciousness, amnesia, confusion), nausea or vomiting: no schema fields exist for amnesia, confusion, nausea, or vomiting as discrete symptoms.",
+      "Within 3 hours of injury: temporal logic relative to injury time cannot be expressed with the available fields and operators.",
+      "Do not include if injury time interval cannot be estimated (e.g. unwitnessed fall, patient found on floor): requires knowledge of witness status and ability to confirm injury time, which are not schema fields.",
+      "Not living in a nursing home, mental health institution, or prison: no schema field captures residential or custodial status.",
+      "Patient will be conveyed to or is admitted to a participating hospital: logistical/site criterion not expressible in the schema.",
+      "TXA not clearly indicated (e.g. major bleeding) or contraindicated (e.g. suspected stroke): medication indication/contraindication logic and stroke suspicion are not schema fields."
+    ]
+  }
+}

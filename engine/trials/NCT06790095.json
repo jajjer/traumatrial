@@ -1,0 +1,89 @@
+{
+  "trial_id": "NCT06790095",
+  "short_name": "PM-003",
+  "title": "TRACK-TBI Precision Medicine Part 3 - Option II",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 3,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "spinal_injury_suspected",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion #2: Requires presentation within 24 hours of head injury and clinical decision to obtain non-contrast cranial CT \u2014 temporal logic and clinical decision not expressible in schema.",
+      "Inclusion #4: Evidence of contusion and/or traumatic axonal microvascular injury (TAMVI) on cranial CT \u2014 no imaging findings field in schema.",
+      "Inclusion #5: Initial GFAP blood level >1000 pg/mL and \u226415000 pg/mL \u2014 lab value field not in schema.",
+      "Inclusion #6: Ability to undergo MRI with no contraindications \u2014 no MRI eligibility field in schema.",
+      "Inclusion #7: Legally Authorized Representative willing and able to provide informed consent \u2014 consent/LAR availability not in schema.",
+      "Inclusion #8: Participant/LAR able to read, speak, and understand English or Spanish \u2014 language field not in schema.",
+      "Exclusion #1: Isolated epidural hematoma \u2014 no imaging diagnosis field in schema.",
+      "Exclusion #2: Bilaterally fixed dilated pupils in absence of paralytic medications or evidence of herniation on cranial CT \u2014 no pupil exam or herniation field in schema.",
+      "Exclusion #3: Pre-existing disabling developmental, neurologic, psychiatric, or medical disorder causing functional disability, or imminent death \u2014 no prior medical history or prognosis field in schema.",
+      "Exclusion #4: Order for comfort care placed prior to enrollment \u2014 no goals-of-care field in schema.",
+      "Exclusion #5: Current enrollment in another interventional study \u2014 no enrollment status field in schema.",
+      "Exclusion #6: Currently breastfeeding or planning to become pregnant in the next 6 months \u2014 partially encoded (pregnant/unknown_could_be_pregnant), but breastfeeding and future pregnancy planning cannot be expressed in schema.",
+      "Exclusion #7: Current incarceration or in custody \u2014 no legal status field in schema.",
+      "Exclusion #8: On psychiatric hold (e.g., 5150, 5250) \u2014 no psychiatric hold field in schema.",
+      "Exclusion #9: Ongoing pre-injury therapy with investigational product, immunosuppressive therapy, or contraindicated medications \u2014 no medication history field in schema.",
+      "Exclusion #10: Allergy or anaphylactic reaction history to CsA or cremophor \u2014 no allergy history field in schema.",
+      "Exclusion #11: Severe polytrauma or previous conditions precluding study activities \u2014 no polytrauma severity field in schema.",
+      "Exclusion #12: Spinal cord injury grade A\u2013D on ASIA Impairment Scale \u2014 schema only captures suspected spinal injury (bool), not confirmed ASIA grade; encoded as spinal_injury_suspected exclusion as closest approximation but ASIA grading specificity is lost.",
+      "Exclusion #13: Primary diagnosis of ischemic or hemorrhagic stroke \u2014 no stroke diagnosis field in schema.",
+      "Exclusion #14: BMI >35 \u2014 no BMI field in schema.",
+      "Exclusion #15: Hemodynamic instability per physician clinical judgement \u2014 no hemodynamic instability field in schema.",
+      "Exclusion #16: Renal dysfunction defined by CrCl/eGFR <60 mL/min/1.73m2 or creatine kinase >5000 IU/L \u2014 no renal function or lab value fields in schema.",
+      "Exclusion #17: Hepatic disease or elevated ALT/AST >3x upper limit of normal \u2014 no liver function or lab value fields in schema.",
+      "Exclusion #18: Serious chronic viral or fungal infection history \u2014 no infection history field in schema.",
+      "Exclusion #19: Active mycobacterial infection or anti-tuberculous treatment \u2014 no infection or medication field in schema.",
+      "Exclusion #20: History of HIV, hepatitis B surface antigen, or hepatitis C virus antibody \u2014 no infectious disease history field in schema.",
+      "Exclusion #21: Significant disease or disorder at investigator discretion \u2014 no investigator judgement field in schema.",
+      "Exclusion #22: Low likelihood of follow-up or study compliance at investigator discretion \u2014 no compliance assessment field in schema."
+    ]
+  }
+}

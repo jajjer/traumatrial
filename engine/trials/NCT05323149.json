@@ -1,0 +1,64 @@
+{
+  "trial_id": "NCT05323149",
+  "short_name": "Tranexamic Acid in Traumatic Brain Injury",
+  "title": "Tranexamic Acid in Traumatic Brain Injury",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gt",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "gsw",
+        "stab"
+      ],
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Non-penetrating TBI onset within 8 hours: temporal 'time since injury' logic cannot be expressed with available schema fields.",
+      "Isolated TBI (no other significant injuries): no schema field exists to confirm injury isolation.",
+      "Mild or moderate TBI severity classification: GCS > 8 partially captures this but severity label cannot be fully encoded.",
+      "Patients with coagulopathies: no coagulopathy or clotting disorder field exists in the schema (anticoagulant_use is a partial proxy but not equivalent).",
+      "Renal failure patients: no renal function or lab value field exists in the schema.",
+      "Patient refusal to participate: consent status cannot be encoded in the schema."
+    ]
+  }
+}

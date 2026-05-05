@@ -210,3 +210,159 @@ def test_mechanism_mapping(code: str, expected: str) -> None:
 </PatientCareReport></EMSDataSet>"""
     patient, _ = from_nemsis_xml(xml)
     assert patient.mechanism == expected
+
+
+# ---------- noisy persona round-trips ----------
+#
+# Each fixture round-trips a persona's adapter-extractable fields. Where the
+# adapter's simplified inference rules diverge from the human-curated persona
+# JSON, the test asserts what the ADAPTER produces — the divergences are
+# documented so future hardening (better activation logic, structured med
+# parsing) shows up as visible test deltas.
+
+
+def test_persona_002_geriatric_fall_namespaced() -> None:
+    """xmlns:nem prefix variant + multi-vitals + non-anticoag meds."""
+    patient, trace = from_nemsis_xml(_load("persona-002-geriatric-fall.xml"))
+    assert patient.patient_id == "SYN-P002-FALL"
+    assert patient.age_years == 67
+    assert patient.sex == "F"
+    # Latest of two eVitalsGroups: SBP 134, HR 88, GCS 14
+    assert patient.gcs == 14
+    assert patient.sbp_mmhg == 134
+    assert patient.hr_bpm == 88
+    assert patient.mechanism == "fall"
+    # Explicit not_pregnant code → extracted, not defaulted
+    preg = next(e for e in trace.extractions if e.field == "pregnancy_status")
+    assert preg.source == "extracted"
+    assert patient.pregnancy_status == "not_pregnant"
+    # Metformin + atorvastatin: no anticoag hit
+    assert patient.anticoagulant_use is False
+    # Adapter activation: fall + age>=55 → Level 2 (Step 2 mechanism+age).
+    # Persona JSON has level 3 (human curator's softer call); divergence is fine.
+    assert patient.trauma_activation_level == 2
+
+
+def test_persona_003_gsw_no_history() -> None:
+    """ICD-10 X95.000A + missing eHistory + single vitals group."""
+    patient, trace = from_nemsis_xml(_load("persona-003-gsw.xml"))
+    assert patient.age_years == 28
+    assert patient.sex == "M"
+    assert patient.gcs == 15
+    assert patient.sbp_mmhg == 70
+    assert patient.hr_bpm == 138
+    assert patient.mechanism == "gsw"
+    # eHistory absent → anticoag defaulted False
+    anticoag = next(e for e in trace.extractions if e.field == "anticoagulant_use")
+    assert anticoag.source == "defaulted"
+    assert patient.anticoagulant_use is False
+    # Hypotension + tachycardia + non-cardiac → presumed_hemorrhage
+    assert patient.presumed_hemorrhage is True
+    # SBP<90 → Level 1
+    assert patient.trauma_activation_level == 1
+
+
+def test_persona_004_tbi_falls_back_to_einjury() -> None:
+    """eSituation.02 absent — adapter falls through to eInjury.01 for mechanism."""
+    patient, trace = from_nemsis_xml(_load("persona-004-tbi-mvc.xml"))
+    assert patient.age_years == 45
+    assert patient.sex == "F"
+    # Latest vitals are the second group — out-of-range HR=350 in the first
+    # group must NOT leak into the Patient.
+    assert patient.gcs == 9
+    assert patient.sbp_mmhg == 110
+    assert patient.hr_bpm == 102
+    # Mechanism resolved via eInjury.01 fallback
+    mech = next(e for e in trace.extractions if e.field == "mechanism")
+    assert mech.source == "extracted"
+    assert patient.mechanism == "blunt_mvc"
+    # GCS<=13 + blunt → presumed_tbi True
+    assert patient.presumed_tbi is True
+    # GCS=9 (>8) → presumed_ich is False per adapter rule, even though the
+    # persona JSON has it as True (human curator factored in CT findings the
+    # adapter can't see).
+    assert patient.presumed_intracranial_hemorrhage is False
+
+
+def test_persona_005_anticoag_via_nested_rxnorm() -> None:
+    """RxNorm CUI inside an eHistory.061 child element + brand-name in sibling."""
+    patient, trace = from_nemsis_xml(_load("persona-005-anticoag-mvc.xml"))
+    assert patient.age_years == 19
+    assert patient.sex == "M"
+    assert patient.mechanism == "blunt_mvc"  # NEMSIS native code 2120001
+    assert patient.anticoagulant_use is True
+    anticoag = next(e for e in trace.extractions if e.field == "anticoagulant_use")
+    # RxNorm channel hits before substring channel
+    assert anticoag.source == "inferred"
+    assert "1114195" in (anticoag.notes or "")
+    # Adapter activation: GCS=14, SBP=105, age=19, blunt → Level 3.
+    # Persona JSON has Level 2 (human bumped for anticoag — adapter's CDC
+    # rules don't bump for that yet).
+    assert patient.trauma_activation_level == 3
+
+
+def test_persona_006_pregnant_fall_explicit_code() -> None:
+    """Explicit pregnant code on a 52yo female + decompensating vitals."""
+    patient, trace = from_nemsis_xml(_load("persona-006-pregnant-fall.xml"))
+    assert patient.age_years == 52
+    assert patient.sex == "F"
+    assert patient.pregnancy_status == "pregnant"
+    # Latest vitals (decompensated): SBP 78, HR 124, GCS 9
+    assert patient.gcs == 9
+    assert patient.sbp_mmhg == 78
+    assert patient.hr_bpm == 124
+    assert patient.mechanism == "fall"
+    # Hypotension → Level 1
+    assert patient.trauma_activation_level == 1
+    # presumed_hemorrhage: SBP<90 + HR>110 + non-cardiac → True
+    assert patient.presumed_hemorrhage is True
+    # GCS=9 + blunt → presumed_tbi True
+    assert patient.presumed_tbi is True
+    # GCS=9 (>8) → presumed_ich False (persona has True)
+    assert patient.presumed_intracranial_hemorrhage is False
+
+
+def test_persona_008_pediatric_caller_provided_id() -> None:
+    """Missing eRecord.01 (caller provides id) + unmapped cause code → 'other'."""
+    patient, trace = from_nemsis_xml(
+        _load("persona-008-pediatric-mvc.xml"), patient_id="P-008"
+    )
+    assert patient.patient_id == "P-008"
+    pid = next(e for e in trace.extractions if e.field == "patient_id")
+    assert pid.notes == "caller-provided"
+    assert patient.age_years == 8
+    assert patient.sex == "M"
+    # Adapter limitation: when eSituation.02 is PRESENT but unmapped,
+    # adapter doesn't fall through to eInjury.01. Mechanism becomes 'other'
+    # even though eInjury.01 carries a valid V43 code.
+    assert patient.mechanism == "other"
+    mech = next(e for e in trace.extractions if e.field == "mechanism")
+    assert mech.source == "defaulted"
+
+
+# ---------- adversarial: known false-positive in substring matcher ----------
+
+
+def test_adversarial_substring_false_positive_documented() -> None:
+    """Allergy note containing 'warfarin' substring → adapter (incorrectly)
+    flags anticoagulant_use=True. This test pins current behavior so a
+    future fix (parsing eHistory.06 into structured fields) flips it."""
+    patient, trace = from_nemsis_xml(_load("adversarial-substring-trap.xml"))
+    assert patient.anticoagulant_use is True
+    anticoag = next(e for e in trace.extractions if e.field == "anticoagulant_use")
+    assert anticoag.source == "inferred"
+    assert "warfarin" in (anticoag.notes or "")
+
+
+# ---------- trace summary covers all Patient fields ----------
+
+
+def test_trace_covers_every_patient_field() -> None:
+    """Every Patient field should have at least one extraction row in the
+    trace — no silent values. Guard against future fields being added to
+    Patient without a corresponding adapter trace entry."""
+    patient, trace = from_nemsis_xml(_load("persona-001-hemorrhage.xml"))
+    fields_in_trace = {e.field for e in trace.extractions}
+    fields_on_patient = set(patient.model_dump().keys())
+    missing = fields_on_patient - fields_in_trace
+    assert not missing, f"Patient fields with no trace row: {missing}"

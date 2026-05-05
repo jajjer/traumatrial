@@ -1,0 +1,77 @@
+{
+  "trial_id": "NCT06930261",
+  "short_name": "ComaDopa",
+  "title": "Dopaminergic Disruption Induced by Traumatic Coma: Dopaminergic Pathways Abnormalities and Biomarkers of Recovery Using MRI and 18F-LBT-999 PET",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lt",
+      "value": 10,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "gsw",
+        "stab"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Affiliated with or beneficiary of a social security system \u2014 no schema field for insurance/social security affiliation.",
+      "Signed informed consent provided by participant or trusted representative \u2014 consent process cannot be encoded in schema fields.",
+      "TBI occurring within the last 30 days \u2014 temporal criterion (time since injury) not expressible with available fields.",
+      "Motor score (M) < 6 at hospital admission \u2014 GCS motor subscore is not a separate schema field; only total GCS is available.",
+      "Sedative treatments discontinued for more than 48 hours \u2014 medication/treatment history field not available in schema.",
+      "Clinically stable (no hemodynamic, respiratory, or metabolic instability requiring specific interventions) \u2014 composite clinical stability criterion not directly encodable; partially related to sbp_mmhg/hr_bpm but requires clinical judgment beyond simple thresholds.",
+      "TBI-COMA Group: no recovery of consciousness at inclusion (GCS < 10 with M < 6) \u2014 subgroup stratification by consciousness recovery status and motor subscore not encodable.",
+      "TBI-REC Group: recovery of consciousness evidenced by simple command-following (GCS \u2265 10 with M = 6) at inclusion \u2014 subgroup stratification by command-following and motor subscore not encodable.",
+      "Healthy Controls matched by age (\u00b1 2 years) and sex to TBI-COMA patients \u2014 matching logic for control group cannot be expressed in per-patient schema rules.",
+      "Contraindications to MRI \u2014 no schema field for MRI contraindications.",
+      "Known allergy to the PET radiotracer or its excipients \u2014 no schema field for drug allergies.",
+      "History of conditions affecting the dopaminergic system \u2014 no schema field for prior medical history.",
+      "Individuals under legal protection measures \u2014 no schema field for legal status.",
+      "Current treatment with dopaminergic agonists or antagonists \u2014 no schema field for current medications.",
+      "Coma due to causes other than TBI \u2014 partially encoded via presumed_tbi and mechanism exclusion of penetrating trauma, but non-TBI coma etiologies (e.g., metabolic, anoxic) cannot be fully enumerated.",
+      "Decompressive craniectomy resulting in anatomical alterations incompatible with standardized image analysis (e.g., midline shift > 2 cm) \u2014 no schema field for surgical history or imaging findings.",
+      "Healthy Controls only: women of childbearing potential without effective contraception \u2014 subgroup-specific criterion and contraception status not encodable in schema.",
+      "Healthy Controls only: women unwilling to maintain effective contraception during the 30-day study period \u2014 patient willingness/compliance criterion not encodable in schema.",
+      "Breastfeeding women excluded \u2014 no schema field for breastfeeding status."
+    ]
+  }
+}

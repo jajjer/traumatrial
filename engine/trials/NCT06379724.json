@@ -1,0 +1,54 @@
+{
+  "trial_id": "NCT06379724",
+  "short_name": "Burn Study- Tranexamic Acid Versus Thrombin in Split Thickness Skin Graft",
+  "title": "Burn Study- Tranexamic Acid Versus Thrombin in Split Thickness Skin Graft",
+  "requires_efic": false,
+  "phase": "PHASE4",
+  "inclusion": [
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "burn"
+      ],
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "English or Spanish speaking: language is not a field in the schema.",
+      "Flame or scald burn injury (inclusion): burn sub-type/cause cannot be distinguished within the allowed 'burn' mechanism enum.",
+      "<=10% total body surface area (TBSA) partial thickness: TBSA percentage is not a field in the schema.",
+      "<=5% total body surface area (TBSA) deep partial or full thickness: TBSA percentage and burn depth are not fields in the schema.",
+      "Skin graft harvested at 1/12 inch depth, meshed 1:1 or pie crusted: surgical/procedural detail is not a field in the schema.",
+      ">10% total body surface area (TBSA) partial thickness burn (exclusion): TBSA percentage is not a field in the schema.",
+      ">5% total body surface area (TBSA) surgical area of burn injury (exclusion): TBSA percentage and burn depth are not fields in the schema.",
+      "Traumatic or chemical burn mechanism (exclusion): burn sub-type cannot be distinguished within the allowed mechanism enum; 'burn' enum value does not differentiate flame/scald from traumatic/chemical.",
+      "Patients on immunosuppression: medication/treatment history is not a field in the schema.",
+      "Uncontrolled diabetes: medical history/lab values are not fields in the schema.",
+      "Known diagnosis of peripheral vascular disease or diagnosis at time of injury: medical history is not a field in the schema.",
+      "Patients with acquired defective color vision: medical history is not a field in the schema.",
+      "Patients with subarachnoid hemorrhage: subarachnoid hemorrhage is a specific subtype not directly mappable to presumed_intracranial_hemorrhage without ambiguity; partially encoded as presumed_intracranial_hemorrhage exclusion.",
+      "Patients with active intravascular clotting or known hypersensitivity reactions to tranexamic acid: coagulation status and drug hypersensitivity are not fields in the schema.",
+      "Inability to give informed consent: consent capacity is not a field in the schema."
+    ]
+  }
+}

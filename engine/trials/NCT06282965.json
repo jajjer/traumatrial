@@ -1,0 +1,61 @@
+{
+  "trial_id": "NCT06282965",
+  "short_name": "ANGel T",
+  "title": "Safety and Efficacy of Angiotensin (1-7) in Persons With Moderate to Severe Traumatic Brain Injury",
+  "requires_efic": true,
+  "phase": "PHASE1",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 12,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Traumatically induced head injury from external force: partially covered by presumed_tbi but mechanism specificity (external force to head) cannot be fully expressed with available fields.",
+      "Clinical diagnosis of acute intracranial lesion based on neuroradiologist CT report: requires imaging/radiology report data not available in schema.",
+      "Moderate TBI defined as loss of consciousness 30 min\u201324 hours with GCS 9\u201312; Severe TBI defined as LOC >24 hours with GCS \u22649: loss-of-consciousness duration is not a schema field.",
+      "Enrollment within 48 hours of TBI: temporal criterion (time since injury) cannot be expressed with available schema fields.",
+      "Time of injury cannot be determined (exclusion): temporal/administrative criterion not representable in schema.",
+      "Neurosurgery within the last 30 days (exclusion): prior surgical history is not a schema field.",
+      "History of neurodegenerative disease or disorder including dementia, Parkinson's, MS, seizure disorder, or brain tumors (exclusion): prior medical history not available in schema.",
+      "Contraindication to MRI (exclusion): imaging contraindication is not a schema field.",
+      "Lactating female (exclusion): lactation status is not a schema field.",
+      "Female of childbearing potential or sexually active male unwilling to use birth control (exclusion): contraceptive compliance is not a schema field.",
+      "Participation in another clinical study involving investigational product within 30 days (exclusion): prior trial participation is not a schema field.",
+      "Investigator opinion of unsuitability (exclusion): subjective investigator judgment cannot be encoded in schema."
+    ]
+  }
+}

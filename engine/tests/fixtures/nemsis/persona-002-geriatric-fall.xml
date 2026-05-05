@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Synthetic NEMSIS v3.5 PCR for persona P-002 (67F, ground-level fall, normal vitals).
+
+Stress patterns:
+  - Namespaced root with prefix (xmlns:nem) instead of default xmlns. Adapter
+    must treat element local-names identically.
+  - Multiple eVitalsGroups in chronological order. Adapter uses the LAST.
+  - Non-anticoagulant meds in eHistory.06 (metformin, atorvastatin). Substring
+    and RxNorm channels should both miss these.
+  - Pregnancy explicitly set to "not_pregnant" (3133003) on a 67yo female so
+    the adapter records "extracted" rather than the conservative default.
+  - Fall coded via ICD-10 W19.XXXA (unspecified fall). Hits the W1x prefix.
+-->
+<nem:EMSDataSet xmlns:nem="http://www.nemsis.org">
+  <nem:Header>
+    <nem:Source>synthetic-test-fixture</nem:Source>
+  </nem:Header>
+  <nem:PatientCareReport>
+    <nem:eRecord>
+      <nem:eRecord.01>SYN-P002-FALL</nem:eRecord.01>
+    </nem:eRecord>
+    <nem:ePatient>
+      <nem:ePatient.13>9906001</nem:ePatient.13>
+      <nem:ePatient.15>67</nem:ePatient.15>
+      <nem:ePatient.16>2516001</nem:ePatient.16>
+    </nem:ePatient>
+    <nem:eHistory>
+      <nem:eHistory.06>Metformin 1000mg PO BID</nem:eHistory.06>
+      <nem:eHistory.06>Atorvastatin 40mg PO QHS</nem:eHistory.06>
+      <nem:eHistory.16>3133003</nem:eHistory.16>
+    </nem:eHistory>
+    <nem:eVitals>
+      <nem:eVitalsGroup>
+        <nem:eVitals.01>2026-05-04T08:14:02-05:00</nem:eVitals.01>
+        <nem:eVitals.06>128</nem:eVitals.06>
+        <nem:eVitals.10>92</nem:eVitals.10>
+        <nem:eVitals.23>14</nem:eVitals.23>
+      </nem:eVitalsGroup>
+      <nem:eVitalsGroup>
+        <nem:eVitals.01>2026-05-04T08:21:55-05:00</nem:eVitals.01>
+        <nem:eVitals.06>134</nem:eVitals.06>
+        <nem:eVitals.10>88</nem:eVitals.10>
+        <nem:eVitals.23>14</nem:eVitals.23>
+      </nem:eVitalsGroup>
+    </nem:eVitals>
+    <nem:eSituation>
+      <nem:eSituation.02>W19.XXXA</nem:eSituation.02>
+    </nem:eSituation>
+  </nem:PatientCareReport>
+</nem:EMSDataSet>

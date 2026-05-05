@@ -1,0 +1,84 @@
+{
+  "trial_id": "NCT06254469",
+  "short_name": "Visualizing Brain Proteinopathies Using [F-18]Flornaptitril-PET in the Prediction of Clinical Progression of Mild Cognitive Impairment With Either Suspected Chronic Traumatic Encephalopathy or Alzheimer's Disease",
+  "title": "Visualizing Brain Proteinopathies Using [F-18]Flornaptitril-PET in the Prediction of Clinical Progression of Mild Cognitive Impairment With Either Suspected Chronic Traumatic Encephalopathy or Alzheimer's Disease",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 45,
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "not_in",
+      "value": [
+        "pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "sbp_mmhg",
+      "op": "gt",
+      "value": 170,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": false,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Diagnosis of MCI due to suspected CTE (age >45) or AD (age >50): conditional age thresholds based on diagnosis type cannot be expressed with available schema fields.",
+      "Participants must have a trial partner with frequent interaction (>3-4 times/week): no schema field for social/caregiver support.",
+      "Informed consent from participant or legally acceptable representative: no schema field for consent capacity.",
+      "Female participants must be surgically sterilized or post-menopausal or have a negative serum pregnancy test: partial pregnancy exclusion encoded; menopausal/sterilization status not in schema.",
+      "Willingness to comply with trial procedures, communicate with trial personnel, and undergo longitudinal follow-up: no schema field for patient willingness.",
+      "CDR global score of 0.5: no schema field for Clinical Dementia Rating.",
+      "Diagnostic criteria for possible traumatic encephalopathy syndrome (symptom persistence >2 years, repetitive head trauma, progressive course, delayed onset, cognitive/behavioral/motor features): no schema fields for these clinical diagnoses.",
+      "Diagnosis of MCI due to suspected AD per NIA-AA guidelines: no schema field for AD diagnosis.",
+      "Documented memory decline with gradual onset for at least 1 year: no schema field for longitudinal cognitive history.",
+      "MMSE-2 score of 22-30 (inclusive) at Screening Visit: no schema field for MMSE score.",
+      "Biomarker positive based on predefined plasma p-tau cutoff: no schema field for biomarker lab values.",
+      "Modified Hachinski Ischemic Score <4: no schema field for this score.",
+      "Cognitive deficits not occurring exclusively in context of delirium: no schema field for delirium status.",
+      "Cognitive deficits not better explained by another mental disorder or medical condition: no schema field for psychiatric/medical history.",
+      "Stable dosage of AchEI and/or memantine for at least 4 months prior to Screening Visit: no schema field for medication history.",
+      "Healthy volunteer inclusion criteria (medically healthy, age within 3 years of MCI participants, no cognitive impairment, no first-degree family history of early-onset AD, MMSE-2 \u226527): no schema fields for health status, relative age matching, cognitive assessment, or family history.",
+      "Breastfeeding exclusion: no schema field for breastfeeding status.",
+      "Unable to remain still for imaging or intolerance of neuropsychological/PET scan studies: no schema field for imaging tolerance.",
+      "History of stroke, TIA, seizures, or head/neck conditions within 12 months affecting circulation or image interpretation: no schema field for medical history or temporal conditions.",
+      "Preexisting major neurologic or physical illness (e.g., multiple sclerosis, diabetes, cancer): no schema field for comorbid conditions.",
+      "Psychiatric disorder (mania, schizophrenia, anxiety, depression with GDS \u226510) interfering with trial procedures: no schema field for psychiatric diagnoses or GDS score.",
+      "Condition or circumstance interfering with data collection quality: no schema field for this investigator judgment.",
+      "History of significant prescription/non-prescription drug or alcohol abuse: no schema field for substance abuse history.",
+      "Previously received F-18 FNT or any investigational product within past 30 days: no schema field for prior investigational drug exposure.",
+      "History of allergic reactions to albumin, or severe anemia or cardiac failure: no schema field for allergy or cardiac failure history.",
+      "Diastolic BP >100 mmHg exclusion: no schema field for diastolic blood pressure.",
+      "Any use of benzodiazepines within 24 hours prior to all trial visits: no schema field for recent medication use.",
+      "Plan to take ibuprofen or naproxen within 5 days before PET scan: no schema field for planned medication use.",
+      "Received radioactive drugs or scans within previous month or 10 half-lives: no schema field for prior imaging/radioactive drug exposure.",
+      "Implants contraindicated for MRI or history of claustrophobia in MRI: no schema field for implant status or claustrophobia.",
+      "History of CT/MRI findings such as mass lesions or brain infection unrelated to trial: no schema field for prior imaging findings.",
+      "Participated in another clinical trial for investigational agent within 90 days: no schema field for prior trial participation.",
+      "Monoclonal antibody treatment within previous 180 days: no schema field for prior biologic treatment.",
+      "Plan to receive aducanumab, lecanemab, or other approved Early AD treatments during trial: no schema field for planned treatments."
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "trial_id": "NCT06322953",
+  "short_name": "RESTARTtlCrH",
+  "title": "Timing to Restart Direct Oral Anticoagulants After Traumatic Intracranial Haemorrhage",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "anticoagulant_use",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion 1: Informed consent and ability to comply cannot be expressed with available schema fields.",
+      "Inclusion 2 (partial): 'traumatic intracranial haemorrhage in the past 1 week' \u2014 temporal constraint (within 1 week of injury) cannot be expressed in the schema.",
+      "Inclusion 3: Specific OAC type (DOAC or VKA/Warfarin) and indication (AF or VTE) cannot be expressed with available schema fields.",
+      "Inclusion 4: CHA2DS2VASc score threshold (\u22652 in men, \u22653 in women) is a composite clinical score not available as a schema field.",
+      "Exclusion 1: Chronic subdural haematoma subtype cannot be distinguished from other intracranial haemorrhage types in the schema.",
+      "Exclusion 2: Mechanical heart valve history is not a schema field.",
+      "Exclusion 3: Plan to start/restart anti-platelet therapy within 12 weeks is not a schema field.",
+      "Exclusion 4: Abbreviated Injury Scale score for non-head regions >3 cannot be expressed with available schema fields.",
+      "Exclusion 6: Hypersensitivity or contraindication to DOAC is not a schema field.",
+      "Exclusion 7: Bleeding severity making DOAC restart unsafe at 1 week cannot be expressed with available schema fields.",
+      "Exclusion 8: Clinical reason to restart DOAC before 4 weeks or complete within 12 weeks cannot be expressed with available schema fields.",
+      "Exclusion 9: Concomitant p-gp and CYP3A4 inducers/inhibitors use is not a schema field.",
+      "Exclusion 10: Indication to stay on VKA rather than switching to DOAC (e.g., severe renal impairment) cannot be expressed with available schema fields."
+    ]
+  }
+}

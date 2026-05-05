@@ -1,0 +1,49 @@
+{
+  "trial_id": "NCT06691165",
+  "short_name": "Improving 24-hour Blood Pressure Stability in Spinal Cord Injury With Low Oxygen Therapy",
+  "title": "Improving 24-hour Blood Pressure Stability in Spinal Cord Injury With Low Oxygen Therapy",
+  "requires_efic": false,
+  "phase": "PHASE1",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 19,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "spinal_injury_suspected",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "eq",
+      "value": "pregnant",
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Living with a chronic cervical (at or above T1) spinal cord injury of at least one year: no schema field captures injury chronicity, specific spinal level, or duration of injury.",
+      "Are fluent in English: no schema field captures language fluency.",
+      "High-cervical injuries requiring ventilator assistance to breathe will be excluded: no schema field captures ventilator dependency or specific injury level.",
+      "Unhealed fracture, contracture, or pressure sore that might interfere with protocol completion: no schema field captures wound or musculoskeletal status.",
+      "Additional concurrent neurological conditions (e.g., multiple sclerosis, Parkinson disease, stroke or brain injury): no schema field captures comorbid neurological diagnoses.",
+      "Uncontrolled cardiovascular or pulmonary disease: no schema field captures cardiovascular or pulmonary disease status.",
+      "Severe neuropathic pain: no schema field captures pain status.",
+      "Severe recurrent autonomic dysreflexia: no schema field captures autonomic dysreflexia history.",
+      "History of seizure disorders: no schema field captures seizure history."
+    ]
+  }
+}

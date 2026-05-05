@@ -1,0 +1,55 @@
+{
+  "trial_id": "NCT06333990",
+  "short_name": "mTBI",
+  "title": "Quetiapine to Reduce Post Concussive Syndrome After Mild Traumatic Brain Injury (mTBI)",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Inclusion 1: Veteran status cannot be expressed with available schema fields.",
+      "Inclusion 2: mTBI diagnosis specifics (loss of consciousness, altered consciousness, posttraumatic amnesia), PCS symptoms on NSI, and requirement that 6+ months elapsed since injury cannot be expressed with available schema fields.",
+      "Inclusion 3: Requirement of being stable on at least three CNS active psychotropic medications cannot be expressed with available schema fields.",
+      "Inclusion 4: PTSD Checklist for DSM-5 (PCL-5) score \u226525 cannot be expressed with available schema fields.",
+      "Exclusion 1: Moderate or severe TBI or major neurocognitive disorder (dementia) cannot be distinguished from mild TBI using available schema fields.",
+      "Exclusion 2: DSM-5 criteria for schizophrenia, bipolar disorder, schizoaffective disorder, or recent inpatient hospitalization cannot be expressed with available schema fields.",
+      "Exclusion 3: Current antipsychotic or prohibited medication use cannot be expressed with available schema fields.",
+      "Exclusion 4: Known intolerance to quetiapine or clinically unstable cardiac, pulmonary, hepatic, renal, hematological, endocrinological conditions, diabetes, severe sleep apnea, or seizure disorder cannot be expressed with available schema fields.",
+      "Exclusion 5: Substance use disorder requiring medication treatment or medical detoxification or inpatient hospitalization within 6 months cannot be expressed with available schema fields.",
+      "Exclusion 6: Suicidal ideation (CSSRS type 4 or 5), homicidal ideation with intent/plan, or suicidal behavior within specified timeframes cannot be expressed with available schema fields.",
+      "Exclusion 7: Cardiac arrhythmia or QTc interval \u2265470 ms cannot be expressed with available schema fields.",
+      "Exclusion 8: Lactating women and those of childbearing potential not using reliable contraception cannot be fully expressed; only pregnant/unknown pregnancy status is encoded."
+    ]
+  }
+}

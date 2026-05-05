@@ -1,0 +1,67 @@
+{
+  "trial_id": "NCT06866691",
+  "short_name": "SEIZE-TBI",
+  "title": "Seizure Prevention in Traumatic Brain Injury With Levetiracetam and Lacosamide",
+  "requires_efic": true,
+  "phase": "PHASE4",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "eq",
+      "value": "pregnant",
+      "hard": true
+    },
+    {
+      "field": "hr_bpm",
+      "op": "lt",
+      "value": 55,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lt",
+      "value": 13,
+      "hard": true
+    },
+    {
+      "field": "spinal_injury_suspected",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Diagnosis of traumatic brain injury: severe, moderate, or mild with high-risk imaging features \u2014 severity grading and imaging features are not available in the schema.",
+      "Seizure prophylaxis with one of the two study drugs within 24 hours of initial injury \u2014 temporal/treatment timing logic cannot be expressed with available fields.",
+      "Patients admitted into the trauma team service \u2014 admission service type is not a schema field.",
+      "Enrolled in another interventional drug study \u2014 trial enrollment status is not a schema field.",
+      "Any active, witnessed, or unable to rule out seizure prior to prophylaxis initiation \u2014 seizure history/status is not a schema field.",
+      "Received antiseizure medication (ASM) prior to randomization \u2014 prior medication use is not a schema field.",
+      "History of seizures \u2014 prior medical history field not available in schema.",
+      "On anti-epileptic medications for seizures or other indications prior to admission \u2014 prior medication use is not a schema field.",
+      "Documented history of alcohol withdrawal with CIWA-Ar or mMINDS requiring treatment \u2014 alcohol withdrawal history and clinical scale scores are not schema fields.",
+      "Spinal cord injury confirmed by radiographic imaging at cervical (C1-C8) or thoracic (T1-T12) levels \u2014 imaging confirmation and spinal level specificity cannot be expressed; spinal_injury_suspected used as a soft proxy only.",
+      "History of bradycardia or permanent pacemaker \u2014 medical history fields are not available in schema; HR < 55 bpm encoded as a proxy but the 'for > 5 min not on medications that cause bradycardia' qualifier cannot be expressed.",
+      "End-stage renal disease (ESRD) \u2014 prior medical history/lab values not available in schema.",
+      "Death, withdrawal of life support, or transfer to hospice within 24 hours \u2014 disposition/outcome fields are not available in schema.",
+      "Patient incarcerated \u2014 incarceration status is not a schema field.",
+      "Patient with GCS of 15 or LAR unable to provide informed consent, or unable to read and understand specified languages \u2014 consent capacity and language comprehension are not schema fields; GCS 15 exclusion conflicts with inclusion logic and cannot be cleanly encoded."
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "trial_id": "NCT02407028",
+  "short_name": "HOBIT",
+  "title": "Hyperbaric Oxygen Brain Injury Treatment Trial",
+  "requires_efic": true,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 16,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 65,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gte",
+      "value": 3,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "gsw",
+        "stab"
+      ],
+      "hard": true
+    },
+    {
+      "field": "spinal_injury_suspected",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Marshall CT score >1 required for GCS 7-8 or alcohol level >200 mg/dl: CT scoring and lab values are not available in the schema.",
+      "First hyperbaric oxygen treatment must be initiated within 8 hours of admission (non-surgical) or 14 hours (surgical): treatment initiation timing and surgical status are not in the schema.",
+      "First hyperbaric oxygen treatment cannot be initiated within 24 hours of injury: treatment initiation timing relative to injury is not in the schema.",
+      "GCS of 3 with mid-position and non-reactive pupils bilaterally (4mm): pupil reactivity and position are not available fields in the schema.",
+      "Penetrating head injury: gsw and stab are used as proxies in the exclusion rules but may not cover all penetrating head injury cases (e.g., impalement).",
+      "Pre-existing neurologic disease with confounding residual neurologic deficits: prior medical history fields are not in the schema.",
+      "Fixed coagulopathy: coagulation status is not in the schema.",
+      "Severe hypoxia: oxygenation/SpO2 values are not in the schema.",
+      "Cardiopulmonary resuscitation performed: cardiac arrest / CPR history is not an available field in the schema.",
+      "Coma suspected to be due to primarily non-TBI causes: clinical judgment criterion not expressible in the schema.",
+      "Any contraindications to the study intervention (hyperbaric oxygen): contraindication details are not in the schema.",
+      "Unstable acute spinal cord injury: spinal_injury_suspected captures suspicion but not instability or acuity; encoded as soft exclusion proxy only."
+    ]
+  }
+}

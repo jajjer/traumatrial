@@ -1,0 +1,53 @@
+{
+  "trial_id": "NCT05095857",
+  "short_name": "KETA-BID",
+  "title": "The Anaesthetic Ketamine as Treatment for Patients With Severe Acute Brain Injury",
+  "requires_efic": true,
+  "phase": "PHASE4",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Admitted to NICU with diagnosis of TBI, aSAH, or ICH: schema has presumed_tbi and presumed_intracranial_hemorrhage but no field for aneurysmal subarachnoid haemorrhage specifically; partially encoded via available bool fields.",
+      "Planned for surgery with a supratentorial craniotomy or craniectomy: no schema field for planned surgical procedure type.",
+      "Expected to continue sedation and mechanical ventilation after surgery: no schema field for post-operative sedation or ventilation status.",
+      "Neither patient nor next of kin understand Danish or English: no schema field for language comprehension.",
+      "Known allergy to S-ketamine: no schema field for drug allergies.",
+      "Wake-up call to occur immediately after surgery: no schema field for post-operative sedation plan.",
+      "Active anti-psychotic treatment before admission: no schema field for prior medication use.",
+      "Current abuse of ketamine: no schema field for substance abuse history.",
+      "Decision to withdraw active treatment: no schema field for goals-of-care or treatment withdrawal status.",
+      "ICH secondary to a known brain tumour at the time of inclusion: no schema field for aetiology of intracranial haemorrhage or brain tumour history."
+    ]
+  }
+}

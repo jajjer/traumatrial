@@ -1,0 +1,60 @@
+{
+  "trial_id": "NCT07480655",
+  "short_name": "Pv-aCO\u2082 Gap-Guided Resuscitation in Adult Polytrauma Patients: A Prospective Randomized Controlled Trial",
+  "title": "Pv-aCO\u2082 Gap-Guided Resuscitation in Adult Polytrauma Patients: A Prospective Randomized Controlled Trial",
+  "requires_efic": false,
+  "phase": "PHASE4",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "blunt_mvc",
+        "blunt_other",
+        "fall",
+        "gsw",
+        "stab",
+        "blast",
+        "crush",
+        "other"
+      ],
+      "hard": true
+    },
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": false
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Poly-trauma patients (multiple injuries): no multi-injury or ISS field exists in the schema to verify polytrauma definition.",
+      "Shock States (inclusion): no blood pressure threshold or shock classification field captures this criterion precisely; sbp_mmhg could partially proxy but the criterion is broader than a single vital sign.",
+      "Any Chest trauma (exclusion): no chest-injury or body-region field exists in the schema.",
+      "Patients with obstructive and restrictive lung disease (exclusion): no prior pulmonary history field exists in the schema.",
+      "Obstructive sleep apnea (exclusion): no prior medical history field exists in the schema.",
+      "Septic shock (exclusion): no infection or sepsis classification field exists in the schema.",
+      "Patients who will require readmission within 48 h after step-down from the ICU (exclusion): requires prospective/temporal outcome data not available at enrollment.",
+      "Patients who will need extra-corporeal membrane oxygenation support (exclusion): no ECMO requirement field exists in the schema."
+    ]
+  }
+}

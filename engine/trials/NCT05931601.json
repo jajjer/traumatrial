@@ -1,0 +1,54 @@
+{
+  "trial_id": "NCT05931601",
+  "short_name": "VASOSHOCK",
+  "title": "Early Initiated Vasopressor Therapy in the Emergency Department",
+  "requires_efic": false,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "sbp_mmhg",
+      "op": "lt",
+      "value": 100,
+      "hard": false
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Signs or suspicion of hypotension/shock defined via MAP < 65 mmHg: MAP is not an available field in the schema.",
+      "Lactate > 2.0 mmol/L combined with SBP/MAP thresholds: lactate is not an available field in the schema.",
+      "Physician-defined blood pressure threshold for individual patient: requires clinical judgment not expressible in schema fields.",
+      "Received at least 500ml of IV fluid before study inclusion within the first 4 hours of ED arrival: fluid administration volume and timing are not available fields.",
+      "Clinical Frailty Score (CFS) \u22644 (or \u22655 with ICU eligibility confirmed): CFS is not an available field in the schema.",
+      "Cardiogenic or anaphylactic shock suspected by treating physician: no schema field distinguishes these shock subtypes (only hemorrhagic is partially covered by presumed_hemorrhage).",
+      "Neurogenic shock suspected by treating physician: no schema field for neurogenic shock subtype.",
+      "Patient deemed terminally ill or with severe co-morbidity resulting in non-eligibility for ICU admittance: no schema field for terminal illness or ICU eligibility status.",
+      "Known allergy to noradrenaline: medication allergy history is not an available field in the schema.",
+      "Fertile women breastfeeding excluded: breastfeeding status is not an available field in the schema.",
+      "Fertile women < 60 years with positive urine/plasma hCG excluded: hCG test result is not an available field; pregnancy_status partially covers this but cannot encode the age-based fertility qualifier or hCG confirmation."
+    ]
+  }
+}

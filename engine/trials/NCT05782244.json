@@ -1,0 +1,83 @@
+{
+  "trial_id": "NCT05782244",
+  "short_name": "CVR-TBI",
+  "title": "Sildenafil for Microvasculopathy in Chronic TBI",
+  "requires_efic": false,
+  "phase": "PHASE2",
+  "inclusion": [
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "age_years",
+      "op": "lte",
+      "value": 70,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "sbp_mmhg",
+      "op": "lt",
+      "value": 90,
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Provision of signed and dated informed consent form (administrative/procedural requirement, no schema field).",
+      "Stated willingness to comply with all study procedures (administrative/procedural requirement, no schema field).",
+      "Defense Enrollment Eligibility Reporting System (DEERS) eligibility at WRNMMC (site-specific administrative criterion, no schema field).",
+      "History of TBI greater than 6 months and less than 25 years prior to enrollment per 2023 ACRM criteria (requires temporal history and diagnostic criteria detail not in schema).",
+      "Chronic persistent post-concussive symptoms with Rivermead Post-Concussion Symptom Questionnaire score >1 on at least 3 items (requires symptom questionnaire score not in schema).",
+      "Glasgow Outcome Scale-Extended (GOSE) between 5-7 (GOSE is not a schema field; distinct from GCS).",
+      "Ability to take oral medication and adhere to study intervention regimen (functional/compliance criterion, no schema field).",
+      "Ability to participate in and complete MRI including CVR challenges and 4-week treatment period (procedural/functional criterion, no schema field).",
+      "Adequate hearing and vision based on self-report and examiner's observation (sensory assessment criterion, no schema field).",
+      "Current/ongoing use of organic nitrate vasodilators or riociguat within past month (medication history, no schema field).",
+      "Current/ongoing use of ritonavir within past month (medication history, no schema field).",
+      "Current/ongoing use of erythromycin, ketoconazole, or itraconazole within past month (medication history, no schema field).",
+      "Current/ongoing use of cimetidine within past month (medication history, no schema field).",
+      "Current resting hypotension BP < 90/50 mmHg: diastolic component (DBP < 50) cannot be expressed as schema only has sbp_mmhg; SBP < 90 encoded.",
+      "Current severe renal insufficiency (lab/clinical diagnosis, no schema field).",
+      "Current hepatic cirrhosis (medical history/diagnosis, no schema field).",
+      "Current cardiac failure or coronary artery disease causing unstable angina (medical history/diagnosis, no schema field).",
+      "Retinitis pigmentosa (medical history/diagnosis, no schema field).",
+      "Known hypersensitivity or allergy to sildenafil or its components (allergy history, no schema field).",
+      "History of melanoma or suspicious skin lesions for melanoma (medical history/diagnosis, no schema field).",
+      "Daily therapy with a PDE5 inhibitor within the month prior to consent (medication history, no schema field).",
+      "History of penetrating TBI (specific TBI subtype history, no schema field).",
+      "History of disabling neurological or psychiatric disorder not related to TBI (medical history/diagnosis, no schema field).",
+      "Active substance abuse or dependence during the past 6 months (substance use history, no schema field).",
+      "Estimated preinjury intellectual level \u226470 based on educational and vocational history (cognitive/intellectual assessment, no schema field).",
+      "Inability to understand written and spoken English in the opinion of the investigator (language/cognitive criterion, no schema field).",
+      "Current inclusion in another interventional trial (enrollment status, no schema field).",
+      "Metal implants that would interfere with MR imaging procedures (implant history, no schema field).",
+      "History of priapism (medical history, no schema field).",
+      "Breastfeeding women (lactation status, no schema field).",
+      "Actively suicidal based on clinician assessment or PHQ-9/CSSRS scores (psychiatric assessment/questionnaire scores, no schema field).",
+      "Hypertension requiring treatment with more than two antihypertensive drugs (medication count/treatment history, no schema field).",
+      "Hyperlipidemia requiring treatment with more than one lipid lowering drug (medication count/treatment history, no schema field).",
+      "Diabetes mellitus requiring medical treatment with insulin (medical history/treatment, no schema field)."
+    ]
+  }
+}

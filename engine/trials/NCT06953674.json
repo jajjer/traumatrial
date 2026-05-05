@@ -1,0 +1,41 @@
+{
+  "trial_id": "NCT06953674",
+  "short_name": "FLUID-TBI",
+  "title": "Saline Versus Balanced Crystalloid in Traumatic Brain Injury",
+  "requires_efic": true,
+  "phase": "PHASE3",
+  "inclusion": [
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 12,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    }
+  ],
+  "exclusion": [
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": false,
+      "hard": false
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "skipped_criteria": [
+      "Head CT with skull fracture(s) and/or hemorrhage(s) (>1cm in any single dimension): requires imaging findings not available in the schema.",
+      "Reported mechanism of trauma: partially covered by the 'mechanism' field but the criterion only requires that a mechanism is documented, not a specific value \u2014 no meaningful rule can be encoded.",
+      "Severe visceral trauma dictating mortality (visceral injury severity score > brain injury severity score): requires injury severity scores not available in the schema.",
+      "Non-survivable brain injury based on the treating physician's judgment: requires a clinical judgment field not available in the schema.",
+      "Emergent visceral operative intervention before complete trauma assessment: requires procedural/temporal data not available in the schema.",
+      "Concern for ruptured intracranial vascular malformation: requires a specific diagnosis field not available in the schema.",
+      "Patients who are transferred from another facility: requires a transfer/origin field not available in the schema."
+    ]
+  }
+}
