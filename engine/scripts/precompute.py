@@ -39,9 +39,14 @@ def main() -> None:
         out_file.write_text(json.dumps(payload, indent=2))
 
     # Index of trials so the demo can render headers, EFIC flags, etc.
+    # by_alias=True preserves the leading underscore on `_metadata` so the
+    # demo can render skipped_criteria from each trial's source provenance.
     trials_index_file = out_dir.parent / "trials.json"
     trials_index_file.write_text(
-        json.dumps([t.model_dump() for t in trials], indent=2)
+        json.dumps(
+            [t.model_dump(by_alias=True, exclude_none=True) for t in trials],
+            indent=2,
+        )
     )
 
     # Index of patients so the demo can list available simulations

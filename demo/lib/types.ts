@@ -50,6 +50,11 @@ export interface Patient {
   spinal_injury_suspected: boolean;
 }
 
+export interface TrialMetadata {
+  source?: string;
+  skipped_criteria: string[];
+}
+
 export interface Trial {
   trial_id: string;
   short_name: string;
@@ -58,6 +63,7 @@ export interface Trial {
   phase: string;
   inclusion: unknown[];
   exclusion: unknown[];
+  _metadata?: TrialMetadata;
 }
 
 export interface ClauseTrace {

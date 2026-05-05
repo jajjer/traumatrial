@@ -19,21 +19,6 @@
   "results": [
     {
       "patient_id": "P-013",
-      "trial_id": "NCT02292589",
-      "eligible": true,
-      "confidence": 1.0,
-      "trace": [
-        {
-          "clause": "presumed_tbi eq True",
-          "kind": "inclusion",
-          "hard": true,
-          "hit": true,
-          "patient_value": true
-        }
-      ]
-    },
-    {
-      "patient_id": "P-013",
       "trial_id": "NCT02407028",
       "eligible": true,
       "confidence": 1.0,
@@ -410,21 +395,6 @@
           "hard": true,
           "hit": false,
           "patient_value": "not_applicable"
-        }
-      ]
-    },
-    {
-      "patient_id": "P-013",
-      "trial_id": "NCT05446584",
-      "eligible": true,
-      "confidence": 1.0,
-      "trace": [
-        {
-          "clause": "age_years gte 55",
-          "kind": "inclusion",
-          "hard": true,
-          "hit": true,
-          "patient_value": 56
         }
       ]
     },
@@ -1213,21 +1183,6 @@
           "hard": true,
           "hit": false,
           "patient_value": "not_applicable"
-        }
-      ]
-    },
-    {
-      "patient_id": "P-013",
-      "trial_id": "NCT07373366",
-      "eligible": true,
-      "confidence": 1.0,
-      "trace": [
-        {
-          "clause": "presumed_tbi eq True",
-          "kind": "inclusion",
-          "hard": true,
-          "hit": true,
-          "patient_value": true
         }
       ]
     },

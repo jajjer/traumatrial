@@ -1571,7 +1571,37 @@ function MatchCard({
               <ClauseRow key={i} clause={c} />
             ))}
           </div>
+          {trial?._metadata?.skipped_criteria &&
+            trial._metadata.skipped_criteria.length > 0 && (
+              <SkippedCriteria items={trial._metadata.skipped_criteria} />
+            )}
         </div>
+      )}
+    </div>
+  );
+}
+
+function SkippedCriteria({ items }: { items: string[] }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <div className="mt-4 pt-4 border-t border-slate-800/60">
+      <button
+        onClick={() => setExpanded((e) => !e)}
+        className="font-mono text-[10px] tracking-wider text-amber-300/80 hover:text-amber-200"
+      >
+        {expanded ? "▼" : "▶"} {items.length} CRITERIA THE ENGINE COULDN&apos;T ENCODE
+      </button>
+      {expanded && (
+        <ul className="mt-2 space-y-1.5 pl-3 fade-in">
+          {items.map((c, i) => (
+            <li
+              key={i}
+              className="font-mono text-[11px] text-slate-400 leading-snug"
+            >
+              <span className="text-amber-400/70">·</span> {c}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
