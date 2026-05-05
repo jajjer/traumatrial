@@ -59,7 +59,6 @@ export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return Response.json({ error: "server is missing ANTHROPIC_API_KEY" }, { status: 500 });
 
   let body: unknown;
   try {
@@ -109,6 +108,13 @@ export async function POST(request: Request) {
     const cached = bundledById.get(id);
     if (cached) {
       portfolio.push({ trial: cached, source: "bundled", skipped_criteria: [], parse_attempts: 0 });
+      continue;
+    }
+    if (!apiKey) {
+      failures.push({
+        nct_id: id,
+        error: "server is missing ANTHROPIC_API_KEY — only bundled trials work without a key",
+      });
       continue;
     }
     try {
