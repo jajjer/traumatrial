@@ -1,5 +1,159 @@
 [
   {
+    "trial_id": "NCT02292589",
+    "short_name": "tDCS/PPCS",
+    "title": "Brain Stimulation for Mild Traumatic Brain Injury",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": []
+  },
+  {
+    "trial_id": "NCT02407028",
+    "short_name": "HOBIT",
+    "title": "Hyperbaric Oxygen Brain Injury Treatment Trial",
+    "requires_efic": true,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 16,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 65,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "gte",
+        "value": 3,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 8,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "gsw",
+          "stab"
+        ],
+        "hard": true
+      },
+      {
+        "field": "spinal_injury_suspected",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT03559114",
+    "short_name": "PROTEST",
+    "title": "PROphylaxis for Venous ThromboEmbolism in Severe Traumatic Brain Injury (PROTEST)",
+    "requires_efic": true,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 12,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "gt",
+        "value": 210,
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT03582293",
+    "short_name": "TORCH",
+    "title": "Tranexamic Acid to Prevent OpeRation in Chronic Subdural Hematoma",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "gcs",
+        "op": "gte",
+        "value": 14,
+        "hard": true
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "anticoagulant_use",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ]
+  },
+  {
     "trial_id": "NCT03754114",
     "short_name": "BOOST3",
     "title": "Brain Oxygen Optimization in Severe TBI, Phase 3",
@@ -47,6 +201,44 @@
         ],
         "hard": true
       },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT03992404",
+    "short_name": "PATTERN",
+    "title": "Study to Compare the Efficacy and Safety of NT 201 (Botulinum Toxin) With Placebo for the Treatment of Lower Limb Spasticity Caused by Stroke or Traumatic Brain Injury",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 85,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      }
+    ],
+    "exclusion": [
       {
         "field": "pregnancy_status",
         "op": "in",
@@ -122,6 +314,106 @@
     ]
   },
   {
+    "trial_id": "NCT04499755",
+    "short_name": "Efficacy of Nucleo CMP Forte in Traumatic Brain Injury in Pediatrics",
+    "title": "Efficacy of Nucleo CMP Forte in Traumatic Brain Injury in Pediatrics",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lt",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 12,
+        "hard": true
+      }
+    ],
+    "exclusion": []
+  },
+  {
+    "trial_id": "NCT04521881",
+    "short_name": "CRASH-4",
+    "title": "Clinical Randomisation of an Anti-fibrinolytic in Symptomatic Mild Head Injury in Older Adults",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 50,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "gte",
+        "value": 13,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": []
+  },
+  {
+    "trial_id": "NCT04588311",
+    "short_name": "EPO-TRAUMA",
+    "title": "ErythroPOietin Alfa to Prevent Mortality and Reduce Severe Disability in Critically Ill TRAUMA Patients",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 75,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "gcs",
+        "op": "eq",
+        "value": 3,
+        "hard": true
+      },
+      {
+        "field": "anticoagulant_use",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
     "trial_id": "NCT04995068",
     "short_name": "SELECT-TBI",
     "title": "Score Predicting Lesion Development on CT Following Mild TBI",
@@ -164,6 +456,205 @@
     ]
   },
   {
+    "trial_id": "NCT05008926",
+    "short_name": "NIPA",
+    "title": "The NIPA Study Naloxegol Administration to Prevent Opioids Induced Gastrointestinal Motility Disturbance in Brain Injured PAtients",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05095857",
+    "short_name": "KETA-BID",
+    "title": "The Anaesthetic Ketamine as Treatment for Patients With Severe Acute Brain Injury",
+    "requires_efic": true,
+    "phase": "PHASE4",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05097261",
+    "short_name": "BIKe",
+    "title": "Ketamine in Acute Brain Injury Patients.",
+    "requires_efic": false,
+    "phase": "PHASE4",
+    "inclusion": [
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05166343",
+    "short_name": "PRIME",
+    "title": "POHCA Resuscitation: Evaluation of IM Epinephrine",
+    "requires_efic": true,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 0,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 17,
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "blunt_mvc",
+          "blunt_other",
+          "fall",
+          "gsw",
+          "stab",
+          "blast",
+          "burn",
+          "crush"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05323149",
+    "short_name": "Tranexamic Acid in Traumatic Brain Injury",
+    "title": "Tranexamic Acid in Traumatic Brain Injury",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "gt",
+        "value": 8,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "gsw",
+          "stab"
+        ],
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      }
+    ]
+  },
+  {
     "trial_id": "NCT05337618",
     "short_name": "INDICT",
     "title": "Improving Neurotrauma by Depolarization Inhibition With Combination Therapy (INDICT)",
@@ -188,6 +679,57 @@
         "hard": true
       }
     ]
+  },
+  {
+    "trial_id": "NCT05437575",
+    "short_name": "PAIN",
+    "title": "Prehospital Analgesia INtervention Trial (PAIN)",
+    "requires_efic": true,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "hr_bpm",
+        "op": "gte",
+        "value": 115,
+        "hard": false
+      },
+      {
+        "field": "eta_minutes",
+        "op": "gt",
+        "value": 0,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "age_years",
+        "op": "lt",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "gt",
+        "value": 180,
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05446584",
+    "short_name": "PATH",
+    "title": "Pathways Relating Amnestic MCI to a Mild Traumatic Brain Injury History",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 55,
+        "hard": true
+      }
+    ],
+    "exclusion": []
   },
   {
     "trial_id": "NCT05449834",
@@ -215,6 +757,91 @@
         "op": "eq",
         "value": "pregnant",
         "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05482945",
+    "short_name": "CPAr",
+    "title": "CardioPulmonary Resuscitation With Argon (CPAr) Trial",
+    "requires_efic": true,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 8,
+        "hard": false
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05616910",
+    "short_name": "Inhaled Nitric Oxide for Microvascular Dysfunction in Traumatic Brain Injury",
+    "title": "Inhaled Nitric Oxide for Microvascular Dysfunction in Traumatic Brain Injury",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 75,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "gte",
+        "value": 9,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "eq",
+        "value": "pregnant",
+        "hard": true
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": false
       }
     ]
   },
@@ -313,6 +940,146 @@
     ]
   },
   {
+    "trial_id": "NCT05702138",
+    "short_name": "B-HIST",
+    "title": "High Intensity Step Training After Traumatic Brain Injury",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05782244",
+    "short_name": "CVR-TBI",
+    "title": "Sildenafil for Microvasculopathy in Chronic TBI",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 70,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "lt",
+        "value": 90,
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05826912",
+    "short_name": "APT-TBI-01",
+    "title": "Multi-Arm Multi-Stage Adaptive Platform Trial (APT) for the Acute Treatment of Traumatic Brain Injury",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 65,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "gte",
+        "value": 9,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 15,
+        "hard": true
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "gsw",
+          "stab"
+        ],
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
     "trial_id": "NCT05889650",
     "short_name": "ELASTIC",
     "title": "External Lumbar Drainage to Reduce ICP in Severe TBI: a Phase 1 Clinical Trial",
@@ -372,6 +1139,44 @@
         "value": [
           "gsw",
           "stab"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT05931601",
+    "short_name": "VASOSHOCK",
+    "title": "Early Initiated Vasopressor Therapy in the Emergency Department",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "lt",
+        "value": 100,
+        "hard": false
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "presumed_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
         ],
         "hard": true
       }
@@ -575,6 +1380,251 @@
     ]
   },
   {
+    "trial_id": "NCT06070350",
+    "short_name": "MATIC-2",
+    "title": "Massive Transfusion in Children-2: A Trial Examining Life Threatening Hemorrhage in Children",
+    "requires_efic": true,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "lt",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "gcs",
+        "op": "eq",
+        "value": 3,
+        "hard": false
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "burn",
+          "cardiac_arrest"
+        ],
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06073886",
+    "short_name": "Personalized Brain Stimulation to Treat Chronic Concussive Symptoms",
+    "title": "Personalized Brain Stimulation to Treat Chronic Concussive Symptoms",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 65,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06253923",
+    "short_name": "IV",
+    "title": "Study to Assess the Safety of Amantadine Hydrochloride (HCl) Intravenous (IV) Solution (MR-301) in Patients With Severe Traumatic Brain Injury (TBI).",
+    "requires_efic": true,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 75,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "gte",
+        "value": 3,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 8,
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "gt",
+        "value": 90,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "spinal_injury_suspected",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "gsw",
+          "stab"
+        ],
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06254469",
+    "short_name": "Visualizing Brain Proteinopathies Using [F-18]Flornaptitril-PET in the Prediction of Clinical Progression of Mild Cognitive Impairment With Either Suspected Chronic Traumatic Encephalopathy or Alzheimer's Disease",
+    "title": "Visualizing Brain Proteinopathies Using [F-18]Flornaptitril-PET in the Prediction of Clinical Progression of Mild Cognitive Impairment With Either Suspected Chronic Traumatic Encephalopathy or Alzheimer's Disease",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 45,
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "not_in",
+        "value": [
+          "pregnant"
+        ],
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "gt",
+        "value": 170,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": false,
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06282965",
+    "short_name": "ANGel T",
+    "title": "Safety and Efficacy of Angiotensin (1-7) in Persons With Moderate to Severe Traumatic Brain Injury",
+    "requires_efic": true,
+    "phase": "PHASE1",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 12,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
     "trial_id": "NCT06292585",
     "short_name": "AEDH-MT",
     "title": "Acute Epidural Hematoma Treated With Middle Meningeal Artery Embolization",
@@ -625,6 +1675,169 @@
     ]
   },
   {
+    "trial_id": "NCT06322953",
+    "short_name": "RESTARTtlCrH",
+    "title": "Timing to Restart Direct Oral Anticoagulants After Traumatic Intracranial Haemorrhage",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "anticoagulant_use",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06330935",
+    "short_name": "Evaluating the Effect of Tranexamic Acid on the Clinical Outcomes in Patients With Traumatic Brain Injury",
+    "title": "Evaluating the Effect of Tranexamic Acid on the Clinical Outcomes in Patients With Traumatic Brain Injury",
+    "requires_efic": true,
+    "phase": "PHASE1",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "lt",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 13,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "eq",
+        "value": "pregnant",
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "eq",
+        "value": 3,
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06333990",
+    "short_name": "mTBI",
+    "title": "Quetiapine to Reduce Post Concussive Syndrome After Mild Traumatic Brain Injury (mTBI)",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 65,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06379724",
+    "short_name": "Burn Study- Tranexamic Acid Versus Thrombin in Split Thickness Skin Graft",
+    "title": "Burn Study- Tranexamic Acid Versus Thrombin in Split Thickness Skin Graft",
+    "requires_efic": false,
+    "phase": "PHASE4",
+    "inclusion": [
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "burn"
+        ],
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ]
+  },
+  {
     "trial_id": "NCT06495294",
     "short_name": "SWiFTCanada",
     "title": "Study of Whole Blood in Frontline Trauma",
@@ -666,5 +1879,750 @@
       }
     ],
     "exclusion": []
+  },
+  {
+    "trial_id": "NCT06510582",
+    "short_name": "CHAI",
+    "title": "Chronic Subdural Hematoma Treatment With Intra-Arterial Bevacizumab Injection",
+    "requires_efic": false,
+    "phase": "PHASE1",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06531642",
+    "short_name": "Trauma AKI PPI",
+    "title": "Comparison of Early Proton Pump Inhibitor Initiation Versus Usual Care on Acute Kidney Injury in Hemorrhagic Shock Patients",
+    "requires_efic": true,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "lte",
+        "value": 90,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06691165",
+    "short_name": "Improving 24-hour Blood Pressure Stability in Spinal Cord Injury With Low Oxygen Therapy",
+    "title": "Improving 24-hour Blood Pressure Stability in Spinal Cord Injury With Low Oxygen Therapy",
+    "requires_efic": false,
+    "phase": "PHASE1",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 19,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 65,
+        "hard": true
+      },
+      {
+        "field": "spinal_injury_suspected",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "eq",
+        "value": "pregnant",
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06736860",
+    "short_name": "Tranexamic Acid in Patients With Traumatic Bleeding Based on Dynamic Monitoring of Thromboelastography",
+    "title": "Tranexamic Acid in Patients With Traumatic Bleeding Based on Dynamic Monitoring of Thromboelastography",
+    "requires_efic": false,
+    "phase": "PHASE4",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 80,
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "lte",
+        "value": 90,
+        "hard": false
+      },
+      {
+        "field": "hr_bpm",
+        "op": "gte",
+        "value": 110,
+        "hard": false
+      },
+      {
+        "field": "presumed_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06790095",
+    "short_name": "PM-003",
+    "title": "TRACK-TBI Precision Medicine Part 3 - Option II",
+    "requires_efic": true,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 65,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "gte",
+        "value": 3,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 8,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "spinal_injury_suspected",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06829498",
+    "short_name": "BCAAs in Concussion 2.0",
+    "title": "BCAAs in Concussion 2.0",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 11,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 23,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "gcs",
+        "op": "lt",
+        "value": 13,
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06836856",
+    "short_name": "Evaluating the Impact of Adjuvant Use of Beta Blockers on Clinical Outcomes in Patients With Traumatic Brain Injury",
+    "title": "Evaluating the Impact of Adjuvant Use of Beta Blockers on Clinical Outcomes in Patients With Traumatic Brain Injury",
+    "requires_efic": false,
+    "phase": "PHASE1",
+    "inclusion": [
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 13,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": false,
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06866691",
+    "short_name": "SEIZE-TBI",
+    "title": "Seizure Prevention in Traumatic Brain Injury With Levetiracetam and Lacosamide",
+    "requires_efic": true,
+    "phase": "PHASE4",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "eq",
+        "value": "pregnant",
+        "hard": true
+      },
+      {
+        "field": "hr_bpm",
+        "op": "lt",
+        "value": 55,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lt",
+        "value": 13,
+        "hard": true
+      },
+      {
+        "field": "spinal_injury_suspected",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06930261",
+    "short_name": "ComaDopa",
+    "title": "Dopaminergic Disruption Induced by Traumatic Coma: Dopaminergic Pathways Abnormalities and Biomarkers of Recovery Using MRI and 18F-LBT-999 PET",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 65,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "gcs",
+        "op": "lt",
+        "value": 10,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "gsw",
+          "stab"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06939335",
+    "short_name": "Lazarus-PEEP",
+    "title": "The Application of Positive End-Expiratory Pressure in Out-of-Hospital Cardiac Arrest: The Lazarus-PEEP Trial.",
+    "requires_efic": true,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06953674",
+    "short_name": "FLUID-TBI",
+    "title": "Saline Versus Balanced Crystalloid in Traumatic Brain Injury",
+    "requires_efic": true,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 12,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": false,
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT06977659",
+    "short_name": "ENTHeS",
+    "title": "Early Norepinephrine in Trauma Patients With Hemorrhagic Shock",
+    "requires_efic": true,
+    "phase": "PHASE1",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 65,
+        "hard": true
+      },
+      {
+        "field": "presumed_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "sbp_mmhg",
+        "op": "lt",
+        "value": 90,
+        "hard": false
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 8,
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT07131475",
+    "short_name": "Precision Biomarkers to Detect Brain Injury in Active-Duty United States Special Operations Forces With Repeated Blast Exposure",
+    "title": "Precision Biomarkers to Detect Brain Injury in Active-Duty United States Special Operations Forces With Repeated Blast Exposure",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "age_years",
+        "op": "lte",
+        "value": 50,
+        "hard": true
+      },
+      {
+        "field": "sex",
+        "op": "eq",
+        "value": "M",
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT07239908",
+    "short_name": "RE-ARREST",
+    "title": "Resuscitation Enhancement to Avoid Rearrest Through Evidence-based Strategies in Prehospital Post-resuscitation Care",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "blunt_mvc",
+          "blunt_other",
+          "fall",
+          "gsw",
+          "stab",
+          "blast",
+          "burn",
+          "crush"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT07245264",
+    "short_name": "RATATA",
+    "title": "Adjuvant Tranexamic Acid (TXA) Versus Surgery Alone for Adult Patients With Chronic Subdural Hematoma (CSDH)",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "presumed_intracranial_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      },
+      {
+        "field": "anticoagulant_use",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT07319208",
+    "short_name": "COSMOS-TBI",
+    "title": "Efficacy of Early Continuous Infusion of HSS on the Neurological Outcome at 6 Months in TBI Patients.",
+    "requires_efic": false,
+    "phase": "PHASE3",
+    "inclusion": [
+      {
+        "field": "gcs",
+        "op": "lte",
+        "value": 12,
+        "hard": true
+      },
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "gcs",
+        "op": "eq",
+        "value": 3,
+        "hard": false
+      },
+      {
+        "field": "spinal_injury_suspected",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "eq",
+        "value": "cardiac_arrest",
+        "hard": true
+      },
+      {
+        "field": "pregnancy_status",
+        "op": "eq",
+        "value": "pregnant",
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT07373366",
+    "short_name": "Assessment of Noninvasive Neuromodulation in a Group of Traumatic Brain Injured Patients and Healthy Volunteers",
+    "title": "Assessment of Noninvasive Neuromodulation in a Group of Traumatic Brain Injured Patients and Healthy Volunteers",
+    "requires_efic": true,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "presumed_tbi",
+        "op": "eq",
+        "value": true,
+        "hard": true
+      }
+    ],
+    "exclusion": []
+  },
+  {
+    "trial_id": "NCT07480655",
+    "short_name": "Pv-aCO\u2082 Gap-Guided Resuscitation in Adult Polytrauma Patients: A Prospective Randomized Controlled Trial",
+    "title": "Pv-aCO\u2082 Gap-Guided Resuscitation in Adult Polytrauma Patients: A Prospective Randomized Controlled Trial",
+    "requires_efic": false,
+    "phase": "PHASE4",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gte",
+        "value": 18,
+        "hard": true
+      },
+      {
+        "field": "mechanism",
+        "op": "in",
+        "value": [
+          "blunt_mvc",
+          "blunt_other",
+          "fall",
+          "gsw",
+          "stab",
+          "blast",
+          "crush",
+          "other"
+        ],
+        "hard": true
+      },
+      {
+        "field": "presumed_hemorrhage",
+        "op": "eq",
+        "value": true,
+        "hard": false
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "pregnancy_status",
+        "op": "in",
+        "value": [
+          "pregnant",
+          "unknown_could_be_pregnant"
+        ],
+        "hard": true
+      }
+    ]
+  },
+  {
+    "trial_id": "NCT07556991",
+    "short_name": "iSDH",
+    "title": "Prospective Clinical Investigation on Infection as a Cause of Chronic Subdural Hematoma.",
+    "requires_efic": false,
+    "phase": "PHASE2",
+    "inclusion": [
+      {
+        "field": "age_years",
+        "op": "gt",
+        "value": 18,
+        "hard": true
+      }
+    ],
+    "exclusion": [
+      {
+        "field": "anticoagulant_use",
+        "op": "eq",
+        "value": false,
+        "hard": false
+      }
+    ]
   }
 ]

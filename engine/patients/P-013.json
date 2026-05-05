@@ -1,0 +1,17 @@
+{
+  "patient_id": "P-013",
+  "age_years": 56,
+  "sex": "M",
+  "gcs": 7,
+  "sbp_mmhg": 118,
+  "hr_bpm": 92,
+  "mechanism": "blunt_other",
+  "trauma_activation_level": 1,
+  "eta_minutes": 5,
+  "pregnancy_status": "not_applicable",
+  "anticoagulant_use": false,
+  "presumed_tbi": true,
+  "presumed_hemorrhage": false,
+  "presumed_intracranial_hemorrhage": true,
+  "spinal_injury_suspected": false
+}

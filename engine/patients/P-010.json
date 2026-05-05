@@ -1,0 +1,17 @@
+{
+  "patient_id": "P-010",
+  "age_years": 38,
+  "sex": "M",
+  "gcs": 15,
+  "sbp_mmhg": 88,
+  "hr_bpm": 58,
+  "mechanism": "fall",
+  "trauma_activation_level": 1,
+  "eta_minutes": 5,
+  "pregnancy_status": "not_applicable",
+  "anticoagulant_use": false,
+  "presumed_tbi": false,
+  "presumed_hemorrhage": false,
+  "presumed_intracranial_hemorrhage": false,
+  "spinal_injury_suspected": true
+}
