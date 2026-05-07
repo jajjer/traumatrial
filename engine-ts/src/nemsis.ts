@@ -72,6 +72,70 @@ const ANTICOAGULANT_RXNORM_CUIS = new Set([
   "1599538",
 ]);
 
+// Reversal agents administered in the field — strong corroboration that the
+// patient is anticoagulated. Picked up from eMedications.03 (admin'd meds),
+// not eHistory.06 (home meds). RxNorm CUIs partial; substring channel does
+// most matching since eMedications.03 often carries free-text or NEMSIS codes.
+const REVERSAL_AGENT_RXNORM_CUIS = new Set([
+  "1604586",  // idarucizumab (Praxbind)
+  "1992425",  // andexanet alfa (Andexxa)
+  "1862625",  // 4-factor PCC / Kcentra
+  "67051",    // phytonadione (vitamin K1)
+  "8819",     // protamine sulfate
+]);
+const REVERSAL_AGENT_STRINGS = [
+  "idarucizumab", "praxbind",
+  "andexanet", "andexxa",
+  "kcentra", "prothrombin complex", "4f-pcc", "4-factor pcc", "ffp transfusion",
+  "vitamin k", "phytonadione",
+  "protamine",
+];
+
+// Tranexamic acid + similar antifibrinolytics — admin'd in the field, strong
+// corroboration of clinical hemorrhage. ORs into presumed_hemorrhage.
+const HEMORRHAGE_TX_RXNORM_CUIS = new Set([
+  "11091", "313364", "859078", "498",
+]);
+const HEMORRHAGE_TX_STRINGS = [
+  "tranexamic", "txa", "cyklokapron", "lysteda",
+  "aminocaproic", "amicar",
+];
+
+// eInjury.09 NEMSIS v3.5 trauma triage criteria codes (CDC field triage).
+const NEMSIS_TRIAGE_STEP1 = new Set([
+  "4509001", "4509003", "4509005", "4509007", "4509033",
+]);
+const NEMSIS_TRIAGE_STEP2 = new Set([
+  "4509013", "4509015", "4509017", "4509019",
+  "4509021", "4509023", "4509025", "4509027", "4509029",
+]);
+const NEMSIS_TRIAGE_STEP3 = new Set([
+  "4509031", "4509035", "4509037", "4509039",
+]);
+const NEMSIS_TRIAGE_STEP4 = new Set([
+  "4509049", "4509051", "4509053", "4509055",
+]);
+
+// eSituation.07 (primary impression) ICD-10 → flag set, longest-prefix wins.
+// Flags map onto Patient: tbi → presumed_tbi, ich → presumed_intracranial_hemorrhage,
+// spinal → spinal_injury_suspected.
+type ImpressionFlag = "tbi" | "ich" | "spinal";
+const ICD10_IMPRESSION_FLAGS: [string, ImpressionFlag[]][] = [
+  ["S06.4", ["tbi", "ich"]],
+  ["S06.5", ["tbi", "ich"]],
+  ["S06.6", ["tbi", "ich"]],
+  ["S06", ["tbi"]],
+  ["S12", ["spinal"]],
+  ["S13", ["spinal"]],
+  ["S14", ["spinal"]],
+  ["S22", ["spinal"]],
+  ["S23", ["spinal"]],
+  ["S24", ["spinal"]],
+  ["S32", ["spinal"]],
+  ["S33", ["spinal"]],
+  ["S34", ["spinal"]],
+];
+
 // NEMSIS v3.5 eField vocabulary — kept in sync with engine/traumatrial_match/nemsis_vocab.py.
 // MAPPED = fields the adapter actively reads; KNOWN = recognized fields the adapter
 // intentionally skips (with a one-phrase description for the audit trail).
@@ -79,8 +143,10 @@ const NEMSIS_MAPPED = new Set<string>([
   "eRecord.01",
   "ePatient.13", "ePatient.15", "ePatient.16",
   "eVitals.06", "eVitals.10", "eVitals.23",
-  "eSituation.02", "eInjury.01",
+  "eSituation.02", "eSituation.07",
+  "eInjury.01", "eInjury.09",
   "eHistory.06", "eHistory.16",
+  "eMedications.03",
   "eTimes.07",
 ]);
 
@@ -132,7 +198,6 @@ const NEMSIS_KNOWN: Record<string, string> = {
   "eExam.21": "extremity findings",
   "eExam.23": "neurological exam findings",
   "eMedications.01": "medication administration time",
-  "eMedications.03": "administered medication (RxNorm/SNOMED)",
   "eMedications.05": "dosage",
   "eMedications.06": "dosage units",
   "eMedications.07": "route of administration",
@@ -142,7 +207,6 @@ const NEMSIS_KNOWN: Record<string, string> = {
   "eProcedures.06": "procedure successful (yes/no)",
   "eProcedures.07": "procedure complications",
   "eSituation.01": "patient's primary symptom",
-  "eSituation.07": "primary impression",
   "eSituation.09": "secondary impression",
   "eSituation.11": "injury type (single/multi system)",
   "eSituation.12": "work-related?",
@@ -151,7 +215,6 @@ const NEMSIS_KNOWN: Record<string, string> = {
   "eInjury.03": "use of safety equipment",
   "eInjury.04": "airbag deployment",
   "eInjury.05": "height of fall",
-  "eInjury.09": "trauma triage criteria met (CDC step 1/2/3)",
   "eNarrative.01": "free-text narrative (out of scope; consider NLP later)",
   "eDisposition.01": "patient disposition",
   "eDisposition.02": "transport mode",
@@ -247,41 +310,256 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, v));
 }
 
-function inferPresumedTbi(gcs: number, mechanism: Mechanism, trace: NemsisConversionTrace): boolean {
+function inferPresumedTbi(
+  gcs: number, mechanism: Mechanism, trace: NemsisConversionTrace,
+  impressionFlags: Set<ImpressionFlag>,
+): boolean {
   const blunt = mechanism === "blunt_mvc" || mechanism === "blunt_other" || mechanism === "fall" || mechanism === "head_strike";
-  const val = gcs <= 13 && blunt;
+  const physiology = gcs <= 13 && blunt;
+  const impression = impressionFlags.has("tbi");
+  const val = physiology || impression;
+  let notes: string;
+  let path: string | null = null;
+  if (impression && !physiology) {
+    notes = `eSituation.07 primary impression flagged TBI → True (physiology alone: GCS=${gcs}, mechanism=${mechanism})`;
+    path = "eSituation.07";
+  } else if (impression && physiology) {
+    notes = `GCS<=13 (${gcs}) AND blunt mechanism (${mechanism}); eSituation.07 corroborates → True`;
+    path = "eSituation.07";
+  } else {
+    notes = `GCS<=13 (${gcs}) AND mechanism in blunt set (${mechanism}) → ${val}`;
+  }
   trace.extractions.push({
-    field: "presumed_tbi", source: "inferred", value: val, nemsis_path: null,
-    notes: `GCS<=13 (${gcs}) AND mechanism in blunt set (${mechanism}) → ${val}`,
+    field: "presumed_tbi", source: "inferred", value: val, nemsis_path: path, notes,
   });
   return val;
 }
 
-function inferPresumedHemorrhage(sbp: number, hr: number, mechanism: Mechanism, trace: NemsisConversionTrace): boolean {
-  const val = sbp < 90 && hr > 110 && mechanism !== "cardiac_arrest";
+function inferPresumedHemorrhage(
+  sbp: number, hr: number, mechanism: Mechanism, trace: NemsisConversionTrace,
+  adminHemorrhageTx: string | null,
+): boolean {
+  const physiology = sbp < 90 && hr > 110 && mechanism !== "cardiac_arrest";
+  const val = physiology || Boolean(adminHemorrhageTx);
+  let notes: string;
+  let path: string | null = null;
+  if (adminHemorrhageTx && !physiology) {
+    notes = `hemorrhage-tx med administered (${JSON.stringify(adminHemorrhageTx)}) → True (physiology alone: SBP=${sbp}, HR=${hr})`;
+    path = "eMedications.03";
+  } else if (adminHemorrhageTx && physiology) {
+    notes = `SBP<90 (${sbp}) AND HR>110 (${hr}); hemorrhage-tx med (${JSON.stringify(adminHemorrhageTx)}) corroborates → True`;
+    path = "eMedications.03";
+  } else {
+    notes = `SBP<90 (${sbp}) AND HR>110 (${hr}) AND non-cardiac → ${val}`;
+  }
   trace.extractions.push({
-    field: "presumed_hemorrhage", source: "inferred", value: val, nemsis_path: null,
-    notes: `SBP<90 (${sbp}) AND HR>110 (${hr}) AND non-cardiac → ${val}`,
+    field: "presumed_hemorrhage", source: "inferred", value: val, nemsis_path: path, notes,
   });
   return val;
 }
 
-function inferPresumedIch(presumedTbi: boolean, gcs: number, trace: NemsisConversionTrace): boolean {
-  const val = presumedTbi && gcs <= 8;
+function inferPresumedIch(
+  presumedTbi: boolean, gcs: number, trace: NemsisConversionTrace,
+  impressionFlags: Set<ImpressionFlag>,
+): boolean {
+  const physiology = presumedTbi && gcs <= 8;
+  const impression = impressionFlags.has("ich");
+  const val = physiology || impression;
+  let notes: string;
+  let path: string | null = null;
+  if (impression && !physiology) {
+    notes = `eSituation.07 primary impression flagged ICH → True (physiology alone: presumed_tbi=${presumedTbi}, GCS=${gcs})`;
+    path = "eSituation.07";
+  } else if (impression && physiology) {
+    notes = `presumed_tbi (${presumedTbi}) AND GCS<=8 (${gcs}); eSituation.07 corroborates → True`;
+    path = "eSituation.07";
+  } else {
+    notes = `presumed_tbi (${presumedTbi}) AND GCS<=8 (${gcs}) → ${val}`;
+  }
   trace.extractions.push({
-    field: "presumed_intracranial_hemorrhage", source: "inferred", value: val, nemsis_path: null,
-    notes: `presumed_tbi (${presumedTbi}) AND GCS<=8 (${gcs}) → ${val}`,
+    field: "presumed_intracranial_hemorrhage", source: "inferred", value: val, nemsis_path: path, notes,
   });
   return val;
 }
 
-function inferSpinalInjury(mechanism: Mechanism, gcs: number, trace: NemsisConversionTrace): boolean {
-  const val = (mechanism === "blunt_mvc" || mechanism === "fall") && gcs <= 13;
+function inferSpinalInjury(
+  mechanism: Mechanism, gcs: number, trace: NemsisConversionTrace,
+  impressionFlags: Set<ImpressionFlag>,
+): boolean {
+  const physiology = (mechanism === "blunt_mvc" || mechanism === "fall") && gcs <= 13;
+  const impression = impressionFlags.has("spinal");
+  const val = physiology || impression;
+  let notes: string;
+  let path: string | null = null;
+  if (impression && !physiology) {
+    notes = `eSituation.07 primary impression flagged spinal injury → True (physiology alone: mechanism=${mechanism}, GCS=${gcs})`;
+    path = "eSituation.07";
+  } else if (impression && physiology) {
+    notes = `mechanism in {blunt_mvc, fall} (${mechanism}) AND GCS<=13 (${gcs}); eSituation.07 corroborates → True`;
+    path = "eSituation.07";
+  } else {
+    notes = `mechanism in {blunt_mvc, fall} (${mechanism}) AND GCS<=13 (${gcs}) → ${val}`;
+  }
   trace.extractions.push({
-    field: "spinal_injury_suspected", source: "inferred", value: val, nemsis_path: null,
-    notes: `mechanism in {blunt_mvc, fall} (${mechanism}) AND GCS<=13 (${gcs}) → ${val}`,
+    field: "spinal_injury_suspected", source: "inferred", value: val, nemsis_path: path, notes,
   });
   return val;
+}
+
+interface AdminMedSignals {
+  reversal: string | null;
+  hemorrhage_tx: string | null;
+}
+
+function extractAdminMedSignals(pcr: NemsisNode, trace: NemsisConversionTrace): AdminMedSignals {
+  const eMeds = pcr.eMedications as NemsisNode | undefined;
+  if (!eMeds) {
+    trace.extractions.push({
+      field: "eMedications.03", source: "skipped", value: null, nemsis_path: "eMedications.03",
+      notes: "no eMedications section in PCR",
+    });
+    return { reversal: null, hemorrhage_tx: null };
+  }
+  const rawValues: string[] = [];
+  // Walk eMedications.03 inside any eMedicationsGroup OR directly under eMedications.
+  const collect = (node: unknown): void => {
+    if (!node || typeof node !== "object") return;
+    const v = (node as Record<string, unknown>)["eMedications.03"];
+    for (const m of asArray(v)) {
+      if (m === null || m === undefined) continue;
+      if (typeof m === "string" || typeof m === "number") {
+        rawValues.push(String(m).trim());
+        continue;
+      }
+      if (typeof m === "object") {
+        const obj = m as Record<string, unknown>;
+        const text = obj["#text"];
+        if (text !== undefined && text !== null) rawValues.push(String(text).trim());
+        for (const [, child] of Object.entries(obj)) {
+          if (child === null || child === undefined) continue;
+          if (typeof child === "string" || typeof child === "number") {
+            rawValues.push(String(child).trim());
+          }
+        }
+      }
+    }
+  };
+  collect(eMeds);
+  for (const g of asArray((eMeds as Record<string, unknown>).eMedicationsGroup)) {
+    collect(g);
+  }
+  const cleaned = rawValues.filter((v) => v.length > 0);
+  const haystack = cleaned.join(" ").toLowerCase();
+
+  let reversal: string | null = null;
+  for (const v of cleaned) if (REVERSAL_AGENT_RXNORM_CUIS.has(v)) { reversal = v; break; }
+  if (!reversal) {
+    for (const needle of REVERSAL_AGENT_STRINGS) {
+      if (haystack.includes(needle)) { reversal = needle; break; }
+    }
+  }
+  let hemorrhage_tx: string | null = null;
+  for (const v of cleaned) if (HEMORRHAGE_TX_RXNORM_CUIS.has(v)) { hemorrhage_tx = v; break; }
+  if (!hemorrhage_tx) {
+    for (const needle of HEMORRHAGE_TX_STRINGS) {
+      if (haystack.includes(needle)) { hemorrhage_tx = needle; break; }
+    }
+  }
+
+  if (cleaned.length === 0) {
+    trace.extractions.push({
+      field: "eMedications.03", source: "skipped", value: null, nemsis_path: "eMedications.03",
+      notes: "eMedications present but no eMedications.03 entries",
+    });
+  } else if (reversal || hemorrhage_tx) {
+    const hits = [
+      reversal ? `reversal=${JSON.stringify(reversal)}` : null,
+      hemorrhage_tx ? `hemorrhage_tx=${JSON.stringify(hemorrhage_tx)}` : null,
+    ].filter(Boolean).join(", ");
+    trace.extractions.push({
+      field: "eMedications.03", source: "extracted", value: hits, nemsis_path: "eMedications.03",
+      notes: `administered meds matched: ${hits}`,
+    });
+  } else {
+    trace.extractions.push({
+      field: "eMedications.03", source: "extracted", value: null, nemsis_path: "eMedications.03",
+      notes: `${cleaned.length} administered med(s); no reversal or hemorrhage-tx match`,
+    });
+  }
+  return { reversal, hemorrhage_tx };
+}
+
+function extractPrimaryImpressionFlags(pcr: NemsisNode, trace: NemsisConversionTrace): Set<ImpressionFlag> {
+  const raw = findText(pcr, ["eSituation", "eSituation.07"]);
+  if (raw === null) {
+    trace.extractions.push({
+      field: "eSituation.07", source: "skipped", value: null, nemsis_path: "eSituation.07",
+      notes: "no eSituation.07 (primary impression) in PCR",
+    });
+    return new Set<ImpressionFlag>();
+  }
+  const code = raw.toUpperCase();
+  const sorted = [...ICD10_IMPRESSION_FLAGS].sort((a, b) => b[0].length - a[0].length);
+  for (const [prefix, flags] of sorted) {
+    if (code.startsWith(prefix)) {
+      const set = new Set<ImpressionFlag>(flags);
+      trace.extractions.push({
+        field: "eSituation.07", source: "extracted", value: [...set].sort(),
+        nemsis_path: "eSituation.07", raw: code,
+        notes: `ICD-10 prefix ${JSON.stringify(prefix)} → flags ${JSON.stringify([...set].sort())}`,
+      });
+      return set;
+    }
+  }
+  trace.extractions.push({
+    field: "eSituation.07", source: "extracted", value: null, nemsis_path: "eSituation.07", raw: code,
+    notes: "primary impression present; no ICD-10 prefix matched",
+  });
+  return new Set<ImpressionFlag>();
+}
+
+interface TriageOutcome {
+  level: number | null;
+  matched: string | null;
+  unrecognized: string[];
+}
+
+function extractTriageActivation(pcr: NemsisNode): TriageOutcome {
+  const eInjury = pcr.eInjury as NemsisNode | undefined;
+  const codes: string[] = [];
+  const collect = (node: unknown): void => {
+    if (!node || typeof node !== "object") return;
+    const v = (node as Record<string, unknown>)["eInjury.09"];
+    for (const m of asArray(v)) {
+      if (m === null || m === undefined) continue;
+      if (typeof m === "string" || typeof m === "number") codes.push(String(m).trim());
+      else if (typeof m === "object") {
+        const obj = m as Record<string, unknown>;
+        const text = obj["#text"];
+        if (text !== undefined && text !== null) codes.push(String(text).trim());
+        for (const [, c] of Object.entries(obj)) {
+          if (typeof c === "string" || typeof c === "number") codes.push(String(c).trim());
+        }
+      }
+    }
+  };
+  if (eInjury) {
+    collect(eInjury);
+    for (const g of asArray((eInjury as Record<string, unknown>).eInjuryGroup)) collect(g);
+  }
+  const cleaned = codes.filter((c) => c.length > 0);
+
+  for (const c of cleaned) {
+    if (NEMSIS_TRIAGE_STEP1.has(c) || NEMSIS_TRIAGE_STEP2.has(c)) {
+      return { level: 1, matched: c, unrecognized: [] };
+    }
+  }
+  for (const c of cleaned) {
+    if (NEMSIS_TRIAGE_STEP3.has(c) || NEMSIS_TRIAGE_STEP4.has(c)) {
+      return { level: 2, matched: c, unrecognized: [] };
+    }
+  }
+  return { level: null, matched: null, unrecognized: cleaned };
 }
 
 const PARSER = new XMLParser({
@@ -567,10 +845,25 @@ export function fromNemsisXml(
     }
   }
 
+  // Administered-med signals (eMedications.03) — must run before
+  // anticoagulant_use so a reversal-agent admin can flip the flag even when
+  // eHistory.06 is silent.
+  const adminSignals = extractAdminMedSignals(pcr, trace);
+
   // anticoagulant_use
   const eHistory = pcr.eHistory as NemsisNode | undefined;
   let anticoagulant_use = false;
-  if (!eHistory) {
+  // Channel 0: a reversal agent administered in the field is decisive — the
+  // EMS crew gave it for a reason. We still log eHistory.06 below if it exists,
+  // for the audit trail.
+  if (adminSignals.reversal) {
+    anticoagulant_use = true;
+    trace.extractions.push({
+      field: "anticoagulant_use", source: "inferred", value: true,
+      nemsis_path: "eMedications.03", raw: adminSignals.reversal,
+      notes: `reversal agent administered in the field (${JSON.stringify(adminSignals.reversal)}) → True`,
+    });
+  } else if (!eHistory) {
     trace.extractions.push({
       field: "anticoagulant_use", source: "defaulted", value: false, nemsis_path: "eHistory.06",
       notes: "no eHistory; defaulted to False",
@@ -660,43 +953,62 @@ export function fromNemsisXml(
     }
   }
 
-  // trauma_activation_level — simplified CDC field triage criteria.
-  // Step 1 (physiology) → Level 1: GCS<=13 OR SBP<90.
-  // Step 2 (anatomy/mechanism) → Level 2: penetrating mechanism OR (high-energy blunt + age>=55).
-  // Otherwise → Level 3.
+  // trauma_activation_level — eInjury.09 CDC trauma triage codes are
+  // authoritative when present; otherwise fall through to physiology inference.
+  const triage = extractTriageActivation(pcr);
   let trauma_activation_level: number;
-  if (gcs <= 13 || sbp < 90) {
-    const reason = gcs <= 13 ? `GCS<=13 (${gcs})` : `SBP<90 (${sbp})`;
-    trauma_activation_level = 1;
+  if (triage.level !== null) {
+    trauma_activation_level = triage.level;
+    const stepLabel = triage.level === 1 ? "Step 1/2" : "Step 3/4";
     trace.extractions.push({
-      field: "trauma_activation_level", source: "inferred", value: 1, nemsis_path: null,
-      notes: `CDC Step 1 physiology: ${reason} → Level 1`,
-    });
-  } else if (mechanism === "gsw" || mechanism === "stab" || mechanism === "blast" || mechanism === "crush") {
-    trauma_activation_level = 2;
-    trace.extractions.push({
-      field: "trauma_activation_level", source: "inferred", value: 2, nemsis_path: null,
-      notes: `penetrating/crush mechanism (${mechanism}) → Level 2`,
-    });
-  } else if ((mechanism === "blunt_mvc" || mechanism === "fall") && age >= 55) {
-    trauma_activation_level = 2;
-    trace.extractions.push({
-      field: "trauma_activation_level", source: "inferred", value: 2, nemsis_path: null,
-      notes: `high-energy blunt (${mechanism}) + age>=55 (${age}) → Level 2`,
+      field: "trauma_activation_level", source: "extracted", value: triage.level,
+      nemsis_path: "eInjury.09", raw: triage.matched,
+      notes: `CDC ${stepLabel} criterion ${JSON.stringify(triage.matched)} on PCR → Level ${triage.level}`,
     });
   } else {
-    trauma_activation_level = 3;
-    trace.extractions.push({
-      field: "trauma_activation_level", source: "inferred", value: 3, nemsis_path: null,
-      notes: "no Step 1 / Step 2 criteria met → Level 3",
-    });
+    if (triage.unrecognized.length > 0) {
+      const sample = triage.unrecognized.slice(0, 3).join(", ") + (triage.unrecognized.length > 3 ? "…" : "");
+      trace.extractions.push({
+        field: "eInjury.09", source: "skipped", value: null, nemsis_path: "eInjury.09", raw: sample,
+        notes: "eInjury.09 codes present but not in our triage table; using physiology inference",
+      });
+    }
+    if (gcs <= 13 || sbp < 90) {
+      const reason = gcs <= 13 ? `GCS<=13 (${gcs})` : `SBP<90 (${sbp})`;
+      trauma_activation_level = 1;
+      trace.extractions.push({
+        field: "trauma_activation_level", source: "inferred", value: 1, nemsis_path: null,
+        notes: `CDC Step 1 physiology: ${reason} → Level 1`,
+      });
+    } else if (mechanism === "gsw" || mechanism === "stab" || mechanism === "blast" || mechanism === "crush") {
+      trauma_activation_level = 2;
+      trace.extractions.push({
+        field: "trauma_activation_level", source: "inferred", value: 2, nemsis_path: null,
+        notes: `penetrating/crush mechanism (${mechanism}) → Level 2`,
+      });
+    } else if ((mechanism === "blunt_mvc" || mechanism === "fall") && age >= 55) {
+      trauma_activation_level = 2;
+      trace.extractions.push({
+        field: "trauma_activation_level", source: "inferred", value: 2, nemsis_path: null,
+        notes: `high-energy blunt (${mechanism}) + age>=55 (${age}) → Level 2`,
+      });
+    } else {
+      trauma_activation_level = 3;
+      trace.extractions.push({
+        field: "trauma_activation_level", source: "inferred", value: 3, nemsis_path: null,
+        notes: "no Step 1 / Step 2 criteria met → Level 3",
+      });
+    }
   }
 
+  // Primary impression flags — OR-channel into the inferred clinical bools below.
+  const impressionFlags = extractPrimaryImpressionFlags(pcr, trace);
+
   // Inferred clinical flags
-  const presumed_tbi = inferPresumedTbi(gcs, mechanism, trace);
-  const presumed_hemorrhage = inferPresumedHemorrhage(sbp, hr, mechanism, trace);
-  const presumed_intracranial_hemorrhage = inferPresumedIch(presumed_tbi, gcs, trace);
-  const spinal_injury_suspected = inferSpinalInjury(mechanism, gcs, trace);
+  const presumed_tbi = inferPresumedTbi(gcs, mechanism, trace, impressionFlags);
+  const presumed_hemorrhage = inferPresumedHemorrhage(sbp, hr, mechanism, trace, adminSignals.hemorrhage_tx);
+  const presumed_intracranial_hemorrhage = inferPresumedIch(presumed_tbi, gcs, trace, impressionFlags);
+  const spinal_injury_suspected = inferSpinalInjury(mechanism, gcs, trace, impressionFlags);
 
   const patient: Patient = {
     patient_id: pid,

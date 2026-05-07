@@ -121,6 +121,13 @@ What this exercises that the persona-001..008 fixtures don't:
         <eMedications.06>3326-MILLILITERS</eMedications.06>
         <eMedications.07>3327-IV-PERIPHERAL</eMedications.07>
       </eMedicationsGroup>
+      <eMedicationsGroup>
+        <eMedications.01>2026-05-04T13:20:11-05:00</eMedications.01>
+        <eMedications.03>Tranexamic acid 1g IV</eMedications.03>
+        <eMedications.05>1000</eMedications.05>
+        <eMedications.06>3326-MILLIGRAMS</eMedications.06>
+        <eMedications.07>3327-IV-PERIPHERAL</eMedications.07>
+      </eMedicationsGroup>
     </eMedications>
 
     <eProcedures>
@@ -136,8 +143,15 @@ What this exercises that the persona-001..008 fixtures don't:
 
     <eSituation>
       <eSituation.02>V44.5XXA</eSituation.02>
+      <eSituation.07>S06.6X9A</eSituation.07>
       <eSituation.11>3811-INJURY-MULTIPLE</eSituation.11>
     </eSituation>
+
+    <eInjury>
+      <eInjury.09>4509001</eInjury.09>
+      <eInjury.09>4509003</eInjury.09>
+      <eInjury.09>4509031</eInjury.09>
+    </eInjury>
 
     <eNarrative>
       <eNarrative.01>38 yo M unrestrained driver, single-vehicle rollover on rural interstate. Significant front-end deformity, prolonged extrication. Patient AOx3 on EMS arrival, c/o chest and abdominal pain. Vitals deteriorated en route with progressive hypotension and tachycardia. GCS dropped from 13 to 8 over 7-minute transport. C-collar in place, two large-bore IVs. Notified receiving facility for trauma activation Level 1. ETA 6 minutes at last contact.</eNarrative.01>

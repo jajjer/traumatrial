@@ -35,12 +35,18 @@ test("realistic ePCR includes high-signal skipped sections", () => {
   for (const expected of [
     "eVitals.14", "eVitals.20",
     "eExam.13", "eExam.18",
-    "eMedications.03",
     "eProcedures.03",
     "eDisposition.20",
     "eNarrative.01",
   ]) {
     assert.ok(fields.has(expected), `expected ${expected} in unmapped`);
+  }
+  // Newly-mapped fields should NOT appear in unmapped on a fixture that uses them.
+  for (const promoted of ["eMedications.03", "eInjury.09", "eSituation.07"]) {
+    assert.ok(
+      !fields.has(promoted),
+      `${promoted} should be reported as mapped on the realistic fixture, not unmapped`,
+    );
   }
 });
 
