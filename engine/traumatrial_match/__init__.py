@@ -12,8 +12,10 @@ from traumatrial_match.schema import (
 )
 from traumatrial_match.match import match, match_all
 from traumatrial_match.nemsis import (
+    CoverageEntry,
     FieldExtraction,
     NemsisConversionTrace,
+    NemsisCoverageReport,
     NemsisParseError,
     from_nemsis_xml,
 )
@@ -33,6 +35,8 @@ __all__ = [
     "match_all",
     "from_nemsis_xml",
     "NemsisConversionTrace",
+    "NemsisCoverageReport",
+    "CoverageEntry",
     "FieldExtraction",
     "NemsisParseError",
     "__version__",

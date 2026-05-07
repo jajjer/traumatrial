@@ -783,9 +783,22 @@ interface NemsisFieldExtraction {
   notes?: string | null;
 }
 
+interface NemsisCoverageEntry {
+  field: string;
+  classification: "known_unmapped" | "unknown";
+  description: string | null;
+  sample_value: string | null;
+}
+
+interface NemsisCoverageReport {
+  mapped_fields: string[];
+  unmapped: NemsisCoverageEntry[];
+}
+
 interface NemsisResponse {
   patient: Patient;
   trace: { extractions: NemsisFieldExtraction[] };
+  coverage: NemsisCoverageReport;
   results: MatchResult[];
   latency_ms: number;
 }
@@ -919,6 +932,8 @@ function NemsisResults({ data, trials }: { data: NemsisResponse; trials: Trial[]
   );
   const eligibleCount = data.results.filter((r) => r.eligible).length;
   const trialFor = (id: string) => trials.find((t) => t.trial_id === id);
+  const knownUnmapped = data.coverage.unmapped.filter((e) => e.classification === "known_unmapped");
+  const unknown = data.coverage.unmapped.filter((e) => e.classification === "unknown");
 
   return (
     <div className="mt-5 fade-in flex flex-col gap-5">
@@ -976,6 +991,56 @@ function NemsisResults({ data, trials }: { data: NemsisResponse; trials: Trial[]
             </tbody>
           </table>
         </div>
+      </details>
+
+      <details className="rounded-md border border-slate-800 bg-slate-950/60 p-3">
+        <summary className="font-mono text-[10px] tracking-wider text-slate-400 cursor-pointer hover:text-slate-200">
+          WHAT WE IGNORED — {knownUnmapped.length} known unmapped
+          {unknown.length > 0 ? ` · ${unknown.length} unknown` : ""}
+        </summary>
+        <p className="mt-2 text-[11px] text-slate-500 leading-relaxed">
+          NEMSIS eFields present in the source PCR that the adapter did not consume.
+          These don&apos;t affect matching today — surfaced so you can see exactly what
+          signal we left on the floor.
+        </p>
+        {data.coverage.unmapped.length === 0 ? (
+          <p className="mt-3 font-mono text-[11px] text-slate-500">no skipped fields</p>
+        ) : (
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full text-[11px] font-mono">
+              <thead>
+                <tr className="text-slate-500">
+                  <th className="text-left pr-3 pb-1.5 font-normal">FIELD</th>
+                  <th className="text-left pr-3 pb-1.5 font-normal">CLASS</th>
+                  <th className="text-left pr-3 pb-1.5 font-normal">DESCRIPTION</th>
+                  <th className="text-left pb-1.5 font-normal">SAMPLE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.coverage.unmapped.map((e, i) => (
+                  <tr key={i} className="border-t border-slate-900 align-top">
+                    <td className="pr-3 py-1 text-slate-300">{e.field}</td>
+                    <td className="pr-3 py-1">
+                      <span
+                        className={`px-1.5 py-0.5 rounded text-[9px] tracking-wider ${
+                          e.classification === "known_unmapped"
+                            ? "bg-slate-800 text-slate-400"
+                            : "bg-rose-900/60 text-rose-200"
+                        }`}
+                      >
+                        {e.classification === "known_unmapped" ? "KNOWN" : "UNKNOWN"}
+                      </span>
+                    </td>
+                    <td className="pr-3 py-1 text-slate-500 leading-snug">{e.description ?? "—"}</td>
+                    <td className="py-1 text-slate-500 truncate max-w-[16rem]" title={e.sample_value ?? ""}>
+                      {e.sample_value ?? ""}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </details>
 
       <div>

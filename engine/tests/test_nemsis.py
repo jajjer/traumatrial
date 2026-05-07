@@ -26,7 +26,7 @@ def _load(name: str) -> str:
 
 
 def test_persona_001_hemorrhage_round_trip() -> None:
-    patient, trace = from_nemsis_xml(_load("persona-001-hemorrhage.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("persona-001-hemorrhage.xml"))
     assert isinstance(patient, Patient)
     assert patient.patient_id == "SYN-P001-HEMORRHAGE"
     assert patient.age_years == 34
@@ -54,7 +54,7 @@ def test_persona_001_hemorrhage_round_trip() -> None:
 
 
 def test_persona_007_cardiac_arrest_extraction() -> None:
-    patient, trace = from_nemsis_xml(_load("persona-007-cardiac-arrest.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("persona-007-cardiac-arrest.xml"))
     assert patient.age_years == 62
     assert patient.sex == "F"
     assert patient.mechanism == "cardiac_arrest"
@@ -75,7 +75,7 @@ def test_persona_007_cardiac_arrest_extraction() -> None:
 
 
 def test_incomplete_xml_falls_back_safely() -> None:
-    patient, trace = from_nemsis_xml(_load("incomplete.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("incomplete.xml"))
     # Patient still validates — every Patient field must have a value.
     assert isinstance(patient, Patient)
     assert patient.age_years == 0           # non-int age → defaulted
@@ -109,7 +109,7 @@ def test_no_pcr_element_raises() -> None:
 
 def test_extracted_patient_runs_through_match_all() -> None:
     """The whole point — convert NEMSIS, match against bundled trials."""
-    patient, _ = from_nemsis_xml(_load("persona-001-hemorrhage.xml"))
+    patient, _, _ = from_nemsis_xml(_load("persona-001-hemorrhage.xml"))
     trials = load_trials(Path(__file__).resolve().parents[1] / "trials")
     results = match_all(patient, trials)
     # P-001 hemorrhage shock should hit at least one eligible trial
@@ -138,29 +138,29 @@ def _wrap_pcr(extra: str = "", *, gcs: int = 15, sbp: int = 120, hr: int = 80,
 
 
 def test_activation_level_1_on_low_gcs() -> None:
-    p, trace = from_nemsis_xml(_wrap_pcr(gcs=8))
+    p, trace, _ = from_nemsis_xml(_wrap_pcr(gcs=8))
     assert p.trauma_activation_level == 1
     note = next(e.notes for e in trace.extractions if e.field == "trauma_activation_level")
     assert "GCS<=13" in note
 
 
 def test_activation_level_1_on_hypotension() -> None:
-    p, _ = from_nemsis_xml(_wrap_pcr(sbp=80))
+    p, _, _ = from_nemsis_xml(_wrap_pcr(sbp=80))
     assert p.trauma_activation_level == 1
 
 
 def test_activation_level_2_on_penetrating() -> None:
-    p, _ = from_nemsis_xml(_wrap_pcr(mechanism_code="X95"))  # gsw
+    p, _, _ = from_nemsis_xml(_wrap_pcr(mechanism_code="X95"))  # gsw
     assert p.trauma_activation_level == 2
 
 
 def test_activation_level_2_on_geriatric_mvc() -> None:
-    p, _ = from_nemsis_xml(_wrap_pcr(age=70, mechanism_code="V40"))
+    p, _, _ = from_nemsis_xml(_wrap_pcr(age=70, mechanism_code="V40"))
     assert p.trauma_activation_level == 2
 
 
 def test_activation_level_3_on_normal_blunt() -> None:
-    p, _ = from_nemsis_xml(_wrap_pcr(age=30, mechanism_code="V40", gcs=15, sbp=120))
+    p, _, _ = from_nemsis_xml(_wrap_pcr(age=30, mechanism_code="V40", gcs=15, sbp=120))
     assert p.trauma_activation_level == 3
 
 
@@ -168,7 +168,7 @@ def test_activation_level_3_on_normal_blunt() -> None:
 
 
 def test_anticoagulant_via_rxnorm_cui() -> None:
-    p, trace = from_nemsis_xml(
+    p, trace, _ = from_nemsis_xml(
         _wrap_pcr(extra="<eHistory><eHistory.06>1364430</eHistory.06></eHistory>")
     )
     assert p.anticoagulant_use is True
@@ -177,7 +177,7 @@ def test_anticoagulant_via_rxnorm_cui() -> None:
 
 
 def test_anticoagulant_via_substring_still_works() -> None:
-    p, _ = from_nemsis_xml(
+    p, _, _ = from_nemsis_xml(
         _wrap_pcr(extra="<eHistory><eHistory.06>warfarin 5mg PO QD</eHistory.06></eHistory>")
     )
     assert p.anticoagulant_use is True
@@ -208,7 +208,7 @@ def test_mechanism_mapping(code: str, expected: str) -> None:
   <ePatient><ePatient.13>9906003</ePatient.13><ePatient.15>30</ePatient.15><ePatient.16>2516001</ePatient.16></ePatient>
   <eSituation><eSituation.02>{code}</eSituation.02></eSituation>
 </PatientCareReport></EMSDataSet>"""
-    patient, _ = from_nemsis_xml(xml)
+    patient, _, _ = from_nemsis_xml(xml)
     assert patient.mechanism == expected
 
 
@@ -223,7 +223,7 @@ def test_mechanism_mapping(code: str, expected: str) -> None:
 
 def test_persona_002_geriatric_fall_namespaced() -> None:
     """xmlns:nem prefix variant + multi-vitals + non-anticoag meds."""
-    patient, trace = from_nemsis_xml(_load("persona-002-geriatric-fall.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("persona-002-geriatric-fall.xml"))
     assert patient.patient_id == "SYN-P002-FALL"
     assert patient.age_years == 67
     assert patient.sex == "F"
@@ -245,7 +245,7 @@ def test_persona_002_geriatric_fall_namespaced() -> None:
 
 def test_persona_003_gsw_no_history() -> None:
     """ICD-10 X95.000A + missing eHistory + single vitals group."""
-    patient, trace = from_nemsis_xml(_load("persona-003-gsw.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("persona-003-gsw.xml"))
     assert patient.age_years == 28
     assert patient.sex == "M"
     assert patient.gcs == 15
@@ -264,7 +264,7 @@ def test_persona_003_gsw_no_history() -> None:
 
 def test_persona_004_tbi_falls_back_to_einjury() -> None:
     """eSituation.02 absent — adapter falls through to eInjury.01 for mechanism."""
-    patient, trace = from_nemsis_xml(_load("persona-004-tbi-mvc.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("persona-004-tbi-mvc.xml"))
     assert patient.age_years == 45
     assert patient.sex == "F"
     # Latest vitals are the second group — out-of-range HR=350 in the first
@@ -286,7 +286,7 @@ def test_persona_004_tbi_falls_back_to_einjury() -> None:
 
 def test_persona_005_anticoag_via_nested_rxnorm() -> None:
     """RxNorm CUI inside an eHistory.061 child element + brand-name in sibling."""
-    patient, trace = from_nemsis_xml(_load("persona-005-anticoag-mvc.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("persona-005-anticoag-mvc.xml"))
     assert patient.age_years == 19
     assert patient.sex == "M"
     assert patient.mechanism == "blunt_mvc"  # NEMSIS native code 2120001
@@ -303,7 +303,7 @@ def test_persona_005_anticoag_via_nested_rxnorm() -> None:
 
 def test_persona_006_pregnant_fall_explicit_code() -> None:
     """Explicit pregnant code on a 52yo female + decompensating vitals."""
-    patient, trace = from_nemsis_xml(_load("persona-006-pregnant-fall.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("persona-006-pregnant-fall.xml"))
     assert patient.age_years == 52
     assert patient.sex == "F"
     assert patient.pregnancy_status == "pregnant"
@@ -324,7 +324,7 @@ def test_persona_006_pregnant_fall_explicit_code() -> None:
 
 def test_persona_008_pediatric_caller_provided_id() -> None:
     """Missing eRecord.01 (caller provides id) + unmapped cause code → 'other'."""
-    patient, trace = from_nemsis_xml(
+    patient, trace, _ = from_nemsis_xml(
         _load("persona-008-pediatric-mvc.xml"), patient_id="P-008"
     )
     assert patient.patient_id == "P-008"
@@ -347,7 +347,7 @@ def test_adversarial_substring_false_positive_documented() -> None:
     """Allergy note containing 'warfarin' substring → adapter (incorrectly)
     flags anticoagulant_use=True. This test pins current behavior so a
     future fix (parsing eHistory.06 into structured fields) flips it."""
-    patient, trace = from_nemsis_xml(_load("adversarial-substring-trap.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("adversarial-substring-trap.xml"))
     assert patient.anticoagulant_use is True
     anticoag = next(e for e in trace.extractions if e.field == "anticoagulant_use")
     assert anticoag.source == "inferred"
@@ -361,7 +361,7 @@ def test_trace_covers_every_patient_field() -> None:
     """Every Patient field should have at least one extraction row in the
     trace — no silent values. Guard against future fields being added to
     Patient without a corresponding adapter trace entry."""
-    patient, trace = from_nemsis_xml(_load("persona-001-hemorrhage.xml"))
+    patient, trace, _ = from_nemsis_xml(_load("persona-001-hemorrhage.xml"))
     fields_in_trace = {e.field for e in trace.extractions}
     fields_on_patient = set(patient.model_dump().keys())
     missing = fields_on_patient - fields_in_trace
@@ -381,7 +381,7 @@ def test_realistic_polytrauma_round_trip_to_corpus() -> None:
     The point of this test is the round-trip — adapter + matcher together
     on a realistic input. Per-field extraction rules are covered elsewhere."""
     xml = _load("realistic-mva-polytrauma.xml")
-    patient, trace = from_nemsis_xml(xml)
+    patient, trace, _ = from_nemsis_xml(xml)
 
     # Multi-section noise must not bleed into the Patient.
     assert patient.patient_id == "ANON-MVA-2026-0517"
