@@ -72,6 +72,114 @@ const ANTICOAGULANT_RXNORM_CUIS = new Set([
   "1599538",
 ]);
 
+// NEMSIS v3.5 eField vocabulary — kept in sync with engine/traumatrial_match/nemsis_vocab.py.
+// MAPPED = fields the adapter actively reads; KNOWN = recognized fields the adapter
+// intentionally skips (with a one-phrase description for the audit trail).
+const NEMSIS_MAPPED = new Set<string>([
+  "eRecord.01",
+  "ePatient.13", "ePatient.15", "ePatient.16",
+  "eVitals.06", "eVitals.10", "eVitals.23",
+  "eSituation.02", "eInjury.01",
+  "eHistory.06", "eHistory.16",
+  "eTimes.07",
+]);
+
+const NEMSIS_KNOWN: Record<string, string> = {
+  "eRecord.SoftwareCreatorAndName": "ePCR vendor identifier",
+  "eRecord.02": "ePCR software version",
+  "eResponse.01": "EMS agency identifier",
+  "eResponse.03": "type of service requested",
+  "eResponse.05": "primary role of the unit",
+  "eResponse.13": "type of dispatch (911, transfer, etc.)",
+  "eDispatch.01": "complaint reported by dispatch",
+  "eDispatch.04": "EMD performed (priority)",
+  "eTimes.01": "PSAP call time",
+  "eTimes.03": "unit notified by dispatch",
+  "eTimes.05": "unit en route",
+  "eTimes.06": "unit arrived on scene",
+  "eTimes.09": "unit back in service",
+  "eTimes.13": "unit canceled",
+  "eScene.07": "incident location type",
+  "eScene.09": "rural/urban/suburban",
+  "eScene.18": "number of patients at scene",
+  "eScene.21": "first/second/etc. EMS on scene",
+  "ePatient.02": "patient last name (PHI; intentionally not consumed)",
+  "ePatient.03": "patient first name (PHI; intentionally not consumed)",
+  "ePatient.14": "race",
+  "ePatient.17": "date of birth (PHI; intentionally not consumed)",
+  "ePatient.NN": "ethnicity / language / SSN (PHI; intentionally not consumed)",
+  "eHistory.05": "allergies",
+  "eHistory.08": "medical/surgical history (comorbidities)",
+  "eHistory.09": "physician orders / DNR status",
+  "eHistory.061": "RxNorm CUI nested under eHistory.06 (consumed when present)",
+  "eVitals.01": "vitals timestamp",
+  "eVitals.07": "diastolic BP",
+  "eVitals.14": "respiratory rate",
+  "eVitals.16": "respiratory effort",
+  "eVitals.20": "SpO2",
+  "eVitals.21": "EtCO2",
+  "eVitals.22": "blood glucose",
+  "eVitals.24": "GCS-Eye component",
+  "eVitals.25": "GCS-Verbal component",
+  "eVitals.26": "GCS-Motor component",
+  "eVitals.27": "stroke scale",
+  "eVitals.28": "pain scale",
+  "eExam.01": "exam timestamp",
+  "eExam.13": "chest exam findings",
+  "eExam.18": "abdomen exam findings",
+  "eExam.19": "back/flank exam findings",
+  "eExam.20": "pelvis/genitourinary findings",
+  "eExam.21": "extremity findings",
+  "eExam.23": "neurological exam findings",
+  "eMedications.01": "medication administration time",
+  "eMedications.03": "administered medication (RxNorm/SNOMED)",
+  "eMedications.05": "dosage",
+  "eMedications.06": "dosage units",
+  "eMedications.07": "route of administration",
+  "eMedications.10": "medication response",
+  "eProcedures.01": "procedure timestamp",
+  "eProcedures.03": "procedure performed (SNOMED)",
+  "eProcedures.06": "procedure successful (yes/no)",
+  "eProcedures.07": "procedure complications",
+  "eSituation.01": "patient's primary symptom",
+  "eSituation.07": "primary impression",
+  "eSituation.09": "secondary impression",
+  "eSituation.11": "injury type (single/multi system)",
+  "eSituation.12": "work-related?",
+  "eSituation.13": "patient activity at time of injury",
+  "eInjury.02": "vehicle role (driver/passenger/pedestrian)",
+  "eInjury.03": "use of safety equipment",
+  "eInjury.04": "airbag deployment",
+  "eInjury.05": "height of fall",
+  "eInjury.09": "trauma triage criteria met (CDC step 1/2/3)",
+  "eNarrative.01": "free-text narrative (out of scope; consider NLP later)",
+  "eDisposition.01": "patient disposition",
+  "eDisposition.02": "transport mode",
+  "eDisposition.16": "destination type",
+  "eDisposition.20": "destination trauma center designation",
+  "eDisposition.23": "level of care provided to receiving facility",
+  "eOutcome.01": "ED disposition",
+  "eOutcome.02": "ED diagnosis",
+  "eOutcome.10": "ED procedures",
+  "eOther.01": "QA/QI flags",
+  "eOther.06": "PCR signatures",
+  "eOther.12": "state-defined customizations",
+  "eCrew.01": "crew member id",
+  "eCrew.02": "crew member level",
+};
+
+const NEMSIS_CONTAINERS = new Set<string>([
+  "EMSDataSet", "Header", "Source", "SchemaVersion", "PatientCareReport",
+  "eRecord", "eResponse", "eDispatch", "eTimes", "eScene", "ePatient",
+  "eHistory", "eVitals", "eVitalsGroup",
+  "eExam", "eExamGroup",
+  "eMedications", "eMedicationsGroup",
+  "eProcedures", "eProceduresGroup",
+  "eSituation", "eInjury", "eInjuryGroup",
+  "eNarrative", "eDisposition", "eOutcome", "eOther",
+  "eCrew", "eCrewGroup",
+]);
+
 export type ExtractionSource = "extracted" | "inferred" | "defaulted" | "skipped";
 
 export interface FieldExtraction {
@@ -85,6 +193,18 @@ export interface FieldExtraction {
 
 export interface NemsisConversionTrace {
   extractions: FieldExtraction[];
+}
+
+export interface CoverageEntry {
+  field: string;
+  classification: "known_unmapped" | "unknown";
+  description: string | null;
+  sample_value: string | null;
+}
+
+export interface NemsisCoverageReport {
+  mapped_fields: string[];
+  unmapped: CoverageEntry[];
 }
 
 export class NemsisParseError extends Error {}
@@ -173,7 +293,89 @@ const PARSER = new XMLParser({
   isArray: (name) => name === "eVitalsGroup" || name === "eHistory.06" || name === "PatientCareReport",
 });
 
-export function fromNemsisXml(xml: string, opts: { patient_id?: string } = {}): { patient: Patient; trace: NemsisConversionTrace } {
+function classifyField(local: string): "mapped" | "known_unmapped" | "container" | "unknown" {
+  if (NEMSIS_MAPPED.has(local)) return "mapped";
+  if (local in NEMSIS_KNOWN) return "known_unmapped";
+  if (NEMSIS_CONTAINERS.has(local)) return "container";
+  return "unknown";
+}
+
+// Walk the parsed PCR object tree and return a coverage report. fast-xml-parser
+// gives us nested objects keyed by element local name. A "leaf" here is a key
+// whose value is a primitive (string/number/boolean) — that's where the eField
+// value lives. Containers (objects) get descended.
+function walkCoverage(pcr: unknown, mappedConsumed: Set<string>): NemsisCoverageReport {
+  const seen = new Map<string, CoverageEntry>();
+
+  const visit = (node: unknown): void => {
+    if (node === null || node === undefined) return;
+    if (Array.isArray(node)) {
+      for (const item of node) visit(item);
+      return;
+    }
+    if (typeof node !== "object") return;
+    for (const [key, value] of Object.entries(node as Record<string, unknown>)) {
+      if (key === "#text") continue;
+      const klass = classifyField(key);
+      const isLeaf =
+        value === null || typeof value !== "object" ||
+        (typeof value === "object" && !Array.isArray(value) &&
+          Object.keys(value as Record<string, unknown>).every((k) => k === "#text"));
+      if (isLeaf) {
+        if (klass === "mapped" || klass === "container") continue;
+        if (seen.has(key)) {
+          const existing = seen.get(key)!;
+          if (existing.sample_value === null) {
+            const sample = leafText(value);
+            if (sample) existing.sample_value = sample;
+          }
+          continue;
+        }
+        seen.set(key, {
+          field: key,
+          classification: klass === "known_unmapped" ? "known_unmapped" : "unknown",
+          description: NEMSIS_KNOWN[key] ?? null,
+          sample_value: leafText(value),
+        });
+      } else {
+        // Container or wrapper: descend.
+        visit(value);
+      }
+    }
+  };
+  visit(pcr);
+
+  const unmapped = [...seen.values()].sort((a, b) => {
+    const aKey = a.classification === "known_unmapped" ? 0 : 1;
+    const bKey = b.classification === "known_unmapped" ? 0 : 1;
+    if (aKey !== bKey) return aKey - bKey;
+    return a.field.localeCompare(b.field);
+  });
+  return { mapped_fields: [...mappedConsumed].sort(), unmapped };
+}
+
+function leafText(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  if (typeof value === "string") return value.trim() || null;
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (typeof value === "object" && !Array.isArray(value)) {
+    const text = (value as Record<string, unknown>)["#text"];
+    if (text !== undefined && text !== null) return String(text).trim() || null;
+  }
+  return null;
+}
+
+function parseIsoDate(raw: string): Date | null {
+  // Tolerate trailing Z; Date(...) handles ISO 8601 with offsets natively.
+  const cleaned = raw.trim();
+  const t = Date.parse(cleaned);
+  return Number.isFinite(t) ? new Date(t) : null;
+}
+
+export function fromNemsisXml(
+  xml: string,
+  opts: { patient_id?: string; now?: Date } = {},
+): { patient: Patient; trace: NemsisConversionTrace; coverage: NemsisCoverageReport } {
   let parsed: unknown;
   try {
     parsed = PARSER.parse(xml);
@@ -430,12 +632,33 @@ export function fromNemsisXml(xml: string, opts: { patient_id?: string } = {}): 
     }
   }
 
-  // eta_minutes
-  trace.extractions.push({
-    field: "eta_minutes", source: "defaulted", value: 0, nemsis_path: "eTimes.07",
-    notes: "ETA inference (current time - estimated arrival) is out of scope for v0; defaulted to 0",
-  });
-  const eta_minutes = 0;
+  // eta_minutes — inferred from eTimes.07 (estimated/actual arrival at destination).
+  // Floors at 0 if the unit has already landed; clamps at 480 (8h) to keep the
+  // value within the Patient schema's bounds.
+  const rawEta = findText(pcr, ["eTimes", "eTimes.07"]);
+  let eta_minutes = 0;
+  if (rawEta === null) {
+    trace.extractions.push({
+      field: "eta_minutes", source: "defaulted", value: 0, nemsis_path: "eTimes.07",
+      notes: "no eTimes.07 (estimated/actual arrival) in PCR; defaulted to 0",
+    });
+  } else {
+    const parsed = parseIsoDate(rawEta);
+    if (parsed === null) {
+      trace.extractions.push({
+        field: "eta_minutes", source: "defaulted", value: 0, nemsis_path: "eTimes.07", raw: rawEta,
+        notes: `could not parse eTimes.07 timestamp ${JSON.stringify(rawEta)}; defaulted to 0`,
+      });
+    } else {
+      const reference = opts.now ?? new Date();
+      const deltaSeconds = (parsed.getTime() - reference.getTime()) / 1000;
+      eta_minutes = Math.max(0, Math.min(480, Math.floor(deltaSeconds / 60)));
+      trace.extractions.push({
+        field: "eta_minutes", source: "inferred", value: eta_minutes, nemsis_path: "eTimes.07", raw: rawEta,
+        notes: `max(0, eTimes.07 − now) ≈ ${eta_minutes}m`,
+      });
+    }
+  }
 
   // trauma_activation_level — simplified CDC field triage criteria.
   // Step 1 (physiology) → Level 1: GCS<=13 OR SBP<90.
@@ -492,7 +715,17 @@ export function fromNemsisXml(xml: string, opts: { patient_id?: string } = {}): 
     presumed_intracranial_hemorrhage,
     spinal_injury_suspected,
   };
-  return { patient, trace };
+
+  // Coverage report — what we mapped on this PCR vs. every NEMSIS field present
+  // that we left on the floor. Mirror of Python's NemsisCoverageReport.
+  const consumed = new Set<string>();
+  for (const e of trace.extractions) {
+    if (e.source === "extracted" && e.nemsis_path && NEMSIS_MAPPED.has(e.nemsis_path)) {
+      consumed.add(e.nemsis_path);
+    }
+  }
+  const coverage = walkCoverage(pcr, consumed);
+  return { patient, trace, coverage };
 }
 
 export function traceCounts(trace: NemsisConversionTrace) {

@@ -30,10 +30,17 @@ from __future__ import annotations
 
 import re
 import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
 from typing import Any, Literal, Optional
 
 from pydantic import BaseModel, Field
 
+from traumatrial_match.nemsis_vocab import (
+    KNOWN as NEMSIS_KNOWN,
+    MAPPED as NEMSIS_MAPPED,
+    SECTION_CONTAINERS as NEMSIS_CONTAINERS,
+    classify as classify_field,
+)
 from traumatrial_match.schema import Mechanism, Patient, PregnancyStatus, Sex
 
 
@@ -209,16 +216,150 @@ class NemsisParseError(ValueError):
     """Raised when the XML is malformed or doesn't look like a NEMSIS PCR."""
 
 
+class CoverageEntry(BaseModel):
+    """One element seen in the source XML that the adapter didn't consume."""
+
+    path: str = Field(description="dotted path under PatientCareReport, e.g. 'eExam.eExam.13'")
+    field: str = Field(description="the eField local name, e.g. 'eExam.13'")
+    classification: Literal["known_unmapped", "unknown"]
+    description: Optional[str] = Field(
+        default=None,
+        description="one-phrase description of the field (KNOWN entries only)",
+    )
+    sample_value: Optional[str] = Field(
+        default=None,
+        description="first non-empty text seen at this path; helpful for auditing",
+    )
+
+
+class NemsisCoverageReport(BaseModel):
+    """What the adapter saw in the XML vs. what it consumed.
+
+    `mapped_fields` is the set of eFields the adapter actually read on this PCR.
+    `unmapped` lists everything else the walker found, classified as either
+    `known_unmapped` (recognized v3.5 eField the adapter intentionally skips —
+    e.g. eExam findings, eMedications, RR/SpO2) or `unknown` (not in our
+    vocabulary at all; could be a state extension, a typo, or a v3.5 field we
+    forgot to catalog).
+
+    This is the patient-side counterpart to Trial.metadata.skipped_criteria —
+    a coordinator should be able to read it and know exactly which signal in
+    their ePCR was ignored.
+    """
+
+    mapped_fields: list[str] = Field(default_factory=list)
+    unmapped: list[CoverageEntry] = Field(default_factory=list)
+
+    @property
+    def mapped_count(self) -> int:
+        return len(self.mapped_fields)
+
+    @property
+    def known_unmapped_count(self) -> int:
+        return sum(1 for e in self.unmapped if e.classification == "known_unmapped")
+
+    @property
+    def unknown_count(self) -> int:
+        return sum(1 for e in self.unmapped if e.classification == "unknown")
+
+    def summary_line(self) -> str:
+        return (
+            f"NEMSIS coverage: {self.mapped_count} mapped, "
+            f"{self.known_unmapped_count} known unmapped, "
+            f"{self.unknown_count} unknown"
+        )
+
+
+def _local_name(tag: str) -> str:
+    """Strip an XML namespace prefix '{ns}Foo' → 'Foo'."""
+    if tag.startswith("{"):
+        return tag.split("}", 1)[1]
+    return tag
+
+
+def _walk_coverage(
+    pcr: ET.Element, mapped_fields_consumed: set[str]
+) -> NemsisCoverageReport:
+    """Walk every leaf element under the PCR and build a coverage report.
+
+    A "leaf" is an element with no element children — that's where the actual
+    eField value lives. Containers (eHistory, eVitalsGroup, etc.) are
+    descended into but not classified.
+
+    Repeats (e.g. multiple eHistory.06) collapse into one CoverageEntry per
+    field, with the first non-empty text retained as `sample_value`. That
+    keeps the report compact on real PCRs without losing audit signal.
+    """
+    seen_unmapped: dict[str, CoverageEntry] = {}
+
+    def walk(node: ET.Element, parent_path: str) -> None:
+        children = list(node)
+        local = _local_name(node.tag)
+        path = f"{parent_path}.{local}" if parent_path else local
+
+        # Container with children: descend.
+        if children:
+            for child in children:
+                walk(child, path)
+            return
+
+        # Leaf node — classify it.
+        klass = classify_field(local)
+        if klass == "container":
+            # Empty container — nothing to record.
+            return
+        if klass == "mapped":
+            # Mapped fields are tracked separately via the trace; the walker
+            # doesn't list them here (they show up in mapped_fields_consumed
+            # if the adapter actually pulled them).
+            return
+        if local in seen_unmapped:
+            # Already recorded; capture sample_value if we didn't have one yet.
+            entry = seen_unmapped[local]
+            if entry.sample_value is None and node.text:
+                entry.sample_value = node.text.strip() or None
+            return
+        sample = (node.text or "").strip() or None
+        seen_unmapped[local] = CoverageEntry(
+            path=path,
+            field=local,
+            classification="known_unmapped" if klass == "known_unmapped" else "unknown",
+            description=NEMSIS_KNOWN.get(local),
+            sample_value=sample,
+        )
+
+    walk(pcr, "")
+
+    # Sort: knowns first (alphabetical), unknowns last (alphabetical). Stable
+    # ordering means snapshot tests don't churn.
+    unmapped = sorted(
+        seen_unmapped.values(),
+        key=lambda e: (0 if e.classification == "known_unmapped" else 1, e.field),
+    )
+    return NemsisCoverageReport(
+        mapped_fields=sorted(mapped_fields_consumed),
+        unmapped=unmapped,
+    )
+
+
 # ---------- public entry point ----------
 
 
 def from_nemsis_xml(
-    xml_str: str, *, patient_id: Optional[str] = None
-) -> tuple[Patient, NemsisConversionTrace]:
-    """Convert a NEMSIS v3.5 PatientCareReport XML into a Patient + trace.
+    xml_str: str,
+    *,
+    patient_id: Optional[str] = None,
+    now: Optional[datetime] = None,
+) -> tuple[Patient, NemsisConversionTrace, NemsisCoverageReport]:
+    """Convert a NEMSIS v3.5 PatientCareReport XML into a Patient + trace + coverage.
 
     The Patient returned is always valid (pydantic enforces this). Fields
     without a NEMSIS source are defaulted with a clear note in the trace.
+    The coverage report enumerates every NEMSIS eField present in the source
+    that the adapter did not consume — see NemsisCoverageReport for details.
+
+    `now` is used as the reference clock for ETA inference (eTimes.07 − now).
+    Defaults to the current UTC time; tests pass a fixed value for determinism.
     """
     try:
         root = ET.fromstring(xml_str)
@@ -236,7 +377,7 @@ def from_nemsis_xml(
     mechanism = _extract_mechanism(pcr, ns, trace)
     pregnancy_status = _extract_pregnancy(pcr, ns, trace, sex)
     anticoagulant_use = _extract_anticoagulant(pcr, ns, trace)
-    eta_minutes = _extract_eta(pcr, ns, trace)
+    eta_minutes = _extract_eta(pcr, ns, trace, now=now)
     activation = _infer_activation_level(gcs, sbp, mechanism, age_years, trace)
 
     # Inferred clinical flags. None of these are canonical NEMSIS fields —
@@ -272,7 +413,16 @@ def from_nemsis_xml(
         presumed_intracranial_hemorrhage=presumed_ich,
         spinal_injury_suspected=spinal_injury,
     )
-    return patient, trace
+
+    # Build the coverage report from the union of MAPPED fields actually
+    # observed in the trace (i.e. an "extracted" row) — that way we don't
+    # claim coverage for a field whose source element was missing.
+    consumed = {
+        e.nemsis_path for e in trace.extractions
+        if e.source == "extracted" and e.nemsis_path in NEMSIS_MAPPED
+    }
+    coverage = _walk_coverage(pcr, consumed)
+    return patient, trace, coverage
 
 
 # ---------- XML helpers ----------
@@ -582,17 +732,57 @@ def _extract_anticoagulant(
 
 
 def _extract_eta(
-    pcr: ET.Element, ns: str, trace: NemsisConversionTrace
+    pcr: ET.Element, ns: str, trace: NemsisConversionTrace,
+    *, now: Optional[datetime] = None,
 ) -> int:
-    # ETA isn't a single NEMSIS field — it's the delta between current time
-    # and eTimes.07 (arrival at destination) when known. For v0 we skip;
-    # downstream logic can override.
+    """Infer ETA as max(0, eTimes.07 − now) in whole minutes.
+
+    eTimes.07 is "Unit Arrived at Destination" in NEMSIS v3.5. While the unit
+    is in transit it carries the receiving facility's *estimated* arrival time;
+    after arrival it carries the actual. Either way, max(0, ...) gives us a
+    sensible ETA that floors at 0 when the patient has already landed.
+
+    `now` is injectable for deterministic tests. Production callers leave it
+    None and we use UTC-now.
+    """
+    raw = _find_text(pcr, ns, "eTimes", "eTimes.07")
+    if raw is None:
+        trace.add(
+            field="eta_minutes", source="defaulted", value=0,
+            nemsis_path="eTimes.07",
+            notes="no eTimes.07 (estimated/actual arrival) in PCR; defaulted to 0",
+        )
+        return 0
+    parsed = _parse_iso_datetime(raw)
+    if parsed is None:
+        trace.add(
+            field="eta_minutes", source="defaulted", value=0,
+            nemsis_path="eTimes.07", raw=raw,
+            notes=f"could not parse eTimes.07 timestamp {raw!r}; defaulted to 0",
+        )
+        return 0
+    reference = now or datetime.now(timezone.utc)
+    if reference.tzinfo is None:
+        reference = reference.replace(tzinfo=timezone.utc)
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    delta_seconds = (parsed - reference).total_seconds()
+    minutes = max(0, min(480, int(delta_seconds // 60)))
     trace.add(
-        field="eta_minutes", source="defaulted", value=0,
-        nemsis_path="eTimes.07",
-        notes="ETA inference (current time - estimated arrival) is out of scope for v0; defaulted to 0",
+        field="eta_minutes", source="inferred", value=minutes,
+        nemsis_path="eTimes.07", raw=raw,
+        notes=f"max(0, eTimes.07 − now) ≈ {minutes}m",
     )
-    return 0
+    return minutes
+
+
+def _parse_iso_datetime(raw: str) -> Optional[datetime]:
+    """Parse a NEMSIS-style ISO 8601 timestamp; tolerate trailing Z."""
+    cleaned = raw.strip().replace("Z", "+00:00")
+    try:
+        return datetime.fromisoformat(cleaned)
+    except ValueError:
+        return None
 
 
 def _infer_activation_level(

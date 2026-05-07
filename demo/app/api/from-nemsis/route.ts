@@ -35,12 +35,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { patient, trace } = fromNemsisXml(xml);
+    const { patient, trace, coverage } = fromNemsisXml(xml);
     const trials = await loadTrials();
     const t0 = performance.now();
     const results = matchAll(patient, trials);
     const latency_ms = +(performance.now() - t0).toFixed(2);
-    return Response.json({ patient, trace, results, latency_ms });
+    return Response.json({ patient, trace, coverage, results, latency_ms });
   } catch (e) {
     const status = e instanceof NemsisParseError ? 400 : 500;
     return Response.json({ error: (e as Error).message }, { status });
