@@ -29,6 +29,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-slate-950 text-slate-100">
+        <div
+          role="note"
+          className="sticky top-0 z-50 w-full bg-amber-900/90 text-amber-50 text-xs sm:text-sm text-center px-3 py-1.5 border-b border-amber-700/60 backdrop-blur"
+        >
+          <span className="font-semibold">DEMO</span> — not a clinical decision system, not validated, no real patient data.
+        </div>
         {children}
       </body>
     </html>
