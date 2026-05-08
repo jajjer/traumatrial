@@ -4,7 +4,7 @@ Converts a NEMSIS v3.5 PatientCareReport into the engine's structured Patient
 record, plus a field-by-field NemsisConversionTrace explaining where each
 value came from (extracted / inferred / defaulted / skipped).
 
-This is a deliberately small adapter. ~10 high-signal eFields are mapped
+This is a deliberately small adapter. ~15 high-signal eFields are mapped
 explicitly; everything else surfaces in the trace with a one-line reason.
 The trace is the contract: a coordinator should be able to read it and
 understand exactly which Patient values were lifted from XML, which were
@@ -21,7 +21,7 @@ What this is NOT:
 
 Usage:
     from traumatrial_match import from_nemsis_xml
-    patient, trace = from_nemsis_xml(xml_str)
+    patient, trace, coverage = from_nemsis_xml(xml_str)
     for line in trace.summary_lines():
         print(line)
 """
@@ -45,7 +45,7 @@ from traumatrial_match.schema import Mechanism, Patient, PregnancyStatus, Sex
 
 
 # NEMSIS code lists — partial, illustrative. Full list at https://nemsis.org/standards/v350/.
-# These cover the codes our 8 personas would plausibly carry.
+# These cover the codes our bundled personas plausibly carry.
 NEMSIS_GENDER: dict[str, Sex] = {
     "9906001": "F",
     "9906003": "M",
@@ -160,6 +160,106 @@ ANTICOAGULANT_RXNORM_CUIS = frozenset({
     "284562",    # heparin sodium
     "11128",     # enoxaparin
 })
+
+
+# Reversal agents administered in the field — strong corroboration that the
+# patient is anticoagulated. We pick these up from eMedications.03 (administered
+# meds), separate from eHistory.06 (home meds). RxNorm CUIs are illustrative
+# and partial; the substring channel does most of the actual matching since
+# eMedications.03 in many ePCRs carries free-text or NEMSIS-specific codes.
+REVERSAL_AGENT_RXNORM_CUIS = frozenset({
+    "1604586",  # idarucizumab (Praxbind — reverses dabigatran)
+    "1992425",  # andexanet alfa (Andexxa — reverses Xa inhibitors)
+    "1862625",  # 4-factor PCC / Kcentra
+    "67051",    # phytonadione (vitamin K1)
+    "8819",     # protamine sulfate
+})
+
+REVERSAL_AGENT_STRINGS = (
+    "idarucizumab", "praxbind",
+    "andexanet", "andexxa",
+    "kcentra", "prothrombin complex", "4f-pcc", "4-factor pcc", "ffp transfusion",
+    "vitamin k", "phytonadione",
+    "protamine",
+)
+
+
+# Tranexamic acid + similar antifibrinolytics — administered in the field
+# strongly corroborates a clinical assessment of hemorrhage. Used to OR with
+# physiology-derived presumed_hemorrhage.
+HEMORRHAGE_TX_RXNORM_CUIS = frozenset({
+    "11091",   # tranexamic acid (ingredient)
+    "313364",  # tranexamic acid 100 MG/ML injectable
+    "859078",  # tranexamic acid (alt SCD)
+    "498",     # aminocaproic acid
+})
+
+HEMORRHAGE_TX_STRINGS = (
+    "tranexamic", "txa", "cyklokapron", "lysteda",
+    "aminocaproic", "amicar",
+)
+
+
+# eInjury.09 — NEMSIS v3.5 trauma triage criteria codes (CDC field triage).
+# Partial: the codes that turn up most often in real ePCRs. Step 1/2 escalate
+# to highest activation; Step 3 to Level 2; Step 4 to Level 2.
+NEMSIS_TRIAGE_STEP1: frozenset[str] = frozenset({
+    "4509001",  # GCS <= 13 / altered mental status
+    "4509003",  # SBP < 90 (or age-adjusted shock)
+    "4509005",  # respiratory rate < 10 or > 29
+    "4509007",  # respiratory distress / need for ventilatory support
+    "4509033",  # cardiopulmonary arrest
+})
+NEMSIS_TRIAGE_STEP2: frozenset[str] = frozenset({
+    "4509013",  # penetrating injury head/neck/torso/proximal extremity
+    "4509015",  # skull deformity / open or depressed skull fracture
+    "4509017",  # chest wall instability / flail chest
+    "4509019",  # two or more proximal long-bone fractures
+    "4509021",  # crushed/degloved/mangled extremity
+    "4509023",  # amputation proximal to wrist or ankle
+    "4509025",  # pelvic fracture
+    "4509027",  # paralysis
+    "4509029",  # active bleeding requiring tourniquet
+})
+NEMSIS_TRIAGE_STEP3: frozenset[str] = frozenset({
+    "4509031",  # high-energy MVC (intrusion / ejection / death same compartment)
+    "4509035",  # auto vs pedestrian / cyclist >20mph
+    "4509037",  # fall >20ft (adult) / >10ft (peds)
+    "4509039",  # motorcycle crash >20mph
+})
+NEMSIS_TRIAGE_STEP4: frozenset[str] = frozenset({
+    "4509049",  # older adult on anticoagulant
+    "4509051",  # pregnancy >20 weeks
+    "4509053",  # burns
+    "4509055",  # EMS judgment / clinician concern
+})
+
+
+# eSituation.07 (primary impression) ICD-10 prefix → set of clinical flags.
+# The flags map onto our Patient bool fields:
+#   tbi    → presumed_tbi
+#   ich    → presumed_intracranial_hemorrhage
+#   spinal → spinal_injury_suspected
+# When eSituation.07 is present and matches, we OR these into the
+# physiology-derived inferences — the trace makes both sources visible.
+ICD10_IMPRESSION_FLAGS: list[tuple[str, frozenset[str]]] = [
+    # Intracranial hemorrhages — most specific, longest prefixes first.
+    ("S06.4", frozenset({"tbi", "ich"})),  # epidural hemorrhage
+    ("S06.5", frozenset({"tbi", "ich"})),  # subdural hemorrhage
+    ("S06.6", frozenset({"tbi", "ich"})),  # subarachnoid hemorrhage
+    # Other intracranial injuries — TBI without explicit hemorrhage code.
+    ("S06", frozenset({"tbi"})),
+    # Cervical / thoracic / lumbosacral spine fractures, dislocations, SCI.
+    ("S12", frozenset({"spinal"})),
+    ("S13", frozenset({"spinal"})),
+    ("S14", frozenset({"spinal"})),
+    ("S22", frozenset({"spinal"})),
+    ("S23", frozenset({"spinal"})),
+    ("S24", frozenset({"spinal"})),
+    ("S32", frozenset({"spinal"})),
+    ("S33", frozenset({"spinal"})),
+    ("S34", frozenset({"spinal"})),
+]
 
 
 ExtractionSource = Literal["extracted", "inferred", "defaulted", "skipped"]
@@ -376,16 +476,33 @@ def from_nemsis_xml(
     gcs, sbp, hr = _extract_vitals(pcr, ns, trace)
     mechanism = _extract_mechanism(pcr, ns, trace)
     pregnancy_status = _extract_pregnancy(pcr, ns, trace, sex)
-    anticoagulant_use = _extract_anticoagulant(pcr, ns, trace)
+    # Reversal agents administered in the field (eMedications.03) are a strong
+    # corroborating signal for anticoagulant_use beyond eHistory.06 home meds.
+    # Hemorrhage-control meds (TXA et al) corroborate presumed_hemorrhage.
+    admin_signals = _extract_administered_med_signals(pcr, ns, trace)
+    anticoagulant_use = _extract_anticoagulant(
+        pcr, ns, trace, admin_reversal=admin_signals["reversal"],
+    )
     eta_minutes = _extract_eta(pcr, ns, trace, now=now)
-    activation = _infer_activation_level(gcs, sbp, mechanism, age_years, trace)
+    # Triage criteria (eInjury.09) are authoritative when present; otherwise
+    # we fall through to the rules-based inference.
+    activation = _extract_or_infer_activation(
+        pcr, ns, gcs, sbp, mechanism, age_years, trace,
+    )
 
-    # Inferred clinical flags. None of these are canonical NEMSIS fields —
-    # the trace makes the inference rule visible.
-    presumed_tbi = _infer_presumed_tbi(gcs, mechanism, trace)
-    presumed_hemorrhage = _infer_presumed_hemorrhage(sbp, hr, mechanism, trace)
-    presumed_ich = _infer_presumed_ich(presumed_tbi, gcs, trace)
-    spinal_injury = _infer_spinal_injury(mechanism, gcs, trace)
+    # ICD-10 primary impression (eSituation.07) flags act as authoritative
+    # OR-channels for the inferred clinical bools below.
+    impression_flags = _extract_primary_impression_flags(pcr, ns, trace)
+
+    # Inferred clinical flags. The XML-sourced impression flags are OR'd in
+    # so a coded primary impression flips the bool even when physiology alone
+    # wouldn't. The trace makes both channels visible.
+    presumed_tbi = _infer_presumed_tbi(gcs, mechanism, trace, impression_flags)
+    presumed_hemorrhage = _infer_presumed_hemorrhage(
+        sbp, hr, mechanism, trace, admin_hemorrhage_tx=admin_signals["hemorrhage_tx"],
+    )
+    presumed_ich = _infer_presumed_ich(presumed_tbi, gcs, trace, impression_flags)
+    spinal_injury = _infer_spinal_injury(mechanism, gcs, trace, impression_flags)
 
     pid = patient_id or _extract_patient_id(pcr, ns, trace) or "P-NEMSIS"
     trace.add(
@@ -678,8 +795,20 @@ def _extract_pregnancy(
 
 
 def _extract_anticoagulant(
-    pcr: ET.Element, ns: str, trace: NemsisConversionTrace
+    pcr: ET.Element, ns: str, trace: NemsisConversionTrace,
+    *, admin_reversal: Optional[str] = None,
 ) -> bool:
+    # Channel 0 (highest signal): a reversal agent was administered in the field.
+    # If the EMS crew gave idarucizumab/andexanet/4F-PCC/vitamin K/protamine,
+    # the patient is anticoagulated regardless of what eHistory says.
+    if admin_reversal:
+        trace.add(
+            field="anticoagulant_use", source="inferred", value=True,
+            nemsis_path="eMedications.03", raw=admin_reversal,
+            notes=f"reversal agent administered in the field ({admin_reversal!r}) → True",
+        )
+        return True
+
     e_history = pcr.find(f"{ns}eHistory")
     if e_history is None:
         trace.add(
@@ -785,6 +914,209 @@ def _parse_iso_datetime(raw: str) -> Optional[datetime]:
         return None
 
 
+def _extract_administered_med_signals(
+    pcr: ET.Element, ns: str, trace: NemsisConversionTrace,
+) -> dict[str, Optional[str]]:
+    """Walk eMedications/eMedicationsGroup/eMedications.03 entries, looking for
+    reversal agents (anticoagulant evidence) and hemorrhage-control meds (TXA).
+
+    Returns a dict with two optional keys: ``reversal`` and ``hemorrhage_tx``.
+    Each carries the matched RxNorm CUI or substring that triggered the hit,
+    or None if nothing matched. The actual booleans flow into anticoagulant_use
+    and presumed_hemorrhage downstream — this function only collects evidence
+    and adds a single trace row when a signal fires.
+    """
+    e_meds = pcr.find(f"{ns}eMedications")
+    if e_meds is None:
+        # No administered meds at all — write one trace row so the absence is
+        # visible. Field-level skip rather than per-channel skip to keep the
+        # trace compact on minimal fixtures.
+        trace.add(
+            field="eMedications.03", source="skipped", value=None,
+            nemsis_path="eMedications.03",
+            notes="no eMedications section in PCR",
+        )
+        return {"reversal": None, "hemorrhage_tx": None}
+
+    raw_values: list[str] = []
+    for group in e_meds.findall(f"{ns}eMedicationsGroup"):
+        for med in group.findall(f"{ns}eMedications.03"):
+            if med.text:
+                raw_values.append(med.text.strip())
+            for child in med:
+                if child.text:
+                    raw_values.append(child.text.strip())
+    # Some PCRs put eMedications.03 directly under eMedications without groups.
+    for med in e_meds.findall(f"{ns}eMedications.03"):
+        if med.text:
+            raw_values.append(med.text.strip())
+
+    cleaned = [v for v in raw_values if v]
+    haystack = " ".join(cleaned).lower()
+
+    reversal_hit: Optional[str] = None
+    for v in cleaned:
+        if v in REVERSAL_AGENT_RXNORM_CUIS:
+            reversal_hit = v
+            break
+    if reversal_hit is None:
+        for needle in REVERSAL_AGENT_STRINGS:
+            if needle in haystack:
+                reversal_hit = needle
+                break
+
+    hemorrhage_hit: Optional[str] = None
+    for v in cleaned:
+        if v in HEMORRHAGE_TX_RXNORM_CUIS:
+            hemorrhage_hit = v
+            break
+    if hemorrhage_hit is None:
+        for needle in HEMORRHAGE_TX_STRINGS:
+            if needle in haystack:
+                hemorrhage_hit = needle
+                break
+
+    if not cleaned:
+        trace.add(
+            field="eMedications.03", source="skipped", value=None,
+            nemsis_path="eMedications.03",
+            notes="eMedications present but no eMedications.03 entries",
+        )
+    else:
+        if reversal_hit or hemorrhage_hit:
+            hits = ", ".join(
+                tag for tag in (
+                    f"reversal={reversal_hit!r}" if reversal_hit else "",
+                    f"hemorrhage_tx={hemorrhage_hit!r}" if hemorrhage_hit else "",
+                ) if tag
+            )
+            trace.add(
+                field="eMedications.03", source="extracted", value=hits,
+                nemsis_path="eMedications.03",
+                notes=f"administered meds matched: {hits}",
+            )
+        else:
+            trace.add(
+                field="eMedications.03", source="extracted", value=None,
+                nemsis_path="eMedications.03",
+                notes=f"{len(cleaned)} administered med(s); no reversal or hemorrhage-tx match",
+            )
+
+    return {"reversal": reversal_hit, "hemorrhage_tx": hemorrhage_hit}
+
+
+def _extract_primary_impression_flags(
+    pcr: ET.Element, ns: str, trace: NemsisConversionTrace,
+) -> frozenset[str]:
+    """Parse eSituation.07 (primary impression) ICD-10 → flag set.
+
+    Returns a possibly-empty frozenset drawn from {"tbi", "ich", "spinal"}.
+    Adds one trace row for the field whether or not it matched (so absence
+    is visible in the audit). The flags then get OR'd into the inferred
+    clinical bools downstream.
+    """
+    raw = _find_text(pcr, ns, "eSituation", "eSituation.07")
+    if raw is None:
+        trace.add(
+            field="eSituation.07", source="skipped", value=None,
+            nemsis_path="eSituation.07",
+            notes="no eSituation.07 (primary impression) in PCR",
+        )
+        return frozenset()
+    code = raw.strip().upper()
+
+    # Longest-prefix match wins (S06.4 before S06).
+    flags: frozenset[str] = frozenset()
+    matched_prefix: Optional[str] = None
+    for prefix, prefix_flags in sorted(
+        ICD10_IMPRESSION_FLAGS, key=lambda x: -len(x[0])
+    ):
+        if code.startswith(prefix):
+            flags = prefix_flags
+            matched_prefix = prefix
+            break
+
+    if matched_prefix is None:
+        trace.add(
+            field="eSituation.07", source="extracted", value=None,
+            nemsis_path="eSituation.07", raw=code,
+            notes="primary impression present; no ICD-10 prefix matched",
+        )
+        return frozenset()
+
+    trace.add(
+        field="eSituation.07", source="extracted",
+        value=sorted(flags), nemsis_path="eSituation.07", raw=code,
+        notes=f"ICD-10 prefix {matched_prefix!r} → flags {sorted(flags)}",
+    )
+    return flags
+
+
+def _extract_or_infer_activation(
+    pcr: ET.Element, ns: str,
+    gcs: int, sbp: int, mechanism: Mechanism, age: int,
+    trace: NemsisConversionTrace,
+) -> int:
+    """Use eInjury.09 (CDC trauma triage criteria) when present, otherwise
+    fall through to the physiology/mechanism inference."""
+    e_injury = pcr.find(f"{ns}eInjury")
+    codes: list[str] = []
+    if e_injury is not None:
+        # NEMSIS v3.5 wraps repeats in eInjuryGroup; some PCRs flatten to direct
+        # children. Walk both layouts.
+        scopes = [e_injury, *e_injury.findall(f"{ns}eInjuryGroup")]
+        for scope in scopes:
+            for el in scope.findall(f"{ns}eInjury.09"):
+                if el.text:
+                    codes.append(el.text.strip())
+                for child in el:
+                    if child.text:
+                        codes.append(child.text.strip())
+    codes = [c for c in codes if c]
+
+    has_step12 = any(
+        c in NEMSIS_TRIAGE_STEP1 or c in NEMSIS_TRIAGE_STEP2 for c in codes
+    )
+    has_step34 = any(
+        c in NEMSIS_TRIAGE_STEP3 or c in NEMSIS_TRIAGE_STEP4 for c in codes
+    )
+
+    if has_step12:
+        matched = next(
+            c for c in codes
+            if c in NEMSIS_TRIAGE_STEP1 or c in NEMSIS_TRIAGE_STEP2
+        )
+        trace.add(
+            field="trauma_activation_level", source="extracted", value=1,
+            nemsis_path="eInjury.09", raw=matched,
+            notes=f"CDC Step 1/2 criterion {matched!r} on PCR → Level 1",
+        )
+        return 1
+    if has_step34:
+        matched = next(
+            c for c in codes
+            if c in NEMSIS_TRIAGE_STEP3 or c in NEMSIS_TRIAGE_STEP4
+        )
+        trace.add(
+            field="trauma_activation_level", source="extracted", value=2,
+            nemsis_path="eInjury.09", raw=matched,
+            notes=f"CDC Step 3/4 criterion {matched!r} on PCR → Level 2",
+        )
+        return 2
+    if codes:
+        # eInjury.09 carried codes we don't recognize — note the skip and fall
+        # through to physiology inference. Use 'skipped' so the downstream
+        # 'inferred' row (added by _infer_activation_level) still carries the
+        # canonical trauma_activation_level value.
+        trace.add(
+            field="eInjury.09", source="skipped", value=None,
+            nemsis_path="eInjury.09",
+            raw=", ".join(codes[:3]) + ("…" if len(codes) > 3 else ""),
+            notes="eInjury.09 codes present but not in our triage table; using physiology inference",
+        )
+    return _infer_activation_level(gcs, sbp, mechanism, age, trace)
+
+
 def _infer_activation_level(
     gcs: int, sbp: int, mechanism: Mechanism, age: int,
     trace: NemsisConversionTrace,
@@ -835,49 +1167,120 @@ def _infer_activation_level(
 
 
 def _infer_presumed_tbi(
-    gcs: int, mechanism: Mechanism, trace: NemsisConversionTrace
+    gcs: int, mechanism: Mechanism, trace: NemsisConversionTrace,
+    impression_flags: frozenset[str] = frozenset(),
 ) -> bool:
     blunt = mechanism in {"blunt_mvc", "blunt_other", "fall", "head_strike"}
-    val = gcs <= 13 and blunt
+    physiology = gcs <= 13 and blunt
+    impression = "tbi" in impression_flags
+    val = physiology or impression
+    if impression and not physiology:
+        notes = (
+            f"eSituation.07 primary impression flagged TBI → True "
+            f"(physiology alone: GCS={gcs}, mechanism={mechanism})"
+        )
+        path: Optional[str] = "eSituation.07"
+    elif impression and physiology:
+        notes = (
+            f"GCS<=13 ({gcs}) AND blunt mechanism ({mechanism}); "
+            "eSituation.07 corroborates → True"
+        )
+        path = "eSituation.07"
+    else:
+        notes = (
+            f"GCS<=13 ({gcs}) AND mechanism in blunt set ({mechanism}) → {val}"
+        )
+        path = None
     trace.add(
         field="presumed_tbi", source="inferred", value=val,
-        nemsis_path=None,
-        notes=f"GCS<=13 ({gcs}) AND mechanism in blunt set ({mechanism}) → {val}",
+        nemsis_path=path, notes=notes,
     )
     return val
 
 
 def _infer_presumed_hemorrhage(
-    sbp: int, hr: int, mechanism: Mechanism, trace: NemsisConversionTrace
+    sbp: int, hr: int, mechanism: Mechanism, trace: NemsisConversionTrace,
+    *, admin_hemorrhage_tx: Optional[str] = None,
 ) -> bool:
-    val = sbp < 90 and hr > 110 and mechanism != "cardiac_arrest"
+    physiology = sbp < 90 and hr > 110 and mechanism != "cardiac_arrest"
+    val = physiology or bool(admin_hemorrhage_tx)
+    if admin_hemorrhage_tx and not physiology:
+        notes = (
+            f"hemorrhage-tx med administered ({admin_hemorrhage_tx!r}) → True "
+            f"(physiology alone: SBP={sbp}, HR={hr})"
+        )
+        path: Optional[str] = "eMedications.03"
+    elif admin_hemorrhage_tx and physiology:
+        notes = (
+            f"SBP<90 ({sbp}) AND HR>110 ({hr}); "
+            f"hemorrhage-tx med ({admin_hemorrhage_tx!r}) corroborates → True"
+        )
+        path = "eMedications.03"
+    else:
+        notes = f"SBP<90 ({sbp}) AND HR>110 ({hr}) AND non-cardiac → {val}"
+        path = None
     trace.add(
         field="presumed_hemorrhage", source="inferred", value=val,
-        nemsis_path=None,
-        notes=f"SBP<90 ({sbp}) AND HR>110 ({hr}) AND non-cardiac → {val}",
+        nemsis_path=path, notes=notes,
     )
     return val
 
 
 def _infer_presumed_ich(
-    presumed_tbi: bool, gcs: int, trace: NemsisConversionTrace
+    presumed_tbi: bool, gcs: int, trace: NemsisConversionTrace,
+    impression_flags: frozenset[str] = frozenset(),
 ) -> bool:
-    val = presumed_tbi and gcs <= 8
+    physiology = presumed_tbi and gcs <= 8
+    impression = "ich" in impression_flags
+    val = physiology or impression
+    if impression and not physiology:
+        notes = (
+            f"eSituation.07 primary impression flagged ICH → True "
+            f"(physiology alone: presumed_tbi={presumed_tbi}, GCS={gcs})"
+        )
+        path: Optional[str] = "eSituation.07"
+    elif impression and physiology:
+        notes = (
+            f"presumed_tbi ({presumed_tbi}) AND GCS<=8 ({gcs}); "
+            "eSituation.07 corroborates → True"
+        )
+        path = "eSituation.07"
+    else:
+        notes = f"presumed_tbi ({presumed_tbi}) AND GCS<=8 ({gcs}) → {val}"
+        path = None
     trace.add(
         field="presumed_intracranial_hemorrhage", source="inferred", value=val,
-        nemsis_path=None,
-        notes=f"presumed_tbi ({presumed_tbi}) AND GCS<=8 ({gcs}) → {val}",
+        nemsis_path=path, notes=notes,
     )
     return val
 
 
 def _infer_spinal_injury(
-    mechanism: Mechanism, gcs: int, trace: NemsisConversionTrace
+    mechanism: Mechanism, gcs: int, trace: NemsisConversionTrace,
+    impression_flags: frozenset[str] = frozenset(),
 ) -> bool:
-    val = mechanism in {"blunt_mvc", "fall"} and gcs <= 13
+    physiology = mechanism in {"blunt_mvc", "fall"} and gcs <= 13
+    impression = "spinal" in impression_flags
+    val = physiology or impression
+    if impression and not physiology:
+        notes = (
+            f"eSituation.07 primary impression flagged spinal injury → True "
+            f"(physiology alone: mechanism={mechanism}, GCS={gcs})"
+        )
+        path: Optional[str] = "eSituation.07"
+    elif impression and physiology:
+        notes = (
+            f"mechanism in {{blunt_mvc, fall}} ({mechanism}) AND GCS<=13 ({gcs}); "
+            "eSituation.07 corroborates → True"
+        )
+        path = "eSituation.07"
+    else:
+        notes = (
+            f"mechanism in {{blunt_mvc, fall}} ({mechanism}) AND GCS<=13 ({gcs}) → {val}"
+        )
+        path = None
     trace.add(
         field="spinal_injury_suspected", source="inferred", value=val,
-        nemsis_path=None,
-        notes=f"mechanism in {{blunt_mvc, fall}} ({mechanism}) AND GCS<=13 ({gcs}) → {val}",
+        nemsis_path=path, notes=notes,
     )
     return val

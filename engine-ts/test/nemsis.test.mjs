@@ -75,6 +75,108 @@ test("anticoagulant inferred from medication substring", () => {
   assert.equal(patient.anticoagulant_use, true);
 });
 
+// ---------- eInjury.09 / eSituation.07 / eMedications.03 mappings ----------
+
+const BASE_PCR_OPEN = `<?xml version="1.0"?>
+<EMSDataSet xmlns="http://www.nemsis.org"><PatientCareReport>
+  <eRecord><eRecord.01>X</eRecord.01></eRecord>
+  <ePatient><ePatient.13>9906003</ePatient.13><ePatient.15>30</ePatient.15><ePatient.16>2516001</ePatient.16></ePatient>
+  <eVitals><eVitalsGroup><eVitals.06>120</eVitals.06><eVitals.10>80</eVitals.10><eVitals.23>15</eVitals.23></eVitalsGroup></eVitals>
+  <eSituation><eSituation.02>V40</eSituation.02></eSituation>`;
+const BASE_PCR_CLOSE = `</PatientCareReport></EMSDataSet>`;
+
+test("eInjury.09 step1 pins activation to Level 1 (override)", () => {
+  const xml = `${BASE_PCR_OPEN}
+    <eInjury><eInjury.09>4509001</eInjury.09></eInjury>
+    ${BASE_PCR_CLOSE}`;
+  const { patient, trace } = fromNemsisXml(xml);
+  assert.equal(patient.trauma_activation_level, 1);
+  const row = trace.extractions.find((e) => e.field === "trauma_activation_level");
+  assert.equal(row.source, "extracted");
+  assert.equal(row.nemsis_path, "eInjury.09");
+});
+
+test("eInjury.09 step3 pins activation to Level 2", () => {
+  const xml = `${BASE_PCR_OPEN}
+    <eInjury><eInjury.09>4509031</eInjury.09></eInjury>
+    ${BASE_PCR_CLOSE}`;
+  const { patient } = fromNemsisXml(xml);
+  assert.equal(patient.trauma_activation_level, 2);
+});
+
+test("eInjury.09 unrecognized codes fall through to inference", () => {
+  const xml = `${BASE_PCR_OPEN}
+    <eInjury><eInjury.09>9999999</eInjury.09></eInjury>
+    ${BASE_PCR_CLOSE}`;
+  const { patient, trace } = fromNemsisXml(xml);
+  assert.equal(patient.trauma_activation_level, 3);
+  const skipped = trace.extractions.filter(
+    (e) => e.field === "eInjury.09" && e.source === "skipped",
+  );
+  assert.ok(skipped.length > 0);
+});
+
+test("eSituation.07 SAH (S06.6) flips presumed_tbi and presumed_ich", () => {
+  const xml = `<?xml version="1.0"?>
+<EMSDataSet xmlns="http://www.nemsis.org"><PatientCareReport>
+  <eRecord><eRecord.01>X</eRecord.01></eRecord>
+  <ePatient><ePatient.13>9906003</ePatient.13><ePatient.15>40</ePatient.15><ePatient.16>2516001</ePatient.16></ePatient>
+  <eVitals><eVitalsGroup><eVitals.06>120</eVitals.06><eVitals.10>80</eVitals.10><eVitals.23>15</eVitals.23></eVitalsGroup></eVitals>
+  <eSituation><eSituation.02>V40</eSituation.02><eSituation.07>S06.6X9A</eSituation.07></eSituation>
+</PatientCareReport></EMSDataSet>`;
+  const { patient, trace } = fromNemsisXml(xml);
+  assert.equal(patient.presumed_tbi, true);
+  assert.equal(patient.presumed_intracranial_hemorrhage, true);
+  const tbiRow = trace.extractions.find((e) => e.field === "presumed_tbi");
+  assert.equal(tbiRow.nemsis_path, "eSituation.07");
+});
+
+test("eSituation.07 cervical SCI (S14) flips spinal_injury_suspected", () => {
+  const xml = `<?xml version="1.0"?>
+<EMSDataSet xmlns="http://www.nemsis.org"><PatientCareReport>
+  <eRecord><eRecord.01>X</eRecord.01></eRecord>
+  <ePatient><ePatient.13>9906003</ePatient.13><ePatient.15>30</ePatient.15><ePatient.16>2516001</ePatient.16></ePatient>
+  <eVitals><eVitalsGroup><eVitals.06>120</eVitals.06><eVitals.10>80</eVitals.10><eVitals.23>15</eVitals.23></eVitalsGroup></eVitals>
+  <eSituation><eSituation.02>2120009</eSituation.02><eSituation.07>S14.0XXA</eSituation.07></eSituation>
+</PatientCareReport></EMSDataSet>`;
+  const { patient } = fromNemsisXml(xml);
+  assert.equal(patient.spinal_injury_suspected, true);
+});
+
+test("eMedications.03 reversal agent flips anticoagulant_use", () => {
+  const xml = `${BASE_PCR_OPEN}
+    <eMedications><eMedicationsGroup><eMedications.03>Idarucizumab 5g IV</eMedications.03></eMedicationsGroup></eMedications>
+    ${BASE_PCR_CLOSE}`;
+  const { patient, trace } = fromNemsisXml(xml);
+  assert.equal(patient.anticoagulant_use, true);
+  const row = trace.extractions.find((e) => e.field === "anticoagulant_use");
+  assert.equal(row.nemsis_path, "eMedications.03");
+});
+
+test("eMedications.03 TXA flips presumed_hemorrhage with normal physiology", () => {
+  const xml = `<?xml version="1.0"?>
+<EMSDataSet xmlns="http://www.nemsis.org"><PatientCareReport>
+  <eRecord><eRecord.01>X</eRecord.01></eRecord>
+  <ePatient><ePatient.13>9906003</ePatient.13><ePatient.15>30</ePatient.15><ePatient.16>2516001</ePatient.16></ePatient>
+  <eVitals><eVitalsGroup><eVitals.06>110</eVitals.06><eVitals.10>95</eVitals.10><eVitals.23>15</eVitals.23></eVitalsGroup></eVitals>
+  <eSituation><eSituation.02>V40</eSituation.02></eSituation>
+  <eMedications><eMedicationsGroup><eMedications.03>Tranexamic acid 1g IV bolus</eMedications.03></eMedicationsGroup></eMedications>
+</PatientCareReport></EMSDataSet>`;
+  const { patient, trace } = fromNemsisXml(xml);
+  assert.equal(patient.presumed_hemorrhage, true);
+  const row = trace.extractions.find((e) => e.field === "presumed_hemorrhage");
+  assert.equal(row.nemsis_path, "eMedications.03");
+});
+
+test("eMedications.03 unrelated meds don't trip signals", () => {
+  const xml = `${BASE_PCR_OPEN}
+    <eMedications><eMedicationsGroup><eMedications.03>Normal saline 500mL IV</eMedications.03></eMedicationsGroup></eMedications>
+    ${BASE_PCR_CLOSE}`;
+  const { patient } = fromNemsisXml(xml);
+  assert.equal(patient.anticoagulant_use, false);
+  assert.equal(patient.presumed_hemorrhage, false);
+});
+
 // ---------- noisy persona round-trips (shared fixtures with Python) ----------
 
 test("P-002 namespaced + multi-vitals + non-anticoag meds", () => {

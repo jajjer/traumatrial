@@ -29,9 +29,12 @@ MAPPED: Final[frozenset[str]] = frozenset({
     "eVitals.10",
     "eVitals.23",
     "eSituation.02",
+    "eSituation.07",
     "eInjury.01",
+    "eInjury.09",
     "eHistory.06",
     "eHistory.16",
+    "eMedications.03",
     "eTimes.07",
 })
 
@@ -97,7 +100,6 @@ KNOWN: Final[dict[str, str]] = {
     "eExam.23": "neurological exam findings",
     # eMedications — administered meds (different from eHistory.06)
     "eMedications.01": "medication administration time",
-    "eMedications.03": "administered medication (RxNorm/SNOMED)",
     "eMedications.05": "dosage",
     "eMedications.06": "dosage units",
     "eMedications.07": "route of administration",
@@ -109,7 +111,6 @@ KNOWN: Final[dict[str, str]] = {
     "eProcedures.07": "procedure complications",
     # eSituation — the call context beyond cause-of-injury
     "eSituation.01": "patient's primary symptom",
-    "eSituation.07": "primary impression",
     "eSituation.09": "secondary impression",
     "eSituation.11": "injury type (single/multi system)",
     "eSituation.12": "work-related?",
@@ -119,7 +120,6 @@ KNOWN: Final[dict[str, str]] = {
     "eInjury.03": "use of safety equipment",
     "eInjury.04": "airbag deployment",
     "eInjury.05": "height of fall",
-    "eInjury.09": "trauma triage criteria met (CDC step 1/2/3)",
     # eNarrative — free-text PCR narrative
     "eNarrative.01": "free-text narrative (out of scope; consider NLP later)",
     # eDisposition — destination + transport mode

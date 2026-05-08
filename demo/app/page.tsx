@@ -935,13 +935,23 @@ function NemsisResults({ data, trials }: { data: NemsisResponse; trials: Trial[]
   const trialFor = (id: string) => trials.find((t) => t.trial_id === id);
   const knownUnmapped = data.coverage.unmapped.filter((e) => e.classification === "known_unmapped");
   const unknown = data.coverage.unmapped.filter((e) => e.classification === "unknown");
+  const totalFieldsSeen = data.coverage.mapped_fields.length + data.coverage.unmapped.length;
+  const coveragePct = totalFieldsSeen > 0
+    ? Math.round((data.coverage.mapped_fields.length / totalFieldsSeen) * 100)
+    : 0;
 
   return (
     <div className="mt-5 fade-in flex flex-col gap-5">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         <Stat label="Extracted" value={`${counts.extracted}`} sub="from XML" accent="emerald" />
         <Stat label="Inferred" value={`${counts.inferred}`} sub="by rule" accent="amber" />
         <Stat label="Defaulted" value={`${counts.defaulted}`} sub="missing in source" />
+        <Stat
+          label="NEMSIS coverage"
+          value={`${data.coverage.mapped_fields.length} / ${totalFieldsSeen}`}
+          sub={`${coveragePct}% of fields read · ${unknown.length} unknown`}
+          accent={unknown.length > 0 ? "amber" : undefined}
+        />
         <Stat
           label="Eligible trials"
           value={`${eligibleCount} / ${data.results.length}`}
@@ -996,14 +1006,21 @@ function NemsisResults({ data, trials }: { data: NemsisResponse; trials: Trial[]
 
       <details className="rounded-md border border-slate-800 bg-slate-950/60 p-3">
         <summary className="font-mono text-[10px] tracking-wider text-slate-400 cursor-pointer hover:text-slate-200">
-          WHAT WE IGNORED — {knownUnmapped.length} known unmapped
-          {unknown.length > 0 ? ` · ${unknown.length} unknown` : ""}
+          NEMSIS COVERAGE — read {data.coverage.mapped_fields.length}, ignored {knownUnmapped.length}
+          {unknown.length > 0 ? `, ${unknown.length} unknown` : ""}
         </summary>
         <p className="mt-2 text-[11px] text-slate-500 leading-relaxed">
-          NEMSIS eFields present in the source PCR that the adapter did not consume.
-          These don&apos;t affect matching today — surfaced so you can see exactly what
-          signal we left on the floor.
+          NEMSIS eFields present in the source PCR. The adapter consumed{" "}
+          <span className="text-emerald-300">{data.coverage.mapped_fields.length}</span> of{" "}
+          {totalFieldsSeen} ({coveragePct}%); the rest sit here for transparency. Each
+          ignored field carries a one-phrase description so you can see what signal we
+          left on the floor.
         </p>
+        {data.coverage.mapped_fields.length > 0 && (
+          <p className="mt-2 font-mono text-[10px] text-emerald-300/80 leading-relaxed">
+            mapped: {data.coverage.mapped_fields.join(", ")}
+          </p>
+        )}
         {data.coverage.unmapped.length === 0 ? (
           <p className="mt-3 font-mono text-[11px] text-slate-500">no skipped fields</p>
         ) : (

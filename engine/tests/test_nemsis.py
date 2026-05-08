@@ -183,6 +183,156 @@ def test_anticoagulant_via_substring_still_works() -> None:
     assert p.anticoagulant_use is True
 
 
+# ---------- eInjury.09 — CDC trauma triage criteria ----------
+
+
+def test_einjury_09_step1_overrides_inference_to_level1() -> None:
+    """A Step 1 physiologic criterion on the PCR should pin activation to
+    Level 1 even when our physiology heuristic would say Level 3."""
+    p, trace, _ = from_nemsis_xml(
+        _wrap_pcr(
+            gcs=15, sbp=120, age=30,
+            extra="<eInjury><eInjury.09>4509001</eInjury.09></eInjury>",
+        )
+    )
+    assert p.trauma_activation_level == 1
+    row = next(e for e in trace.extractions if e.field == "trauma_activation_level")
+    assert row.source == "extracted"
+    assert row.nemsis_path == "eInjury.09"
+    assert row.raw == "4509001"
+
+
+def test_einjury_09_step3_pins_level2() -> None:
+    """A Step 3 mechanism criterion should pin activation to Level 2."""
+    p, _, _ = from_nemsis_xml(
+        _wrap_pcr(
+            gcs=15, sbp=120, age=30, mechanism_code="V40",
+            extra="<eInjury><eInjury.09>4509031</eInjury.09></eInjury>",
+        )
+    )
+    assert p.trauma_activation_level == 2
+
+
+def test_einjury_09_unrecognized_codes_fall_through_to_inference() -> None:
+    """Codes not in our triage table should not break the adapter — fall
+    through to physiology inference, with a 'skipped' trace row noting the
+    reason."""
+    p, trace, _ = from_nemsis_xml(
+        _wrap_pcr(
+            gcs=15, sbp=120, age=30,
+            extra="<eInjury><eInjury.09>9999999</eInjury.09></eInjury>",
+        )
+    )
+    assert p.trauma_activation_level == 3
+    # The skipped row exists, telling reviewers we saw the code and didn't act
+    skips = [
+        e for e in trace.extractions
+        if e.field == "eInjury.09" and e.source == "skipped"
+    ]
+    assert skips, "expected a skipped trace row for unrecognized eInjury.09 codes"
+
+
+# ---------- eSituation.07 — primary impression ----------
+
+
+def test_esituation_07_sah_flips_tbi_and_ich() -> None:
+    """ICD-10 S06.6 (subarachnoid hemorrhage) on a normal-physiology patient
+    should still flip presumed_tbi AND presumed_ich. This is the core
+    'coded primary impression beats GCS heuristic' case."""
+    p, trace, _ = from_nemsis_xml(
+        _wrap_pcr(
+            gcs=15, sbp=120, age=40, mechanism_code="V40",
+            extra="<eHistory><eHistory.06>None</eHistory.06></eHistory>"
+                  "<eSituation><eSituation.07>S06.6X9A</eSituation.07>"
+                  "<eSituation.02>V40</eSituation.02></eSituation>",
+        )
+        .replace("<eSituation><eSituation.02>V40</eSituation.02></eSituation>", "")
+    )
+    assert p.presumed_tbi is True
+    assert p.presumed_intracranial_hemorrhage is True
+    # Trace should make the eSituation.07 channel visible.
+    tbi_row = next(e for e in trace.extractions if e.field == "presumed_tbi")
+    assert tbi_row.nemsis_path == "eSituation.07"
+
+
+def test_esituation_07_spinal_code_flips_spinal_injury() -> None:
+    """ICD-10 S14 (cervical spinal cord injury) should flip
+    spinal_injury_suspected even on a normal-GCS, non-blunt patient."""
+    xml = """<?xml version="1.0"?>
+<EMSDataSet xmlns="http://www.nemsis.org"><PatientCareReport>
+  <eRecord><eRecord.01>X</eRecord.01></eRecord>
+  <ePatient><ePatient.13>9906003</ePatient.13><ePatient.15>30</ePatient.15><ePatient.16>2516001</ePatient.16></ePatient>
+  <eVitals><eVitalsGroup><eVitals.06>120</eVitals.06><eVitals.10>80</eVitals.10><eVitals.23>15</eVitals.23></eVitalsGroup></eVitals>
+  <eSituation><eSituation.02>2120009</eSituation.02><eSituation.07>S14.0XXA</eSituation.07></eSituation>
+</PatientCareReport></EMSDataSet>"""
+    p, _, _ = from_nemsis_xml(xml)
+    assert p.spinal_injury_suspected is True
+
+
+def test_esituation_07_unrelated_code_doesnt_flip_flags() -> None:
+    """An ICD-10 prefix that isn't in our impression table shouldn't flip
+    any inferred flag — the physiology defaults still apply."""
+    p, _, _ = from_nemsis_xml(
+        _wrap_pcr(
+            gcs=15, sbp=120, age=30,
+            extra="<eSituation><eSituation.02>V40</eSituation.02>"
+                  "<eSituation.07>R51</eSituation.07></eSituation>",
+        ).replace("<eSituation><eSituation.02>V40</eSituation.02></eSituation>", "")
+    )
+    assert p.presumed_tbi is False
+    assert p.presumed_intracranial_hemorrhage is False
+    assert p.spinal_injury_suspected is False
+
+
+# ---------- eMedications.03 — administered meds ----------
+
+
+def test_admin_reversal_agent_flips_anticoagulant_use() -> None:
+    """If EMS administered a reversal agent (idarucizumab here) the patient
+    is on an anticoagulant, regardless of what eHistory.06 says."""
+    p, trace, _ = from_nemsis_xml(
+        _wrap_pcr(
+            extra="<eMedications><eMedicationsGroup>"
+                  "<eMedications.03>Idarucizumab 5g IV</eMedications.03>"
+                  "</eMedicationsGroup></eMedications>",
+        )
+    )
+    assert p.anticoagulant_use is True
+    row = next(e for e in trace.extractions if e.field == "anticoagulant_use")
+    assert row.nemsis_path == "eMedications.03"
+    assert "reversal" in (row.notes or "").lower()
+
+
+def test_admin_txa_flips_presumed_hemorrhage_on_normal_physiology() -> None:
+    """TXA administered with normal SBP/HR should still flip presumed_hemorrhage —
+    it's a stronger clinical signal than the physiology threshold."""
+    p, trace, _ = from_nemsis_xml(
+        _wrap_pcr(
+            sbp=110, hr=95,  # would NOT trip physiology rule
+            extra="<eMedications><eMedicationsGroup>"
+                  "<eMedications.03>Tranexamic acid 1g IV bolus</eMedications.03>"
+                  "</eMedicationsGroup></eMedications>",
+        )
+    )
+    assert p.presumed_hemorrhage is True
+    row = next(e for e in trace.extractions if e.field == "presumed_hemorrhage")
+    assert row.nemsis_path == "eMedications.03"
+
+
+def test_unrelated_admin_meds_dont_trip_signals() -> None:
+    """Normal saline shouldn't trip reversal or hemorrhage-tx detection."""
+    p, _, _ = from_nemsis_xml(
+        _wrap_pcr(
+            sbp=110, hr=95,
+            extra="<eMedications><eMedicationsGroup>"
+                  "<eMedications.03>Normal saline 500mL IV</eMedications.03>"
+                  "</eMedicationsGroup></eMedications>",
+        )
+    )
+    assert p.anticoagulant_use is False
+    assert p.presumed_hemorrhage is False
+
+
 # ---------- mechanism mapping ----------
 
 
@@ -431,3 +581,120 @@ def test_realistic_polytrauma_round_trip_to_corpus() -> None:
         f"TROOP (NCT05638581) should be eligible for polytrauma w/ hemorrhage; "
         f"got eligible={sorted(eligible_ids)}"
     )
+
+
+def test_realistic_peds_severe_tbi_round_trip() -> None:
+    """A 12 yo F bicycle-vs-vehicle struck pedestrian with declining GCS
+    and coded SDH on primary impression. Tests:
+    - Pediatric demographics extracted cleanly
+    - Latest vitals (GCS 6) picked, not initial (GCS 9)
+    - eSituation.07 S06.5X1A flips presumed_tbi AND presumed_ich
+    - eInjury.09 Step 1 GCS criterion pins activation Level 1
+    - No false-positive on anticoagulant_use (no eHistory.06 meds)"""
+    patient, trace, coverage = from_nemsis_xml(_load("realistic-peds-severe-tbi.xml"))
+
+    assert patient.patient_id == "ANON-PEDS-TBI-2026-0218"
+    assert patient.age_years == 12
+    assert patient.sex == "F"
+    # Latest eVitalsGroup wins — declining GCS, not initial 9
+    assert patient.gcs == 6
+    assert patient.sbp_mmhg == 96
+    # ICD-10 V03.10XA → blunt_mvc via V-prefix
+    assert patient.mechanism == "blunt_mvc"
+
+    # Coded primary impression (SDH) authoritative
+    assert patient.presumed_tbi is True
+    assert patient.presumed_intracranial_hemorrhage is True
+
+    # eInjury.09 Step 1 → Level 1 (extracted, not inferred)
+    activation = next(e for e in trace.extractions if e.field == "trauma_activation_level")
+    assert activation.source == "extracted"
+    assert activation.nemsis_path == "eInjury.09"
+    assert patient.trauma_activation_level == 1
+
+    assert patient.anticoagulant_use is False
+
+    # The new mappings should appear as mapped, not unmapped, on this fixture.
+    assert "eSituation.07" in coverage.mapped_fields
+    assert "eInjury.09" in coverage.mapped_fields
+
+
+def test_realistic_isolated_burn_round_trip() -> None:
+    """Isolated thermal burn — alert, normal physiology, burn mechanism.
+    Tests:
+    - 2120013 NEMSIS native cause code → 'burn' mechanism
+    - eInjury.09 Step 4 (4509053 burn) → Level 2 activation
+    - eSituation.07 T31.20 (TBSA burn code) NOT in our impression table —
+      should NOT flip TBI/ICH/spine flags
+    - Fentanyl + LR admin'd: must NOT trip reversal-agent or hemorrhage-tx
+    - End-to-end: should land eligible for at least one burn-relevant trial
+      from the corpus (P-009 burn persona's matches give us a baseline)
+    """
+    patient, trace, coverage = from_nemsis_xml(_load("realistic-isolated-burn.xml"))
+
+    assert patient.age_years == 47
+    assert patient.sex == "M"
+    assert patient.mechanism == "burn"
+
+    # GCS 15, normal SBP — physiology heuristic does NOT call TBI.
+    # T31.20 not in our ICD-10 prefix table — primary impression doesn't flip flags.
+    assert patient.presumed_tbi is False
+    assert patient.presumed_intracranial_hemorrhage is False
+    assert patient.spinal_injury_suspected is False
+
+    # eInjury.09 Step 4 burn criterion → Level 2
+    activation = next(e for e in trace.extractions if e.field == "trauma_activation_level")
+    assert activation.source == "extracted"
+    assert activation.value == 2
+    assert "Step 3/4" in (activation.notes or "")
+
+    # Analgesics must not look like reversal agents or hemorrhage tx
+    assert patient.anticoagulant_use is False
+    assert patient.presumed_hemorrhage is False
+
+    assert "eInjury.09" in coverage.mapped_fields
+    # eSituation.07 was present even though it didn't match a flag prefix —
+    # the extractor still consumed it. Coverage reports it as mapped.
+    assert "eSituation.07" in coverage.mapped_fields
+
+
+def test_realistic_sci_diving_round_trip() -> None:
+    """Cervical SCI from shallow-water dive — alert (GCS 15), stable
+    vitals, but coded paralysis on primary impression. Demonstrates the
+    case where IMPRESSION + TRIAGE override physiology for the activation
+    decision. Tests:
+    - W16 ICD-10 → 'fall' mechanism (diving = water fall)
+    - eSituation.07 S14.111A → spinal_injury_suspected True even though
+      mechanism+GCS would yield False
+    - eInjury.09 4509027 (paralysis) → Level 1 activation despite normal vitals
+    - Methylprednisolone admin must not look like a reversal agent
+    """
+    patient, trace, coverage = from_nemsis_xml(_load("realistic-sci-diving.xml"))
+
+    assert patient.age_years == 24
+    assert patient.sex == "M"
+    assert patient.gcs == 15  # GCS stable throughout — alert SCI
+    assert patient.mechanism == "fall"  # W16 prefix → fall
+
+    # Stable vitals, alert mental status — physiology doesn't flag spine
+    # but eSituation.07 S14.111A (cervical SCI) does.
+    assert patient.spinal_injury_suspected is True
+    spinal = next(e for e in trace.extractions if e.field == "spinal_injury_suspected")
+    assert spinal.nemsis_path == "eSituation.07"
+
+    # No physiologic shock yet, no TBI signal
+    assert patient.presumed_hemorrhage is False
+    assert patient.presumed_tbi is False
+    assert patient.presumed_intracranial_hemorrhage is False
+
+    # eInjury.09 Step 2 paralysis → Level 1 (extracted, not inferred)
+    assert patient.trauma_activation_level == 1
+    activation = next(e for e in trace.extractions if e.field == "trauma_activation_level")
+    assert activation.source == "extracted"
+    assert activation.raw == "4509027"
+
+    # Methylprednisolone bolus must not look like a reversal agent
+    assert patient.anticoagulant_use is False
+
+    # Sanity: all three new fields surface as mapped
+    assert {"eSituation.07", "eInjury.09", "eMedications.03"}.issubset(set(coverage.mapped_fields))

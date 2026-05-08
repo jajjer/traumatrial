@@ -55,7 +55,7 @@ def main() -> int:
     else:
         xml = Path(args.xml_file).read_text()
 
-    patient, trace = from_nemsis_xml(xml)
+    patient, trace, coverage = from_nemsis_xml(xml)
     trials = load_trials(args.trials_dir)
 
     _section(f"NEMSIS → Patient (XML: {args.xml_file})")
@@ -78,6 +78,18 @@ def main() -> int:
     )
     for line in trace.summary_lines():
         print(line)
+
+    _section(coverage.summary_line())
+    if coverage.unmapped:
+        for entry in coverage.unmapped[:12]:
+            tag = entry.classification.replace("_", " ").upper().ljust(15)
+            desc = entry.description or "—"
+            sample = (
+                f"  e.g. {entry.sample_value!r}" if entry.sample_value else ""
+            )
+            print(f"  [{tag}] {entry.field:<28} {desc}{sample}")
+        if len(coverage.unmapped) > 12:
+            print(f"  ... and {len(coverage.unmapped) - 12} more unmapped fields")
 
     results = match_all(patient, trials)
     eligible = [r for r in results if r.eligible]

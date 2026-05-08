@@ -67,7 +67,7 @@ for clause in result.trace:
 - **`MatchResult`** — eligibility, confidence, and a complete clause-level reasoning trace.
 - **`match(patient, trial)`** — evaluate one patient against one trial.
 - **`match_all(patient, trials)`** — evaluate against many; sorted eligible-first, confidence desc.
-- **`from_nemsis_xml(xml_str)`** — convert a NEMSIS v3.5 ePCR XML into `(Patient, NemsisConversionTrace)`. The trace records each Patient field as `extracted` / `inferred` / `defaulted` / `skipped` with a one-line reason. v0 mapping covers ~10 high-signal eFields; everything else is honestly defaulted. See `traumatrial_match/nemsis.py`.
+- **`from_nemsis_xml(xml_str)`** — convert a NEMSIS v3.5 ePCR XML into `(Patient, NemsisConversionTrace, NemsisCoverageReport)`. The trace records each Patient field as `extracted` / `inferred` / `defaulted` / `skipped` with a one-line reason; the coverage report enumerates every NEMSIS eField present in the XML, split into `mapped` / `known_unmapped` / `unknown` so a coordinator can see exactly what signal was left on the floor. v0 mapping covers ~15 high-signal eFields including CDC trauma triage criteria (eInjury.09), coded primary impression (eSituation.07), and administered reversal/hemorrhage-control meds (eMedications.03). See `traumatrial_match/nemsis.py`.
 
 ## Operators (8)
 
@@ -120,7 +120,14 @@ Take a NEMSIS v3.5 PatientCareReport XML in, get a structured Patient out, match
 python scripts/demo_round_trip.py tests/fixtures/nemsis/realistic-mva-polytrauma.xml
 ```
 
-The output has three sections: the parsed Patient, a field-by-field conversion trace (every value labelled `extracted` / `inferred` / `defaulted`), and the eligible-trial list with EFIC flags and skipped-criteria counts. The bundled `realistic-mva-polytrauma.xml` is a synthetic, multi-section ePCR (eDispatch / eResponse / eScene / eVitals progression / eHistory / eMedications / eProcedures / eNarrative / eDisposition) — a polytrauma adult with deteriorating vitals — and it currently surfaces 33 eligible trials.
+The output has four sections: the parsed Patient, a field-by-field conversion trace (every value labelled `extracted` / `inferred` / `defaulted` / `skipped`), a coverage summary listing every NEMSIS eField present in the XML that the adapter did *not* consume (with a one-phrase description for each), and the eligible-trial list with EFIC flags and skipped-criteria counts.
+
+Four bundled fixtures span the major injury patterns:
+
+- `realistic-mva-polytrauma.xml` — adult polytrauma from a high-energy MVC, multi-group eVitals deterioration, coded primary impression (S06.6 SAH), CDC Step 1 triage criteria, and TXA admin'd in the field
+- `realistic-peds-severe-tbi.xml` — pediatric struck cyclist with declining GCS and coded subdural hemorrhage (S06.5)
+- `realistic-isolated-burn.xml` — adult thermal burn at 22% TBSA, alert with normal physiology, exercising the burn mechanism + Step 4 triage path
+- `realistic-sci-diving.xml` — alert cervical spinal cord injury from a shallow-water dive — demonstrates the override case where eSituation.07 (S14 SCI) flips `spinal_injury_suspected` even when GCS + mechanism wouldn't, and eInjury.09 (paralysis) pins activation to Level 1 despite stable vitals.
 
 ## Auto-import a trial from clinicaltrials.gov
 

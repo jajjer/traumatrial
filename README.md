@@ -136,7 +136,7 @@ The custom-patient form and `/api/match` work with no setup. The NCT parser at `
 │   │   ├── discover_trials.py    # bulk import: clinicaltrials.gov → Rule JSON
 │   │   ├── parse_trial.py        # single-trial import via Claude
 │   │   └── precompute.py         # patient × trials → static JSON for demo
-│   └── tests/                    # pytest, 60 tests
+│   └── tests/                    # pytest, 84 tests
 ├── engine-ts/                    # @traumatrial/match — npm port of the engine
 └── demo/                         # Next.js coordinator-view demo
     ├── app/
@@ -158,7 +158,7 @@ The custom-patient form and `/api/match` work with no setup. The NCT parser at `
 
 This is a v0 weekend project, public-facing because the OSS framing is the point.
 
-- Engine matching logic is exercised by 60 pytest tests; trace format is stable.
+- Engine matching logic is exercised by 84 pytest tests; trace format is stable.
 - Trial JSONs are LLM-imported from public clinicaltrials.gov criteria via `discover_trials.py` + `parse_trial.py`. Each carries `_metadata.skipped_criteria` listing source criteria the engine couldn't encode (lab values, imaging findings, prior medical history, etc.) — the demo surfaces these on every trial card. They are an **approximation, not a clinical decision system**.
 - The TS port in `demo/lib/engine.ts` produces identical eligible/confidence/trace output to the Python engine for every patient × trial pair in the bundled corpus.
 

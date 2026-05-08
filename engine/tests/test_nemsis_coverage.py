@@ -59,13 +59,19 @@ def test_realistic_polytrauma_coverage_includes_expected_skipped_sections() -> N
         "eVitals.20",         # SpO2
         "eExam.13",           # chest deformity
         "eExam.18",           # abdominal tenderness
-        "eMedications.03",    # admin'd med
         "eProcedures.03",     # procedure performed
         "eDisposition.20",    # destination trauma center designation
         "eNarrative.01",      # free-text narrative
     }
     missing = expected - skipped_fields
     assert not missing, f"realistic export missing expected skipped fields: {missing}"
+    # The fields we now map should NOT appear in unmapped on a fixture that uses them.
+    newly_mapped = {"eMedications.03", "eInjury.09", "eSituation.07"}
+    promoted = newly_mapped & skipped_fields
+    assert not promoted, (
+        f"these fields should be reported as mapped on the realistic fixture, "
+        f"not unmapped: {promoted}"
+    )
 
 
 def test_realistic_polytrauma_coverage_describes_skipped_fields() -> None:
