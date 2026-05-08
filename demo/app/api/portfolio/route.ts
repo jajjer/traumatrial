@@ -2,6 +2,8 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 import { matchAll } from "@/lib/engine";
+import { logEvent, newRequestId } from "@/lib/log";
+import { getCachedParse, setCachedParse } from "@/lib/parseCache";
 import { parseTrial } from "@/lib/parseTrial";
 import type { MatchResult, Patient, Trial } from "@/lib/types";
 
@@ -58,16 +60,22 @@ interface PortfolioCoverage {
 export const maxDuration = 60;
 
 export async function POST(request: Request) {
+  const requestId = newRequestId();
+  const startedAt = Date.now();
+  const route = "portfolio";
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
   let body: unknown;
   try {
     body = await request.json();
   } catch {
+    logEvent({ route, request_id: requestId, outcome: "bad_request", latency_ms: Date.now() - startedAt, error: "invalid JSON body", status: 400 });
     return Response.json({ error: "invalid JSON body" }, { status: 400 });
   }
   const raw = (body as Record<string, unknown> | null)?.nct_ids;
   if (!Array.isArray(raw)) {
+    logEvent({ route, request_id: requestId, outcome: "bad_request", latency_ms: Date.now() - startedAt, error: "nct_ids must be an array", status: 400 });
     return Response.json({ error: "nct_ids must be an array" }, { status: 400 });
   }
   const nctIds = Array.from(
@@ -79,17 +87,21 @@ export async function POST(request: Request) {
     ),
   );
   if (nctIds.length === 0) {
+    logEvent({ route, request_id: requestId, outcome: "bad_request", latency_ms: Date.now() - startedAt, error: "no NCT IDs provided", status: 400 });
     return Response.json({ error: "no NCT IDs provided" }, { status: 400 });
   }
   if (nctIds.length > MAX_NCTS) {
+    logEvent({ route, request_id: requestId, outcome: "bad_request", latency_ms: Date.now() - startedAt, nct_count: nctIds.length, error: "too many NCT IDs", status: 400 });
     return Response.json({ error: `at most ${MAX_NCTS} NCT IDs per request` }, { status: 400 });
   }
   for (const id of nctIds) {
     if (!NCT_RE.test(id)) {
+      logEvent({ route, request_id: requestId, outcome: "bad_request", latency_ms: Date.now() - startedAt, error: `bad nct_id ${id}`, status: 400 });
       return Response.json({ error: `${id} doesn't match NCT followed by 8 digits` }, { status: 400 });
     }
   }
   if (rateLimited(clientIp(request))) {
+    logEvent({ route, request_id: requestId, outcome: "rate_limited", latency_ms: Date.now() - startedAt, nct_count: nctIds.length, status: 429 });
     return Response.json(
       { error: `rate limit hit (${RATE_LIMIT} portfolios per 10 min). Heavy users should self-host the engine — see github.com/jajjer/traumatrial.` },
       { status: 429 },
@@ -105,9 +117,19 @@ export async function POST(request: Request) {
   // Parse unknown trials sequentially. Each parse is a paid Claude call;
   // running them in parallel just makes a Vercel Pro account angrier.
   for (const id of nctIds) {
-    const cached = bundledById.get(id);
-    if (cached) {
-      portfolio.push({ trial: cached, source: "bundled", skipped_criteria: [], parse_attempts: 0 });
+    const bundledHit = bundledById.get(id);
+    if (bundledHit) {
+      portfolio.push({ trial: bundledHit, source: "bundled", skipped_criteria: [], parse_attempts: 0 });
+      continue;
+    }
+    const cachedHit = getCachedParse(id);
+    if (cachedHit) {
+      portfolio.push({
+        trial: cachedHit.trial,
+        source: "parsed",
+        skipped_criteria: cachedHit.skipped_criteria,
+        parse_attempts: cachedHit.attempts,
+      });
       continue;
     }
     if (!apiKey) {
@@ -119,6 +141,7 @@ export async function POST(request: Request) {
     }
     try {
       const r = await parseTrial(id, apiKey);
+      setCachedParse(id, r);
       portfolio.push({
         trial: r.trial,
         source: "parsed",
@@ -144,6 +167,15 @@ export async function POST(request: Request) {
 
   const personasCovered = coverage.filter((c) => c.eligible_count > 0).length;
   const totalSkipped = portfolio.reduce((acc, p) => acc + p.skipped_criteria.length, 0);
+
+  logEvent({
+    route,
+    request_id: requestId,
+    outcome: failures.length > 0 && portfolio.length === 0 ? "upstream_error" : "ok",
+    latency_ms: Date.now() - startedAt,
+    nct_count: nctIds.length,
+    status: 200,
+  });
 
   return Response.json({
     portfolio,
