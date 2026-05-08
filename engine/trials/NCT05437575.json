@@ -46,6 +46,13 @@
       "Objection to study voiced by subject or family member at scene: consent/objection status is not an available schema field.",
       "Pain treatment contraindicated by local protocol: local protocol contraindication is not an available schema field.",
       "Wearing a 'NO PAIN STUDY' bracelet: opt-out bracelet status is not an available schema field."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05437575",
+    "source_last_update_posted": "2026-03-09",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "7016ab9c777f36188a38f36979ff922ab0274f8ce103be936a10eed56d82be85"
   }
 }

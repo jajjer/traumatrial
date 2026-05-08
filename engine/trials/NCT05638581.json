@@ -5,13 +5,56 @@
   "requires_efic": true,
   "phase": "III",
   "inclusion": [
-    {"field": "age_years", "op": "gte", "value": 15, "hard": true},
-    {"field": "presumed_hemorrhage", "op": "eq", "value": true, "hard": true},
-    {"field": "trauma_activation_level", "op": "lte", "value": 1, "hard": false},
-    {"field": "eta_minutes", "op": "lte", "value": 3, "hard": false}
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 15,
+      "hard": true
+    },
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "trauma_activation_level",
+      "op": "lte",
+      "value": 1,
+      "hard": false
+    },
+    {
+      "field": "eta_minutes",
+      "op": "lte",
+      "value": 3,
+      "hard": false
+    }
   ],
   "exclusion": [
-    {"field": "pregnancy_status", "op": "in", "value": ["pregnant", "unknown_could_be_pregnant"], "hard": true},
-    {"field": "mechanism", "op": "eq", "value": "burn", "hard": true}
-  ]
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "burn",
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05638581",
+    "source_last_update_posted": "2025-08-21",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "ce67eee2d31d64c9ec9fc2c89a55141166e5ba5e5a85e875b735e4b11d12fadd"
+  }
 }

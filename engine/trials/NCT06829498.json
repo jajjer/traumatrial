@@ -56,6 +56,13 @@
       "Exclusion #5: Hypersensitivity to any ingredient in active or placebo products \u2014 allergy/hypersensitivity fields not in schema.",
       "Exclusion #6 (partial): Planning to become pregnant during study or breastfeeding \u2014 future pregnancy intent and breastfeeding status not in schema.",
       "Exclusion #7: Non-English speaking participants or parent/guardian \u2014 language fields not in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06829498",
+    "source_last_update_posted": "2025-06-13",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "325dbdbd3595435b613dd717e0f1af98656949b5ac71c5afbddbf1af043c9217"
   }
 }

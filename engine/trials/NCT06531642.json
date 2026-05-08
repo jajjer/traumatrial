@@ -51,6 +51,13 @@
       "Patients already enrolled in other trials that do not allow co-enrollment: no trial enrollment field exists in the schema.",
       "Patients presenting with ongoing GI bleeding requiring higher dose GI prophylaxis: no GI bleeding field exists in the schema.",
       "Prisoners excluded as a vulnerable population: no incarceration status field exists in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06531642",
+    "source_last_update_posted": "2026-02-19",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "882745fcab3fce245708fd408b8ac4aea373d9b467a0a3a4b11aca0c133c5a9c"
   }
 }

@@ -79,6 +79,13 @@
       "Participated in another clinical trial for investigational agent within 90 days: no schema field for prior trial participation.",
       "Monoclonal antibody treatment within previous 180 days: no schema field for prior biologic treatment.",
       "Plan to receive aducanumab, lecanemab, or other approved Early AD treatments during trial: no schema field for planned treatments."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06254469",
+    "source_last_update_posted": "2025-07-30",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "9612b0fc3c560644c59f33ee1679f25604a1c040d7793e403f4ff380f16fa09c"
   }
 }

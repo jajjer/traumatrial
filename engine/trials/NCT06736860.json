@@ -65,6 +65,13 @@
       "Failure of cardiopulmonary resuscitation: requires a clinical outcome/status field not available in the schema.",
       "Penetrating brain injury: no field distinguishes penetrating brain injury specifically; mechanism field does not have a dedicated penetrating brain injury enum value.",
       "Drowning or hanging: no matching mechanism enum values exist in the schema for drowning or hanging."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06736860",
+    "source_last_update_posted": "2024-12-17",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "0b83ebebfa04048aa2f3b28eb45ae4ed30a4bf862a597a887dfbc44dfd71c423"
   }
 }

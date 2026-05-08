@@ -44,6 +44,13 @@
       "Life expectancy less than six months due to comorbid terminal conditions: no prognosis or comorbidity fields in schema.",
       "Premorbid modified Rankin score (mRS) of 5 or greater: no mRS or functional status fields in schema.",
       "Concurrent participation in another research protocol for experimental therapy: no enrollment status fields in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06510582",
+    "source_last_update_posted": "2025-07-01",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "4aba85c328787ab7f961e05a5622194fe4e4a1d799a2539514377a63b24e5985"
   }
 }

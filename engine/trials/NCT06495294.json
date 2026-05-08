@@ -5,10 +5,49 @@
   "requires_efic": true,
   "phase": "III",
   "inclusion": [
-    {"field": "age_years", "op": "gte", "value": 16, "hard": true},
-    {"field": "presumed_hemorrhage", "op": "eq", "value": true, "hard": true},
-    {"field": "mechanism", "op": "in", "value": ["blunt_mvc", "blunt_other", "gsw", "stab", "blast", "fall", "crush", "other"], "hard": true},
-    {"field": "trauma_activation_level", "op": "lte", "value": 1, "hard": false}
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 16,
+      "hard": true
+    },
+    {
+      "field": "presumed_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "blunt_mvc",
+        "blunt_other",
+        "gsw",
+        "stab",
+        "blast",
+        "fall",
+        "crush",
+        "other"
+      ],
+      "hard": true
+    },
+    {
+      "field": "trauma_activation_level",
+      "op": "lte",
+      "value": 1,
+      "hard": false
+    }
   ],
-  "exclusion": []
+  "exclusion": [],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06495294",
+    "source_last_update_posted": "2026-05-06",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "9fa50467b7857e8662e5f5771f1ed240f3e864f31de66d4e56a2a2ec923ab253"
+  }
 }

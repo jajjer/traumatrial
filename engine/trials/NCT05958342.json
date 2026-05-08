@@ -62,6 +62,13 @@
       "Exclusion 8: Isolated drowning or hanging victims cannot be expressed with available fields (no matching mechanism enum values).",
       "Exclusion 9: Objection to study voiced by subject or family member cannot be expressed with available fields.",
       "Exclusion 10: Inability to obtain IV/IO access cannot be expressed with available fields."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05958342",
+    "source_last_update_posted": "2026-04-14",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "78dbc586547a14cdc1bbf8c76b90d13a88263beec037a17686f2a1fdbeedb848"
   }
 }

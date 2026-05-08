@@ -36,6 +36,13 @@
       "Exclusion: Patients with active acute coronary syndrome \u2014 prior medical history/comorbidities are not available fields in the schema.",
       "Exclusion: TBI with GCS \u2264 13 with associated major injuries (moderate/marked IPFF requiring laparotomy, moderate/marked lung contusion/pneumothorax/hemothorax with hypoxia/tachypnea, compound fractures, open faciomaxillary trauma) \u2014 associated injury type and severity are not available fields in the schema.",
       "Exclusion: Persistent shock defined as SBP < 100 mmHg, base deficit > 4, or oliguria, or HR < 60 bpm after more than one week of admission \u2014 the temporal qualifier 'after more than one week of admission' cannot be expressed in the schema; base deficit and oliguria are not available fields."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06836856",
+    "source_last_update_posted": "2025-04-02",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "b7d8772520539396dfe2508310481fe0cbf2a6ec7b475257ee8acf10e65900b0"
   }
 }

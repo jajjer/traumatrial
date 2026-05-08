@@ -23,12 +23,18 @@ Install the optional parse extras first:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+# Bumped when this script's prompt or output shape changes meaningfully, so
+# freshness checks can tell which trials were parsed against an older parser.
+PARSER_VERSION = "1"
 
 try:
     import httpx
@@ -71,8 +77,16 @@ _load_dotenv()
 from traumatrial_match.schema import (  # noqa: E402
     OPERATORS,
     PATIENT_FIELD_TYPES,
+    SCHEMA_VERSION,
     Trial,
 )
+
+
+def criteria_sha256(criteria_text: str) -> str:
+    """Stable hash of eligibilityCriteria text. Whitespace-normalized so that
+    cosmetic edits on clinicaltrials.gov don't trigger spurious drift alerts."""
+    normalized = " ".join((criteria_text or "").split())
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
 CTG_API = "https://clinicaltrials.gov/api/v2/studies/{nct_id}?format=json"
 
@@ -189,6 +203,8 @@ def extract_metadata(study: dict[str, Any]) -> dict[str, Any]:
         or title  # full title, the LLM is told to compress this if no acronym exists
     )
 
+    last_update_struct = status.get("lastUpdatePostDateStruct") or {}
+
     return {
         "trial_id": ident.get("nctId", "?"),
         "short_name": short_name,
@@ -196,6 +212,7 @@ def extract_metadata(study: dict[str, Any]) -> dict[str, Any]:
         "phase": phase,
         "status": status.get("overallStatus", "?"),
         "criteria_text": elig.get("eligibilityCriteria", ""),
+        "last_update_posted": last_update_struct.get("date"),
     }
 
 
@@ -325,6 +342,17 @@ def parse_one(
             f"  last error:\n{last_error}\n"
         )
         raise SystemExit(1)
+
+    # Stamp provenance so freshness checks can detect drift later.
+    md = payload.setdefault("metadata", {})
+    md.setdefault("source", "clinicaltrials.gov")
+    md["imported_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    md["parser_version"] = PARSER_VERSION
+    md["schema_version"] = SCHEMA_VERSION
+    md["source_url"] = f"https://clinicaltrials.gov/study/{nct_id}"
+    md["source_overall_status"] = meta["status"]
+    md["source_last_update_posted"] = meta["last_update_posted"]
+    md["source_criteria_sha256"] = criteria_sha256(meta["criteria_text"])
 
     out_path = output_dir / f"{nct_id}.json"
     trial = validate_and_write(payload, out_path, overwrite)

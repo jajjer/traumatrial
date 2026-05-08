@@ -37,6 +37,13 @@
       "Known objection to blood products: no schema field for patient advance directives or blood product refusal.",
       "Dedicated prior fibrinogen replacement: no schema field for prior fibrinogen administration.",
       "Participation in a competing study: no schema field for concurrent trial enrollment."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05449834",
+    "source_last_update_posted": "2026-02-05",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "cdb6bed9bc134984edf77d368b43c8d8aeee7b7bdfea2dd0626af833734b2724"
   }
 }

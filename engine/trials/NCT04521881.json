@@ -35,6 +35,13 @@
       "Not living in a nursing home, mental health institution, or prison: no schema field captures residential or custodial status.",
       "Patient will be conveyed to or is admitted to a participating hospital: logistical/site criterion not expressible in the schema.",
       "TXA not clearly indicated (e.g. major bleeding) or contraindicated (e.g. suspected stroke): medication indication/contraindication logic and stroke suspicion are not schema fields."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT04521881",
+    "source_last_update_posted": "2026-03-12",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "4f5ee2ac6eb46527090db5ef4693e9c1ac6826779b7b006b947299495c2da9f8"
   }
 }

@@ -43,6 +43,13 @@
       "History of convulsions: prior medical history not in schema.",
       "History of inability to safely swallow oral medication: functional history not in schema.",
       "Inability to obtain informed consent including language barrier: consent/administrative criterion not in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT03582293",
+    "source_last_update_posted": "2024-06-20",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "cec59b5658ec5f8058913226c328eca65e39518386622efa778a0618955989e4"
   }
 }

@@ -51,6 +51,13 @@
       "Exclusion 8: Clinical reason to restart DOAC before 4 weeks or complete within 12 weeks cannot be expressed with available schema fields.",
       "Exclusion 9: Concomitant p-gp and CYP3A4 inducers/inhibitors use is not a schema field.",
       "Exclusion 10: Indication to stay on VKA rather than switching to DOAC (e.g., severe renal impairment) cannot be expressed with available schema fields."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06322953",
+    "source_last_update_posted": "2025-04-04",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "b20d3a68d2b3a34b3d00f1e031b6a37d10e57da8b97e056370e8498b0e1e4a95"
   }
 }

@@ -10,6 +10,11 @@ from typing import Any, Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+# Bumped when the Patient/Trial/Rule shape changes in a way that would invalidate
+# previously cached trial JSONs. Stamped into _metadata.schema_version on import
+# so freshness checks can flag trials parsed against an older schema.
+SCHEMA_VERSION = "1"
+
 Mechanism = Literal[
     "blunt_mvc",
     "blunt_other",
@@ -200,12 +205,44 @@ def _check_scalar_for_field(field: str, value: Any, meta: dict[str, Any]) -> Non
 
 
 class TrialMetadata(BaseModel):
-    """Provenance + honesty: where the trial came from and what its source
-    criteria text contains that the engine couldn't encode. Surfacing this
-    is what lets a coordinator trust the engine's "eligible" answer."""
+    """Provenance + honesty: where the trial came from, when it was imported,
+    and what its source criteria text contains that the engine couldn't encode.
+    Surfacing this is what lets a coordinator trust the engine's "eligible"
+    answer — and lets `scripts/check_freshness.py` flag trials whose source
+    criteria have drifted from what we cached."""
 
     source: Optional[str] = None
     skipped_criteria: list[str] = Field(default_factory=list)
+
+    # Provenance: when and how the cached rules were produced.
+    imported_at: Optional[str] = Field(
+        default=None,
+        description="UTC ISO-8601 timestamp at which this trial JSON was generated.",
+    )
+    parser_version: Optional[str] = Field(
+        default=None,
+        description="Version of scripts/parse_trial.py that produced this file.",
+    )
+    schema_version: Optional[str] = Field(
+        default=None,
+        description="Version of the engine schema this file was validated against.",
+    )
+
+    # Source state at import time — used to detect drift on the next freshness check.
+    source_url: Optional[str] = None
+    source_last_update_posted: Optional[str] = Field(
+        default=None,
+        description="clinicaltrials.gov lastUpdatePostDateStruct.date at import.",
+    )
+    source_overall_status: Optional[str] = Field(
+        default=None,
+        description="clinicaltrials.gov overallStatus at import (e.g., RECRUITING).",
+    )
+    source_criteria_sha256: Optional[str] = Field(
+        default=None,
+        description="sha256 of the eligibilityCriteria text at import. If the live "
+        "value differs, the cached rules may no longer reflect the trial.",
+    )
 
 
 class Trial(BaseModel):

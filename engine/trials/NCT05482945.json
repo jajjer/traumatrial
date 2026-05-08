@@ -50,6 +50,13 @@
       "Known terminal illness (exclusion): no schema field for terminal illness.",
       "Pre-cardiac arrest cerebral performance category (CPC) \u2265 3 (exclusion): no schema field for CPC.",
       "Participation in another clinical trial (exclusion): no schema field for concurrent trial enrollment."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05482945",
+    "source_last_update_posted": "2025-09-17",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "e499133676c24ad7b6bd5b25190c6bcfcc4f130db31e8b04ad5405dcfd3c260e"
   }
 }

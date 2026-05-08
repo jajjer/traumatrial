@@ -46,6 +46,13 @@
       "Exclusion of ROSC patients without rearrest whose representative declined further investigations after ED arrival \u2014 no schema field for rearrest status or surrogate consent.",
       "Exclusion of patients whose legally authorized representative declined study participation \u2014 no schema field for consent status.",
       "Exclusion of patients without an available legally authorized representative \u2014 no schema field for surrogate availability."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT07239908",
+    "source_last_update_posted": "2026-04-21",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "636359e17ee58841c10c5427dc577ee52bce65b0eb65ba2bf63dc9382193f3c4"
   }
 }

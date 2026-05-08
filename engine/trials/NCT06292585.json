@@ -5,13 +5,56 @@
   "requires_efic": false,
   "phase": "II/III",
   "inclusion": [
-    {"field": "age_years", "op": "gte", "value": 18, "hard": true},
-    {"field": "presumed_intracranial_hemorrhage", "op": "eq", "value": true, "hard": true},
-    {"field": "gcs", "op": "gt", "value": 8, "hard": true},
-    {"field": "eta_minutes", "op": "lte", "value": 360, "hard": false}
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "presumed_intracranial_hemorrhage",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "gt",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "eta_minutes",
+      "op": "lte",
+      "value": 360,
+      "hard": false
+    }
   ],
   "exclusion": [
-    {"field": "anticoagulant_use", "op": "eq", "value": true, "hard": true},
-    {"field": "pregnancy_status", "op": "in", "value": ["pregnant", "unknown_could_be_pregnant"], "hard": true}
-  ]
+    {
+      "field": "anticoagulant_use",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "pregnancy_status",
+      "op": "in",
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06292585",
+    "source_last_update_posted": "2025-04-04",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "d3bbf44375d11d845077f1e4321816d63f63708bc59d22cc67f05ad143b47657"
+  }
 }

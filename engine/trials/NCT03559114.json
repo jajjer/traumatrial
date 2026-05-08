@@ -58,6 +58,13 @@
       "Exclusion xi): Known irreversible coagulopathies \u2014 no coagulopathy history field in schema.",
       "Exclusion xiii): Patient weight <45 kg or >120 kg \u2014 no weight field in schema.",
       "Exclusion xiv): Not expected to survive more than 48 hours from admission \u2014 no survival prognosis field in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT03559114",
+    "source_last_update_posted": "2024-09-19",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "f28796c0e01872e67ed3b462cc4348da5f9c750ac3e4d0e4c8d12a56ec3294b1"
   }
 }

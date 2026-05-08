@@ -62,6 +62,13 @@
       "Death, withdrawal of life support, or transfer to hospice within 24 hours \u2014 disposition/outcome fields are not available in schema.",
       "Patient incarcerated \u2014 incarceration status is not a schema field.",
       "Patient with GCS of 15 or LAR unable to provide informed consent, or unable to read and understand specified languages \u2014 consent capacity and language comprehension are not schema fields; GCS 15 exclusion conflicts with inclusion logic and cannot be cleanly encoded."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06866691",
+    "source_last_update_posted": "2026-04-24",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "2c8cec0f13210bc5dd95ff1b970d5c02f4fa2f28d462b18ca10070f58289fbb1"
   }
 }

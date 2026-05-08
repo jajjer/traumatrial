@@ -49,6 +49,13 @@
       "Known allergy to noradrenaline: medication allergy history is not an available field in the schema.",
       "Fertile women breastfeeding excluded: breastfeeding status is not an available field in the schema.",
       "Fertile women < 60 years with positive urine/plasma hCG excluded: hCG test result is not an available field; pregnancy_status partially covers this but cannot encode the age-based fertility qualifier or hCG confirmation."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05931601",
+    "source_last_update_posted": "2025-07-01",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "667d2c22891ff00c1dbb078692b80e6617e1348be4a9cab07d31e3e1aa4dab38"
   }
 }

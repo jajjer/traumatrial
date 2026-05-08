@@ -50,6 +50,13 @@
       "Exclusion 6: Suicidal ideation (CSSRS type 4 or 5), homicidal ideation with intent/plan, or suicidal behavior within specified timeframes cannot be expressed with available schema fields.",
       "Exclusion 7: Cardiac arrhythmia or QTc interval \u2265470 ms cannot be expressed with available schema fields.",
       "Exclusion 8: Lactating women and those of childbearing potential not using reliable contraception cannot be fully expressed; only pregnant/unknown pregnancy status is encoded."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06333990",
+    "source_last_update_posted": "2025-07-11",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "513891a044f0e2183e9976312657c9b53490e61c44634643ea5848bff4bf57da"
   }
 }

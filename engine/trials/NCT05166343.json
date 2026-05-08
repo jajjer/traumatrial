@@ -47,6 +47,13 @@
       "Must be receiving at least 1 minute of CPR by trained first responders (police, fire, or paramedic services) \u2014 no schema field exists for CPR duration or responder type.",
       "Age lower bound of '1 day' cannot be distinguished from age_years=0 which also covers newborns under 1 day; the sub-year age granularity is not supported by the integer age_years field.",
       "Exclusion of OHCA due to 'obvious traumatic event' is partially covered by the mechanism exclusion list, but the schema's cardiac_arrest mechanism on inclusion and the overlap with traumatic mechanisms cannot be fully disambiguated when trauma precipitates cardiac arrest."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05166343",
+    "source_last_update_posted": "2025-03-11",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "7f482ce98f72fd87afafecf3c6faffd2c5835770d8c1ec61bc8a18607fdf9748"
   }
 }

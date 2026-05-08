@@ -85,6 +85,13 @@
       "Exclusion #12: Unable/unwilling to consume animal byproducts, gelatin allergy, or religious beliefs prohibiting gelatin \u2014 no dietary/religious preference field in schema.",
       "Exclusion #13: Intolerance to small amounts of lactose \u2014 no lactose intolerance field in schema.",
       "Exclusion #14: Low likelihood of follow-up or study compliance per investigator judgment \u2014 administrative/discretionary criterion not expressible in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05826912",
+    "source_last_update_posted": "2025-12-22",
+    "source_overall_status": "ENROLLING_BY_INVITATION",
+    "source_criteria_sha256": "87e2bf08d08a24a132d0109cd8ed64707aa08a70cfbf4f280cf0cfef6c6ecdca"
   }
 }

@@ -78,6 +78,13 @@
       "Hypertension requiring treatment with more than two antihypertensive drugs (medication count/treatment history, no schema field).",
       "Hyperlipidemia requiring treatment with more than one lipid lowering drug (medication count/treatment history, no schema field).",
       "Diabetes mellitus requiring medical treatment with insulin (medical history/treatment, no schema field)."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05782244",
+    "source_last_update_posted": "2025-12-10",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "5fd50639dd832021eb46f69661d3edd1c9e7dafcaa6f6bbd2fe026d2f3fa1f69"
   }
 }

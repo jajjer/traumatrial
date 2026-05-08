@@ -75,6 +75,13 @@
       "Severe decreases in neutrophil, lymphocyte, platelet counts or hemoglobin (exclusion): lab values not in schema.",
       "Severe liver and kidney dysfunction (exclusion): organ function lab values not in schema.",
       "Currently participating in other interventional clinical trials (exclusion): trial enrollment status not in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06065046",
+    "source_last_update_posted": "2026-04-13",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "e6741d2a3f150dddb1d7bb02250d16a04ee82ef781f1e8ec5a36d0e0372b93a7"
   }
 }

@@ -77,6 +77,13 @@
       "Coma suspected to be due to primarily non-TBI causes: clinical judgment criterion not expressible in the schema.",
       "Any contraindications to the study intervention (hyperbaric oxygen): contraindication details are not in the schema.",
       "Unstable acute spinal cord injury: spinal_injury_suspected captures suspicion but not instability or acuity; encoded as soft exclusion proxy only."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT02407028",
+    "source_last_update_posted": "2025-10-03",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "71cd7be263fcb07bbede8d32071d359baa041002e3dbf70d8013aedd1cc17e62"
   }
 }

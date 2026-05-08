@@ -31,6 +31,13 @@
       "Exclusion (1): Persistent bilateral non-reactive pupils or other evidence of non-survivable injury \u2014 requires neurological exam findings not available in schema.",
       "Exclusion (2): Decompressive craniectomy to treat refractory ICP subsequent to diffuse injury \u2014 requires surgical history and ICP management data not available in schema.",
       "Exclusion (3): Co-enrollment in another therapeutic TBI trial \u2014 requires enrollment status in other trials, not available in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05337618",
+    "source_last_update_posted": "2025-12-22",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "7cfb7c2a54caa2e2ca3d80ceb71173f49900acab7805c1aa54d293c2a519590c"
   }
 }

@@ -5,12 +5,47 @@
   "requires_efic": true,
   "phase": "III",
   "inclusion": [
-    {"field": "age_years", "op": "gte", "value": 18, "hard": true},
-    {"field": "mechanism", "op": "eq", "value": "cardiac_arrest", "hard": true},
-    {"field": "gcs", "op": "lte", "value": 8, "hard": true},
-    {"field": "eta_minutes", "op": "lte", "value": 60, "hard": false}
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 18,
+      "hard": true
+    },
+    {
+      "field": "mechanism",
+      "op": "eq",
+      "value": "cardiac_arrest",
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "lte",
+      "value": 8,
+      "hard": true
+    },
+    {
+      "field": "eta_minutes",
+      "op": "lte",
+      "value": 60,
+      "hard": false
+    }
   ],
   "exclusion": [
-    {"field": "sbp_mmhg", "op": "lt", "value": 80, "hard": true}
-  ]
+    {
+      "field": "sbp_mmhg",
+      "op": "lt",
+      "value": 80,
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT04217551",
+    "source_last_update_posted": "2025-06-25",
+    "source_overall_status": "ACTIVE_NOT_RECRUITING",
+    "source_criteria_sha256": "425834f11aa960489fbb7eeb2dd6ff15fb0a402efc796532a2884d82edbc7e5c"
+  }
 }

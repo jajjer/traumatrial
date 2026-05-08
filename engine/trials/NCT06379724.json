@@ -49,6 +49,13 @@
       "Patients with subarachnoid hemorrhage: subarachnoid hemorrhage is a specific subtype not directly mappable to presumed_intracranial_hemorrhage without ambiguity; partially encoded as presumed_intracranial_hemorrhage exclusion.",
       "Patients with active intravascular clotting or known hypersensitivity reactions to tranexamic acid: coagulation status and drug hypersensitivity are not fields in the schema.",
       "Inability to give informed consent: consent capacity is not a field in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06379724",
+    "source_last_update_posted": "2025-10-20",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "1334a129de60f3c9408d789db360184fc48fd91486a4ab667261f24ca7a2505d"
   }
 }

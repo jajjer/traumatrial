@@ -5,11 +5,48 @@
   "requires_efic": false,
   "phase": "Observational",
   "inclusion": [
-    {"field": "age_years", "op": "gte", "value": 15, "hard": true},
-    {"field": "presumed_tbi", "op": "eq", "value": true, "hard": true},
-    {"field": "gcs", "op": "in", "value": [13, 14, 15], "hard": true}
+    {
+      "field": "age_years",
+      "op": "gte",
+      "value": 15,
+      "hard": true
+    },
+    {
+      "field": "presumed_tbi",
+      "op": "eq",
+      "value": true,
+      "hard": true
+    },
+    {
+      "field": "gcs",
+      "op": "in",
+      "value": [
+        13,
+        14,
+        15
+      ],
+      "hard": true
+    }
   ],
   "exclusion": [
-    {"field": "mechanism", "op": "in", "value": ["gsw", "stab"], "hard": true}
-  ]
+    {
+      "field": "mechanism",
+      "op": "in",
+      "value": [
+        "gsw",
+        "stab"
+      ],
+      "hard": true
+    }
+  ],
+  "_metadata": {
+    "source": "clinicaltrials.gov",
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT04995068",
+    "source_last_update_posted": "2025-03-10",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "90ea488f3081989cafb9cefb4241f0cd48ef106250f2618daadef2f4c41359bd"
+  }
 }

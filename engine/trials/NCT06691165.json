@@ -44,6 +44,13 @@
       "Severe neuropathic pain: no schema field captures pain status.",
       "Severe recurrent autonomic dysreflexia: no schema field captures autonomic dysreflexia history.",
       "History of seizure disorders: no schema field captures seizure history."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06691165",
+    "source_last_update_posted": "2025-11-18",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "99ea213bf4abc55a6983b3166df3e8058a27cb4784d3d6484b1d9090e2539600"
   }
 }

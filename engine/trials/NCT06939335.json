@@ -40,6 +40,13 @@
       "DNR or advanced directive orders: no schema field exists for code status or advance directives.",
       "Failure to intubate: no schema field exists for intubation success/failure status.",
       "Enrollment in other interventional clinical trials: no schema field exists for concurrent trial enrollment."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06939335",
+    "source_last_update_posted": "2026-01-21",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "9b7c604554b4d0e8648e99eddeb59362bed7f4738643c271a00cf709810bde9c"
   }
 }
