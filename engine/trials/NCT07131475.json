@@ -44,6 +44,13 @@
       "Any condition that may cause undue risk or logistical contraindication: too vague and general to encode in the schema.",
       "MRI contraindication: no schema field exists for imaging contraindications.",
       "PET contraindication: no schema field exists for imaging contraindications."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT07131475",
+    "source_last_update_posted": "2025-10-31",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "d4a57a8e29af90fbbc5b31905d841846f6bf5f3957ac2a384727a64f79ecaf8d"
   }
 }

@@ -60,6 +60,13 @@
       "Respiratory Infection: requires clinical diagnosis fields not in the schema.",
       "Prisoners or patients in police custody: requires custody status field not in the schema.",
       "Possible drug interactions (nitric oxide donors: prilocaine, sodium nitroprusside, nitroglycerin): requires current medication fields not in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05616910",
+    "source_last_update_posted": "2025-06-03",
+    "source_overall_status": "ENROLLING_BY_INVITATION",
+    "source_criteria_sha256": "ccc3cd8fcec04cfcd678af985cd4fa59eb9c117585a731a496a5cf7b9592a583"
   }
 }

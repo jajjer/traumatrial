@@ -49,6 +49,13 @@
       "Lactating females: no schema field for lactation status.",
       "Current participation in any other interventional trials: no schema field for concurrent trial enrollment.",
       "History of untreated or poorly controlled psychiatric condition (depression, schizophrenia, bipolar disorder): no schema field for psychiatric history."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05702138",
+    "source_last_update_posted": "2025-02-21",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "8bab398cbc197d78b331651ad23e7ab46f0a70c7a598d2045908babd391efc64"
   }
 }

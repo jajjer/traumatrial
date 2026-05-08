@@ -64,6 +64,13 @@
       "Greater than 3 hours since time of injury (TXA/Placebo domain): no schema field for time since injury.",
       "History of seizure after the injury event (TXA/Placebo domain): no schema field for post-injury seizure history.",
       "Known allergy or hypersensitivity to TXA (TXA/Placebo domain): no schema field for drug allergies."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06070350",
+    "source_last_update_posted": "2026-02-23",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "cd915a11b7a2034daab4866023c344fae307a7b163ce9eae6db1e0a228f53d92"
   }
 }

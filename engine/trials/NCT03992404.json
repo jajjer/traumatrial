@@ -55,6 +55,13 @@
       "Infection or inflammation at injection sites: no schema field for local infection status.",
       "Presence or history of aspiration pneumonia, recurrent lower respiratory tract infections, or compromised respiratory function: no schema field for respiratory history.",
       "Breast feeding exclusion: no schema field for lactation status."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT03992404",
+    "source_last_update_posted": "2026-04-23",
+    "source_overall_status": "ACTIVE_NOT_RECRUITING",
+    "source_criteria_sha256": "05fc7490694f612b3a378a740a269bd92fd8b2b8a73efa45cf670f91e06b6aa8"
   }
 }

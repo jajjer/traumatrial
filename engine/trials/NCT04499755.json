@@ -31,6 +31,13 @@
       "Moderate and severe TBI classification: GCS cutoff for 'moderate' (9-12) and 'severe' (3-8) is partially encoded via gcs <= 12, but the upper bound of 'moderate' vs. 'severe' distinction and exact GCS thresholds used by the trial are not fully specified in the criteria text.",
       "Underlying CNS disorders: Cannot be expressed because there is no field in the schema for pre-existing neurological or CNS conditions.",
       "Pediatric age lower bound: The exact minimum age for 'children' is not specified in the criteria, so no lower age bound rule is encoded."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT04499755",
+    "source_last_update_posted": "2020-08-05",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "0b4dcb8f21afd7776014cc278d3c359c976d6f844989c4e110d930005a7dcdae"
   }
 }

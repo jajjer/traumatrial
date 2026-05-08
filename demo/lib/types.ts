@@ -53,6 +53,15 @@ export interface Patient {
 export interface TrialMetadata {
   source?: string;
   skipped_criteria: string[];
+  // Provenance — populated by engine/scripts/parse_trial.py at import time.
+  // See engine/traumatrial_match/schema.py:TrialMetadata for field semantics.
+  imported_at?: string | null;
+  parser_version?: string | null;
+  schema_version?: string | null;
+  source_url?: string | null;
+  source_last_update_posted?: string | null;
+  source_overall_status?: string | null;
+  source_criteria_sha256?: string | null;
 }
 
 export interface Trial {

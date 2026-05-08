@@ -40,7 +40,10 @@
     {
       "field": "pregnancy_status",
       "op": "in",
-      "value": ["pregnant", "unknown_could_be_pregnant"],
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
       "hard": true
     },
     {
@@ -78,6 +81,13 @@
       "Coagulopathy or thrombocytopenia <50,000 as contraindication for ELD (no coagulation or platelet count field in schema)",
       "Severe spinal deformity as contraindication for ELD (no spinal deformity field in schema)",
       "Posterior fossa hemorrhage (no anatomic hemorrhage location field in schema)"
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05889650",
+    "source_last_update_posted": "2026-04-22",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "9a4c5820819feb1a691f2577f1468c4c34b13bcbaee58715eeab06620e9f60e2"
   }
 }

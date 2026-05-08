@@ -53,6 +53,13 @@
       "Exclusion #13 (patient under legal protection or deprived of liberty): legal status is not an available field.",
       "Exclusion #14 (another life-threatening injury): multi-trauma/life-threatening injury status is not an available field.",
       "Exclusion #15 (history of clinically important alterations of the blood-brain barrier including brain tumors, metastasis, CNS inflammatory pathologies, active MS, advanced Alzheimer's): neurological history is not an available field."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05008926",
+    "source_last_update_posted": "2025-11-21",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "d2a595b0fff2423a36a14d1e1d9a654741f3b23c02ab0bb84a90360913205853"
   }
 }

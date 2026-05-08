@@ -26,6 +26,13 @@
       "Consultation with relatives or consent from guardians: consent process criterion, not expressible as a patient data field.",
       "Known egg yolk allergy: allergy history field does not exist in schema.",
       "Unilateral or bilateral fixed and dilated pupil after initial operative intervention: pupil exam finding field does not exist in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT04117672",
+    "source_last_update_posted": "2026-01-21",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "4970f9fb991a45d3fc82f849f02ffeca8ca44a6b13212271701ef76c864fa9ed"
   }
 }

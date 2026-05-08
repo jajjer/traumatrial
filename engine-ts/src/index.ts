@@ -4,7 +4,7 @@
 
 import type { ClauseTrace, MatchResult, Operator, Patient, Rule, Trial } from "./types.js";
 
-export type { ClauseTrace, MatchResult, Operator, Patient, Rule, Trial } from "./types.js";
+export type { ClauseTrace, MatchResult, Operator, Patient, Rule, Trial, TrialMetadata } from "./types.js";
 export type { Mechanism, PregnancyStatus, Sex } from "./types.js";
 
 function evaluate(op: Operator, patientValue: unknown, ruleValue: unknown): boolean {

@@ -84,6 +84,13 @@
       "Exclusion #20: History of HIV, hepatitis B surface antigen, or hepatitis C virus antibody \u2014 no infectious disease history field in schema.",
       "Exclusion #21: Significant disease or disorder at investigator discretion \u2014 no investigator judgement field in schema.",
       "Exclusion #22: Low likelihood of follow-up or study compliance at investigator discretion \u2014 no compliance assessment field in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06790095",
+    "source_last_update_posted": "2026-01-26",
+    "source_overall_status": "ENROLLING_BY_INVITATION",
+    "source_criteria_sha256": "d421025a729c888dd4f23c03541902e0f9f966d19eaad872b36175b3ee483275"
   }
 }

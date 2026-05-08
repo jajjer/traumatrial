@@ -1,0 +1,56 @@
+name: trial freshness check
+
+# Weekly drift detection: re-fetches every cached trial from clinicaltrials.gov
+# and compares against the cached _metadata. Anything other than OK / SOFT_UPDATE
+# fails the job and is uploaded as a JSON artifact for review. The intent is to
+# catch silent drift (criteria text changed, trial closed) before it becomes
+# wrong eligibility output in production.
+
+on:
+  schedule:
+    - cron: "13 7 * * 1" # Mondays 07:13 UTC
+  workflow_dispatch:
+  push:
+    paths:
+      - "engine/scripts/check_freshness.py"
+      - "engine/scripts/parse_trial.py"
+      - ".github/workflows/freshness.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install engine + parse extras
+        working-directory: engine
+        run: python -m pip install -e ".[parse]"
+      - name: Run freshness check
+        working-directory: engine
+        run: |
+          python scripts/check_freshness.py --json > freshness.json
+          python -c "
+          import json, sys
+          report = json.load(open('freshness.json'))
+          summary = report['summary']
+          print('Summary:', summary)
+          bad = {k: v for k, v in summary.items()
+                 if k not in ('OK', 'SOFT_UPDATE')}
+          if bad:
+              print('::error::Freshness check found drift:', bad)
+              for t in report['trials']:
+                  if t['status'] not in ('OK', 'SOFT_UPDATE'):
+                      print(f\"  {t['trial_id']}: {t['status']} — {'; '.join(t.get('reasons', []))}\")
+              sys.exit(1)
+          "
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: freshness-report
+          path: engine/freshness.json

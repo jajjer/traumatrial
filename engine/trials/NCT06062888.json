@@ -62,6 +62,13 @@
       "Exclusion #11: Persons who refuse administration of blood products \u2014 requires patient consent/refusal status not in schema.",
       "Exclusion #12: Persons with a research opt-out bracelet \u2014 requires opt-out status not in schema.",
       "Exclusion #13: Persons who require FFP for any other indication (e.g., reversal of coagulopathy) \u2014 requires clinical indication data not in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06062888",
+    "source_last_update_posted": "2026-02-11",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "07feb124efa6b6b1f627d4f8c540e8ca1b47b5923e2fc95b51be54196dc0b202"
   }
 }

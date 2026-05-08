@@ -44,6 +44,13 @@
       "Porphyria: no diagnosis/medical history field exists in the schema.",
       "Glaucoma: no diagnosis/medical history field exists in the schema.",
       "Lactation status: no lactation field exists in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05097261",
+    "source_last_update_posted": "2024-08-22",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "e6682ff4c2c93ee5d7acf9938b1aa012428fc29aef1c43c890f5e063418eae93"
   }
 }

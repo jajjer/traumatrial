@@ -65,6 +65,13 @@
       "Exclusion #9: Current use of ergotamine, MAOIs, or TCAs \u2014 no schema field for medication use.",
       "Exclusion #10: Prior vasopressor administration before randomization \u2014 no schema field for prior vasopressor use.",
       "Exclusion #11: Weight less than 30 kg \u2014 no schema field for patient weight."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06977659",
+    "source_last_update_posted": "2025-05-18",
+    "source_overall_status": "ENROLLING_BY_INVITATION",
+    "source_criteria_sha256": "3895e1b849989080bd01b11a931d8c48a45e099c6ebb30a5a31df734bf593ce4"
   }
 }

@@ -12,6 +12,7 @@ import type {
   PregnancyStatus,
   Sex,
   Trial,
+  TrialMetadata,
 } from "../lib/types";
 
 const PATIENT_IDS = [
@@ -1571,6 +1572,7 @@ function MatchCard({
                 EFIC
               </span>
             )}
+            <EnrollmentStatusChip status={trial?._metadata?.source_overall_status} />
           </div>
           <p className="text-sm text-slate-300 mt-1.5 leading-snug">
             {trial?.title ?? result.trial_id}
@@ -1640,10 +1642,100 @@ function MatchCard({
             trial._metadata.skipped_criteria.length > 0 && (
               <SkippedCriteria items={trial._metadata.skipped_criteria} />
             )}
+          {trial?._metadata && <TrialProvenance metadata={trial._metadata} />}
         </div>
       )}
     </div>
   );
+}
+
+// Coordinator-facing summary: when were these rules cached, what state was
+// the trial in at import, and where to verify on clinicaltrials.gov. The
+// answer to "should I trust this match" is partly here.
+function TrialProvenance({ metadata }: { metadata: TrialMetadata }) {
+  const imported = metadata.imported_at;
+  const url = metadata.source_url;
+  const status = metadata.source_overall_status;
+  const lastUpdate = metadata.source_last_update_posted;
+  if (!imported && !url && !status && !lastUpdate) return null;
+  return (
+    <div className="mt-4 pt-3 border-t border-slate-800/60 font-mono text-[10px] text-slate-500 space-y-0.5">
+      {imported && (
+        <div>
+          <span className="text-slate-600">imported </span>
+          <span className="text-slate-400">{formatRelative(imported)}</span>
+          {metadata.parser_version === "0" && (
+            <span className="text-slate-600"> · pre-tracking import</span>
+          )}
+        </div>
+      )}
+      {(status || lastUpdate) && (
+        <div>
+          {status && (
+            <>
+              <span className="text-slate-600">ctgov status </span>
+              <span className="text-slate-400">{status}</span>
+            </>
+          )}
+          {lastUpdate && (
+            <>
+              <span className="text-slate-600"> · last update </span>
+              <span className="text-slate-400">{lastUpdate}</span>
+            </>
+          )}
+        </div>
+      )}
+      {url && (
+        <div>
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-slate-500 hover:text-slate-300 underline-offset-2 hover:underline"
+          >
+            verify on clinicaltrials.gov →
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// "RECRUITING" and "ENROLLING_BY_INVITATION" are the only states where a
+// coordinator can actually consent and enroll today. Everything else (e.g.,
+// ACTIVE_NOT_RECRUITING, COMPLETED, WITHDRAWN, SUSPENDED) is shown as a
+// warning chip — an "ELIGIBLE" verdict against a closed trial is misleading.
+const ENROLLMENT_OPEN: ReadonlySet<string> = new Set([
+  "RECRUITING",
+  "ENROLLING_BY_INVITATION",
+]);
+
+function EnrollmentStatusChip({ status }: { status?: string | null }) {
+  if (!status) return null;
+  if (ENROLLMENT_OPEN.has(status)) return null;
+  const label = status.replace(/_/g, " ");
+  return (
+    <span
+      className="font-mono text-[10px] tracking-wider px-1.5 py-0.5 rounded bg-amber-900/60 text-amber-100 border border-amber-800"
+      title="This trial is not currently enrolling. Verify on clinicaltrials.gov before paging."
+    >
+      {label}
+    </span>
+  );
+}
+
+function formatRelative(iso: string): string {
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return iso;
+  const days = Math.floor((Date.now() - t) / 86_400_000);
+  if (days < 1) return "today";
+  if (days === 1) return "1 day ago";
+  if (days < 30) return `${days} days ago`;
+  const months = Math.floor(days / 30);
+  if (months === 1) return "1 month ago";
+  if (months < 12) return `${months} months ago`;
+  const years = Math.floor(days / 365);
+  return years === 1 ? "1 year ago" : `${years} years ago`;
 }
 
 function SkippedCriteria({ items }: { items: string[] }) {

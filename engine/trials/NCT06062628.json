@@ -34,7 +34,10 @@
     {
       "field": "pregnancy_status",
       "op": "in",
-      "value": ["pregnant", "unknown_could_be_pregnant"],
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
       "hard": true
     }
   ],
@@ -49,6 +52,13 @@
       "Documented episode(s) of ICP elevations >25 mm Hg sustained greater than 5 minutes within 24 hours: no schema field exists for ICP values or temporal ICP history.",
       "Episodes of PbtO2 <15 mmHg: no schema field exists for brain tissue oxygenation values.",
       "Currently breast-feeding: no schema field exists for lactation status."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06062628",
+    "source_last_update_posted": "2026-01-14",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "8d04c14d2f075ef9d7a2b1b9699e789e75db61d30964a53c70aacca5780171e7"
   }
 }

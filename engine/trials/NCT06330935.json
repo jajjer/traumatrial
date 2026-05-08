@@ -62,6 +62,13 @@
       "Prior TXA for current injury: no schema field exists for prior medication administration.",
       "Known venous or arterial thrombosis: no schema field exists for thrombosis history.",
       "Intracranial haemorrhage confirmed on cranial CT scan: imaging confirmation cannot be expressed with available schema fields (presumed_intracranial_hemorrhage used as proxy)."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06330935",
+    "source_last_update_posted": "2024-05-10",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "834b39b48376d5b35bde3e30f3a05e2252ce149dfc4b04812e580913b88390e1"
   }
 }

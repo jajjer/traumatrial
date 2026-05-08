@@ -36,6 +36,13 @@
       "Emergent visceral operative intervention before complete trauma assessment: requires procedural/temporal data not available in the schema.",
       "Concern for ruptured intracranial vascular malformation: requires a specific diagnosis field not available in the schema.",
       "Patients who are transferred from another facility: requires a transfer/origin field not available in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06953674",
+    "source_last_update_posted": "2025-08-17",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "7dbae98e2387746548bdeb5d00e56c5b231051d6ef7e0d938e6668d2f312c7c4"
   }
 }

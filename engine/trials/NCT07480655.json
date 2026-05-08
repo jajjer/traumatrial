@@ -55,6 +55,13 @@
       "Septic shock (exclusion): no infection or sepsis classification field exists in the schema.",
       "Patients who will require readmission within 48 h after step-down from the ICU (exclusion): requires prospective/temporal outcome data not available at enrollment.",
       "Patients who will need extra-corporeal membrane oxygenation support (exclusion): no ECMO requirement field exists in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT07480655",
+    "source_last_update_posted": "2026-03-18",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "8aceb40e4020c5c0664b1fb80b3fe4cad48f8e33fddc063e26483b49c6b57aa9"
   }
 }

@@ -72,6 +72,13 @@
       "Healthy Controls only: women of childbearing potential without effective contraception \u2014 subgroup-specific criterion and contraception status not encodable in schema.",
       "Healthy Controls only: women unwilling to maintain effective contraception during the 30-day study period \u2014 patient willingness/compliance criterion not encodable in schema.",
       "Breastfeeding women excluded \u2014 no schema field for breastfeeding status."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06930261",
+    "source_last_update_posted": "2025-04-16",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "7e96365cc7a688c4311d29296db5c9c2a1652ea65850d8a129f8b706737dfc95"
   }
 }

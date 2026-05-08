@@ -56,6 +56,13 @@
       "Female of childbearing potential or sexually active male unwilling to use birth control (exclusion): contraceptive compliance is not a schema field.",
       "Participation in another clinical study involving investigational product within 30 days (exclusion): prior trial participation is not a schema field.",
       "Investigator opinion of unsuitability (exclusion): subjective investigator judgment cannot be encoded in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06282965",
+    "source_last_update_posted": "2025-07-31",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "7644ea0270a29ce675ed6ce8198d8ae8bc2191b87034f2941ba94d3a403abbc9"
   }
 }

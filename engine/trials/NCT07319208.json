@@ -60,6 +60,13 @@
       "High risk of follow-up difficulties after ICU discharge: social/logistical criterion not expressible in schema.",
       "Patients under court protection: legal status criterion not expressible in schema.",
       "Patient who does not speak French: language criterion not expressible in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT07319208",
+    "source_last_update_posted": "2026-04-29",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "c5a80e376897d30bae94b7e4ff6831d5237644c8dedcacf382c6030097953142"
   }
 }

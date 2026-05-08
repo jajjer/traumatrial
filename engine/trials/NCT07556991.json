@@ -28,6 +28,13 @@
       "Exclusion: infection \u2014 no schema field exists for active or prior infection status.",
       "Exclusion: recurrent chronic subdural hematoma \u2014 no schema field exists for recurrence of a prior diagnosis.",
       "Exclusion: conservatively treated chronic subdural hematoma \u2014 no schema field exists for treatment modality or chronic subdural hematoma diagnosis."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT07556991",
+    "source_last_update_posted": "2026-04-29",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "0e4730192bc530c5c3d513e3c47eee8d5a3f014a72b906b9f1e6935d3877737c"
   }
 }

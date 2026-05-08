@@ -61,6 +61,13 @@
       "End stage renal failure receiving chronic dialysis (no renal_failure or dialysis field in schema).",
       "Severe pre-existing physical or mental disability or severe co-morbidity (no disability or comorbidity field in schema).",
       "Treating physician believes randomisation not in patient's best interest (clinical judgment criterion; not encodable in schema)."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT04588311",
+    "source_last_update_posted": "2025-07-16",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "591e7c74c620d18dafcb329a98a8f401149b04a13b493c618e99ecb52cc58f12"
   }
 }

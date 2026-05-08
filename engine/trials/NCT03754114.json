@@ -49,7 +49,10 @@
     {
       "field": "pregnancy_status",
       "op": "in",
-      "value": ["pregnant", "unknown_could_be_pregnant"],
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
       "hard": true
     }
   ],
@@ -74,6 +77,13 @@
       "Known active drug or alcohol dependence that would interfere with physiological response (exclusion): requires substance use history field not in the schema.",
       "Prisoner (exclusion): requires legal/custody status field not in the schema.",
       "On EFIC Opt-Out list as indicated by a bracelet or medical alert (exclusion): requires consent registry/opt-out status field not in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT03754114",
+    "source_last_update_posted": "2026-05-05",
+    "source_overall_status": "ACTIVE_NOT_RECRUITING",
+    "source_criteria_sha256": "836856813f38ac2d7d9bc1ee52eea97e41ef04eacbaf19730b493fd405cba9ee"
   }
 }

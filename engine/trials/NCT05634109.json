@@ -28,7 +28,10 @@
     {
       "field": "pregnancy_status",
       "op": "in",
-      "value": ["pregnant", "unknown_could_be_pregnant"],
+      "value": [
+        "pregnant",
+        "unknown_could_be_pregnant"
+      ],
       "hard": true
     },
     {
@@ -57,6 +60,13 @@
       "Candidate for massive transfusion (ABC Score >= 2 or physician discretion): ABC score is a composite clinical score not directly representable in schema fields.",
       "Concurrent availability of whole blood or blood component therapy: requires resource/inventory availability field not in schema.",
       "Trauma activation level rule used as partial proxy for hemorrhagic shock trauma code activation, but the schema does not distinguish hemorrhagic shock specifically."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05634109",
+    "source_last_update_posted": "2025-02-27",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "9a7dacb12c43c51a9b57c9d0f6742d9d2119c20a5c04172e0fe7d13cb4d2aa64"
   }
 }

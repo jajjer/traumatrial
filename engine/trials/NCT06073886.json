@@ -47,6 +47,13 @@
       "Severe mental, physical, or medical problems (liver/kidney/heart disease, uncontrolled diabetes or hypertension, malignancy, psychosis, previous seizure): requires medical history fields not available in the schema.",
       "Active alcohol or illicit drug abuse: requires substance use history not available in the schema.",
       "Inability to speak and read English: requires language ability assessment not available in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06073886",
+    "source_last_update_posted": "2026-02-24",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "5be45db80aa6f4de50184b1106eacf2560939d01400660a9fd788f79aca06251"
   }
 }

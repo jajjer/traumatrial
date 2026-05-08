@@ -52,6 +52,13 @@
       "Exclusion #9: Severe renal impairment (eGFR <30 ml/min or serum creatinine >150 \u03bcmol/L) \u2014 no renal function lab fields in schema.",
       "Exclusion #10: Known hypersensitivity or allergy to TXA \u2014 no allergy/hypersensitivity field in schema.",
       "Exclusion #11: Inability to obtain informed consent \u2014 no consent capacity field in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT07245264",
+    "source_last_update_posted": "2025-12-08",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "6b6d16f7ee9aa1a6196fb41a3d8dd7778bfa43eaba9a031d788a3b40f36ec210"
   }
 }

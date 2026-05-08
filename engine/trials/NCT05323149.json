@@ -59,6 +59,13 @@
       "Patients with coagulopathies: no coagulopathy or clotting disorder field exists in the schema (anticoagulant_use is a partial proxy but not equivalent).",
       "Renal failure patients: no renal function or lab value field exists in the schema.",
       "Patient refusal to participate: consent status cannot be encoded in the schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT05323149",
+    "source_last_update_posted": "2026-01-02",
+    "source_overall_status": "RECRUITING",
+    "source_criteria_sha256": "b5e13405ba91b5f5abdc5688491450855b2825f9837fc936d599b573f0a8cfb5"
   }
 }

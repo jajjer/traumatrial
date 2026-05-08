@@ -92,6 +92,13 @@
       "Exclusion #13: Any other clinically significant medical condition as determined by investigator \u2014 subjective investigator judgment not encodable in schema.",
       "Exclusion #14: Prolonged QT interval \u2014 ECG/QT interval field not available in schema.",
       "Exclusion #15: Treatment with systemic anticholinergic medication within 1 week prior to screening \u2014 medication history field not available in schema."
-    ]
+    ],
+    "imported_at": "2026-05-08T03:33:34Z",
+    "parser_version": "0",
+    "schema_version": "1",
+    "source_url": "https://clinicaltrials.gov/study/NCT06253923",
+    "source_last_update_posted": "2025-07-15",
+    "source_overall_status": "ACTIVE_NOT_RECRUITING",
+    "source_criteria_sha256": "257a01ec0ece5c7dc2a3a7385f960d6a775a470e6bede8c95e57d0d8313820d9"
   }
 }
