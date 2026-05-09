@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Synthetic NEMSIS v3.5 PatientCareReport — isolated cervical SCI from a
+shallow-water diving accident at a public pool. Multi-section, realistic
+ePCR shape.
+
+Profile: 24-year-old male, dove into shallow end and struck pool floor
+head-first. Found prone in water by lifeguard, extricated by bystanders.
+Conscious throughout (GCS 15) but reports loss of sensation/motor in
+all four extremities. C-spine immobilized on scene. Receiving Level I
+trauma center.
+
+What this exercises beyond the polytrauma fixture:
+- Mechanism is a "fall" via ICD-10 W16 (jumping/diving) — exercises the
+  fall ICD-10 prefix table, not the MVC path.
+- eSituation.07 carries ICD-10 S14.111A (cervical SCI, complete) — should
+  flip spinal_injury_suspected even with GCS 15 + non-blunt-MVC mechanism,
+  because impression overrides physiology.
+- eInjury.09 carries Step 2 paralysis criterion (4509027) — should pin
+  Level 1 activation despite stable vitals.
+- eMedications.03 has methylprednisolone (high-dose steroid for SCI) —
+  not a reversal agent or hemorrhage tx, must NOT trip those signals.
+- Demonstrates the case where a patient with NORMAL physiology has
+  catastrophic injury and the trace makes that visible.
+-->
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <Header>
+    <Source>synthetic-test-fixture</Source>
+    <SchemaVersion>3.5.0.211008CP3</SchemaVersion>
+  </Header>
+  <PatientCareReport>
+    <eRecord>
+      <eRecord.01>ANON-SCI-2026-0712</eRecord.01>
+      <eRecord.SoftwareCreatorAndName>SYNTH-EHR/1.0</eRecord.SoftwareCreatorAndName>
+    </eRecord>
+
+    <eResponse>
+      <eResponse.01>SYN-AGENCY-003</eResponse.01>
+      <eResponse.03>2400-RESPONSE-911</eResponse.03>
+      <eResponse.13>2406-CALL-911</eResponse.13>
+    </eResponse>
+
+    <eDispatch>
+      <eDispatch.01>2301-DROWNING</eDispatch.01>
+      <eDispatch.04>2304-PRIORITY-1</eDispatch.04>
+    </eDispatch>
+
+    <eTimes>
+      <eTimes.01>2026-07-12T14:01:25-05:00</eTimes.01>
+      <eTimes.03>2026-07-12T14:01:54-05:00</eTimes.03>
+      <eTimes.05>2026-07-12T14:04:33-05:00</eTimes.05>
+      <eTimes.06>2026-07-12T14:11:19-05:00</eTimes.06>
+      <eTimes.07>2026-07-12T14:35:04-05:00</eTimes.07>
+    </eTimes>
+
+    <eScene>
+      <eScene.07>2807-RECREATIONAL-PUBLIC</eScene.07>
+      <eScene.09>2809-SUBURBAN</eScene.09>
+      <eScene.18>1</eScene.18>
+    </eScene>
+
+    <ePatient>
+      <ePatient.13>9906003</ePatient.13>
+      <ePatient.15>24</ePatient.15>
+      <ePatient.16>2516001</ePatient.16>
+    </ePatient>
+
+    <eHistory>
+      <eHistory.05>None known</eHistory.05>
+      <eHistory.06>None</eHistory.06>
+      <eHistory.16>3133003</eHistory.16>
+    </eHistory>
+
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.01>2026-07-12T14:13:50-05:00</eVitals.01>
+        <eVitals.06>118</eVitals.06>
+        <eVitals.07>74</eVitals.07>
+        <eVitals.10>72</eVitals.10>
+        <eVitals.14>18</eVitals.14>
+        <eVitals.20>98</eVitals.20>
+        <eVitals.23>15</eVitals.23>
+      </eVitalsGroup>
+      <eVitalsGroup>
+        <eVitals.01>2026-07-12T14:25:11-05:00</eVitals.01>
+        <eVitals.06>104</eVitals.06>
+        <eVitals.07>62</eVitals.07>
+        <eVitals.10>58</eVitals.10>
+        <eVitals.14>16</eVitals.14>
+        <eVitals.20>97</eVitals.20>
+        <eVitals.23>15</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+
+    <eExam>
+      <eExam.21>3621-FLACCID-EXTREMITIES</eExam.21>
+      <eExam.23>3623-NO-SENSATION-BELOW-CLAVICLE</eExam.23>
+    </eExam>
+
+    <eMedications>
+      <eMedicationsGroup>
+        <eMedications.01>2026-07-12T14:18:42-05:00</eMedications.01>
+        <eMedications.03>Methylprednisolone 30mg/kg IV bolus</eMedications.03>
+        <eMedications.05>2400</eMedications.05>
+        <eMedications.06>3326-MILLIGRAMS</eMedications.06>
+        <eMedications.07>3327-IV-PERIPHERAL</eMedications.07>
+      </eMedicationsGroup>
+    </eMedications>
+
+    <eProcedures>
+      <eProceduresGroup>
+        <eProcedures.01>2026-07-12T14:13:00-05:00</eProcedures.01>
+        <eProcedures.03>3502-CERVICAL-COLLAR</eProcedures.03>
+      </eProceduresGroup>
+      <eProceduresGroup>
+        <eProcedures.01>2026-07-12T14:14:22-05:00</eProcedures.01>
+        <eProcedures.03>3504-LONG-SPINE-BOARD</eProcedures.03>
+      </eProceduresGroup>
+      <eProceduresGroup>
+        <eProcedures.01>2026-07-12T14:17:01-05:00</eProcedures.01>
+        <eProcedures.03>3503-IV-ACCESS</eProcedures.03>
+      </eProceduresGroup>
+    </eProcedures>
+
+    <eSituation>
+      <eSituation.02>W16.022A</eSituation.02>
+      <eSituation.07>S14.111A</eSituation.07>
+      <eSituation.11>3811-INJURY-SINGLE</eSituation.11>
+    </eSituation>
+
+    <eInjury>
+      <eInjury.01>W16.022A</eInjury.01>
+      <eInjury.05>0</eInjury.05>
+      <eInjury.09>4509027</eInjury.09>
+    </eInjury>
+
+    <eNarrative>
+      <eNarrative.01>24 yo M dove into shallow end of public pool and struck head on bottom. Witnessed event. Found prone, face-down in water by lifeguard, extricated and turned by bystanders within 30 seconds. AOx3 throughout. Reports complete loss of motor and sensation below clavicle. C-collar applied at scene, log-rolled to LSB. Methylprednisolone bolus per regional SCI protocol. Receiving Level I trauma center.</eNarrative.01>
+    </eNarrative>
+
+    <eDisposition>
+      <eDisposition.01>4801-TRANSPORTED</eDisposition.01>
+      <eDisposition.20>4820-TRAUMA-CENTER-LEVEL-I</eDisposition.20>
+    </eDisposition>
+  </PatientCareReport>
+</EMSDataSet>

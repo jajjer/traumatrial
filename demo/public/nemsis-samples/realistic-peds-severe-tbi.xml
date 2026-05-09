@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Synthetic NEMSIS v3.5 PatientCareReport — pediatric severe TBI from helmeted
+bicycle vs. vehicle. Multi-section, the way an actual ePCR looks at handoff.
+
+Profile: 12-year-old female, struck by SUV at residential intersection while
+riding a bicycle (helmet on). Initial GCS 9 (E2/V2/M5) at scene, dropped to
+GCS 6 en route. Anisocoria noted on second exam. Receiving Level I peds
+trauma center.
+
+What this exercises beyond the polytrauma fixture:
+- Pediatric demographics (age 12, female)
+- Coded primary impression S06.5X1A (subdural hemorrhage with LOC of any
+  duration with death due to brain injury before regaining consciousness —
+  picked S06.5 prefix specifically to test the ICH branch)
+- eInjury.09 carries Step 1 GCS criterion
+- Mechanism is auto-vs-pedestrian/cyclist, ICD-10 V03.10XA falls through to
+  blunt_mvc via prefix match
+- eMedications.03 carries hypertonic saline (no special signal — control)
+- eHistory.06 is empty (peds patient on no home meds)
+-->
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <Header>
+    <Source>synthetic-test-fixture</Source>
+    <SchemaVersion>3.5.0.211008CP3</SchemaVersion>
+  </Header>
+  <PatientCareReport>
+    <eRecord>
+      <eRecord.01>ANON-PEDS-TBI-2026-0218</eRecord.01>
+      <eRecord.SoftwareCreatorAndName>SYNTH-EHR/1.0</eRecord.SoftwareCreatorAndName>
+    </eRecord>
+
+    <eResponse>
+      <eResponse.01>SYN-AGENCY-001</eResponse.01>
+      <eResponse.03>2400-RESPONSE-911</eResponse.03>
+      <eResponse.13>2406-CALL-911</eResponse.13>
+    </eResponse>
+
+    <eDispatch>
+      <eDispatch.01>2301-PED-STRUCK</eDispatch.01>
+      <eDispatch.04>2304-PRIORITY-1</eDispatch.04>
+    </eDispatch>
+
+    <eTimes>
+      <eTimes.01>2026-04-18T16:42:09-05:00</eTimes.01>
+      <eTimes.03>2026-04-18T16:42:38-05:00</eTimes.03>
+      <eTimes.05>2026-04-18T16:46:10-05:00</eTimes.05>
+      <eTimes.06>2026-04-18T16:51:45-05:00</eTimes.06>
+      <eTimes.07>2026-04-18T17:08:30-05:00</eTimes.07>
+    </eTimes>
+
+    <eScene>
+      <eScene.07>2807-INTERSECTION</eScene.07>
+      <eScene.09>2809-SUBURBAN</eScene.09>
+      <eScene.18>1</eScene.18>
+    </eScene>
+
+    <ePatient>
+      <ePatient.13>9906001</ePatient.13>
+      <ePatient.15>12</ePatient.15>
+      <ePatient.16>2516001</ePatient.16>
+    </ePatient>
+
+    <eHistory>
+      <eHistory.05>None known</eHistory.05>
+      <eHistory.06>None</eHistory.06>
+      <eHistory.16>3133003</eHistory.16>
+    </eHistory>
+
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.01>2026-04-18T16:52:12-05:00</eVitals.01>
+        <eVitals.06>108</eVitals.06>
+        <eVitals.10>96</eVitals.10>
+        <eVitals.14>20</eVitals.14>
+        <eVitals.20>96</eVitals.20>
+        <eVitals.23>9</eVitals.23>
+      </eVitalsGroup>
+      <eVitalsGroup>
+        <eVitals.01>2026-04-18T17:02:48-05:00</eVitals.01>
+        <eVitals.06>96</eVitals.06>
+        <eVitals.10>110</eVitals.10>
+        <eVitals.14>14</eVitals.14>
+        <eVitals.20>94</eVitals.20>
+        <eVitals.23>6</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+
+    <eExam>
+      <eExam.21>3621-LACERATIONS-LE</eExam.21>
+      <eExam.23>3623-ANISOCORIA</eExam.23>
+    </eExam>
+
+    <eMedications>
+      <eMedicationsGroup>
+        <eMedications.01>2026-04-18T17:00:11-05:00</eMedications.01>
+        <eMedications.03>3322-NORMAL-SALINE</eMedications.03>
+        <eMedications.05>250</eMedications.05>
+        <eMedications.06>3326-MILLILITERS</eMedications.06>
+        <eMedications.07>3327-IV-PERIPHERAL</eMedications.07>
+      </eMedicationsGroup>
+    </eMedications>
+
+    <eProcedures>
+      <eProceduresGroup>
+        <eProcedures.01>2026-04-18T16:53:30-05:00</eProcedures.01>
+        <eProcedures.03>3502-CERVICAL-COLLAR</eProcedures.03>
+      </eProceduresGroup>
+      <eProceduresGroup>
+        <eProcedures.01>2026-04-18T16:58:04-05:00</eProcedures.01>
+        <eProcedures.03>3503-IV-ACCESS</eProcedures.03>
+      </eProceduresGroup>
+    </eProcedures>
+
+    <eSituation>
+      <eSituation.02>V03.10XA</eSituation.02>
+      <eSituation.07>S06.5X1A</eSituation.07>
+      <eSituation.11>3811-INJURY-MULTIPLE</eSituation.11>
+    </eSituation>
+
+    <eInjury>
+      <eInjury.01>V03.10XA</eInjury.01>
+      <eInjury.03>3303-HELMET-WORN</eInjury.03>
+      <eInjury.09>4509001</eInjury.09>
+    </eInjury>
+
+    <eNarrative>
+      <eNarrative.01>12 yo F helmeted cyclist struck by passenger car at intersection. Patient awake but disoriented on EMS arrival, GCS 9 with sluggish R pupil. Mental status declined en route to GCS 6 with frank anisocoria. C-collar in place, IV access, transport to peds Level I.</eNarrative.01>
+    </eNarrative>
+
+    <eDisposition>
+      <eDisposition.01>4801-TRANSPORTED</eDisposition.01>
+      <eDisposition.20>4820-TRAUMA-CENTER-LEVEL-I-PEDS</eDisposition.20>
+    </eDisposition>
+  </PatientCareReport>
+</EMSDataSet>

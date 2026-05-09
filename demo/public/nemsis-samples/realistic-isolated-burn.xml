@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Synthetic NEMSIS v3.5 PatientCareReport — isolated thermal burn from
+residential structure fire. Multi-section, the way an actual ePCR looks.
+
+Profile: 47-year-old male, residential structure fire. 2nd-degree burns
+estimated 22% TBSA across face, anterior chest, and bilateral upper
+extremities. Singed nasal hairs, soot in airway. Alert (GCS 15) but
+respiratory compromise developing. Receiving regional burn center.
+
+What this exercises beyond the polytrauma fixture:
+- Burn mechanism via NEMSIS native cause code 2120013
+- eInjury.09 carries Step 4 burn criterion (4509053) — should pin Level 2
+  via the Step 3/4 path of the new triage extractor
+- eSituation.07 ICD-10 T31.20 (burns of 20-29% TBSA) — not in our impression
+  prefix table, so the test verifies it correctly does NOT flip TBI/ICH/spine
+- Anticoagulant absence (clean negative — no eHistory.06 medication content)
+- eMedications.03 carries fentanyl + morphine (analgesia) — must NOT trip
+  reversal-agent or hemorrhage-tx detection
+-->
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <Header>
+    <Source>synthetic-test-fixture</Source>
+    <SchemaVersion>3.5.0.211008CP3</SchemaVersion>
+  </Header>
+  <PatientCareReport>
+    <eRecord>
+      <eRecord.01>ANON-BURN-2026-0309</eRecord.01>
+      <eRecord.SoftwareCreatorAndName>SYNTH-EHR/1.0</eRecord.SoftwareCreatorAndName>
+    </eRecord>
+
+    <eResponse>
+      <eResponse.01>SYN-AGENCY-002</eResponse.01>
+      <eResponse.03>2400-RESPONSE-911</eResponse.03>
+      <eResponse.13>2406-CALL-911</eResponse.13>
+    </eResponse>
+
+    <eDispatch>
+      <eDispatch.01>2301-STRUCTURE-FIRE</eDispatch.01>
+      <eDispatch.04>2304-PRIORITY-1</eDispatch.04>
+    </eDispatch>
+
+    <eTimes>
+      <eTimes.01>2026-03-09T03:11:42-05:00</eTimes.01>
+      <eTimes.03>2026-03-09T03:12:18-05:00</eTimes.03>
+      <eTimes.05>2026-03-09T03:14:05-05:00</eTimes.05>
+      <eTimes.06>2026-03-09T03:21:30-05:00</eTimes.06>
+      <eTimes.07>2026-03-09T03:48:55-05:00</eTimes.07>
+    </eTimes>
+
+    <eScene>
+      <eScene.07>2807-RESIDENTIAL</eScene.07>
+      <eScene.09>2809-URBAN</eScene.09>
+      <eScene.18>1</eScene.18>
+    </eScene>
+
+    <ePatient>
+      <ePatient.13>9906003</ePatient.13>
+      <ePatient.15>47</ePatient.15>
+      <ePatient.16>2516001</ePatient.16>
+    </ePatient>
+
+    <eHistory>
+      <eHistory.05>Penicillin (rash)</eHistory.05>
+      <eHistory.06>Atorvastatin 20mg PO daily</eHistory.06>
+      <eHistory.08>3050-HYPERLIPIDEMIA</eHistory.08>
+      <eHistory.16>3133005</eHistory.16>
+    </eHistory>
+
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.01>2026-03-09T03:23:00-05:00</eVitals.01>
+        <eVitals.06>138</eVitals.06>
+        <eVitals.07>88</eVitals.07>
+        <eVitals.10>118</eVitals.10>
+        <eVitals.14>26</eVitals.14>
+        <eVitals.20>94</eVitals.20>
+        <eVitals.23>15</eVitals.23>
+      </eVitalsGroup>
+      <eVitalsGroup>
+        <eVitals.01>2026-03-09T03:35:45-05:00</eVitals.01>
+        <eVitals.06>132</eVitals.06>
+        <eVitals.07>84</eVitals.07>
+        <eVitals.10>122</eVitals.10>
+        <eVitals.14>28</eVitals.14>
+        <eVitals.20>92</eVitals.20>
+        <eVitals.23>15</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+
+    <eExam>
+      <eExam.21>3621-BURNS-22-PCT-TBSA</eExam.21>
+      <eExam.13>3613-SOOT-FACE-AIRWAY</eExam.13>
+    </eExam>
+
+    <eMedications>
+      <eMedicationsGroup>
+        <eMedications.01>2026-03-09T03:25:30-05:00</eMedications.01>
+        <eMedications.03>Fentanyl 50mcg IV</eMedications.03>
+        <eMedications.05>50</eMedications.05>
+        <eMedications.06>3326-MICROGRAMS</eMedications.06>
+        <eMedications.07>3327-IV-PERIPHERAL</eMedications.07>
+      </eMedicationsGroup>
+      <eMedicationsGroup>
+        <eMedications.01>2026-03-09T03:30:18-05:00</eMedications.01>
+        <eMedications.03>Lactated Ringer 1L IV bolus</eMedications.03>
+        <eMedications.05>1000</eMedications.05>
+        <eMedications.06>3326-MILLILITERS</eMedications.06>
+        <eMedications.07>3327-IV-PERIPHERAL</eMedications.07>
+      </eMedicationsGroup>
+    </eMedications>
+
+    <eProcedures>
+      <eProceduresGroup>
+        <eProcedures.01>2026-03-09T03:24:11-05:00</eProcedures.01>
+        <eProcedures.03>3505-OXYGEN-NRB</eProcedures.03>
+      </eProceduresGroup>
+      <eProceduresGroup>
+        <eProcedures.01>2026-03-09T03:28:55-05:00</eProcedures.01>
+        <eProcedures.03>3503-IV-ACCESS</eProcedures.03>
+      </eProceduresGroup>
+    </eProcedures>
+
+    <eSituation>
+      <eSituation.02>2120013</eSituation.02>
+      <eSituation.07>T31.20</eSituation.07>
+      <eSituation.11>3811-INJURY-MULTIPLE</eSituation.11>
+    </eSituation>
+
+    <eInjury>
+      <eInjury.01>X02.0XXA</eInjury.01>
+      <eInjury.09>4509053</eInjury.09>
+    </eInjury>
+
+    <eNarrative>
+      <eNarrative.01>47 yo M extricated from kitchen fire by FD prior to EMS arrival. AOx3, c/o pain. Burns to face, anterior chest, bilateral arms estimated 22% TBSA mixed 2nd degree. Singed nasal hairs and soot in oropharynx — concern for inhalation injury. Established 18g IV bilateral AC, ran LR per ABA formula, fentanyl for pain. Receiving facility: regional burn center.</eNarrative.01>
+    </eNarrative>
+
+    <eDisposition>
+      <eDisposition.01>4801-TRANSPORTED</eDisposition.01>
+      <eDisposition.20>4820-BURN-CENTER</eDisposition.20>
+    </eDisposition>
+  </PatientCareReport>
+</EMSDataSet>
