@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Synthetic NEMSIS v3.5 PatientCareReport — realistic-shape polytrauma export.
+
+This fixture is the size and section-richness of an actual ePCR that an
+EMS unit would generate at the end of a transport: full Header,
+eDispatch/eResponse/eScene boilerplate, multi-point eVitals progression,
+medical history, allergies, on-scene medications, procedures, narrative,
+disposition. None of the patient-identifying values are real.
+
+Profile: 38-year-old male, restrained driver in a high-energy MVC,
+arrival at receiving Level I trauma center. Hypotensive and
+deteriorating en route — initial GCS 13 → 8 over 7 minutes,
+SBP 102 → 78. Polytrauma with presumed TBI, intracranial hemorrhage,
+hemorrhagic shock, and unstable spine.
+
+What this exercises that the persona-001..008 fixtures don't:
+- Multi-section NEMSIS noise (eDispatch, eResponse, eScene, eOther,
+  eMedications, eProcedures, eExam, eNarrative, eDisposition,
+  eTimes) that the adapter must ignore cleanly
+- Multi-group eVitals progression where only the LATEST group should
+  drive the Patient (deterioration must surface, not initial values)
+- eHistory.06 medication list carrying non-anticoagulants (acetaminophen
+  PRN, lisinopril) — must NOT trip the anticoagulant heuristic
+- Realistic ICD-10 cause-of-injury (V44.5XXA, "driver of pickup truck or
+  van injured in collision with car") rather than a stub V code
+-->
+<EMSDataSet xmlns="http://www.nemsis.org">
+  <Header>
+    <Source>synthetic-test-fixture</Source>
+    <SchemaVersion>3.5.0.211008CP3</SchemaVersion>
+  </Header>
+  <PatientCareReport>
+    <eRecord>
+      <eRecord.01>ANON-MVA-2026-0517</eRecord.01>
+      <eRecord.SoftwareCreatorAndName>SYNTH-EHR/1.0</eRecord.SoftwareCreatorAndName>
+    </eRecord>
+
+    <eResponse>
+      <eResponse.01>SYN-AGENCY-001</eResponse.01>
+      <eResponse.03>2400-RESPONSE-911</eResponse.03>
+      <eResponse.05>2401-EMS-PRIMARY</eResponse.05>
+      <eResponse.13>2406-CALL-911</eResponse.13>
+    </eResponse>
+
+    <eDispatch>
+      <eDispatch.01>2301-MVA-INJURY</eDispatch.01>
+      <eDispatch.04>2304-PRIORITY-1</eDispatch.04>
+    </eDispatch>
+
+    <eTimes>
+      <eTimes.01>2026-05-04T13:02:11-05:00</eTimes.01>
+      <eTimes.03>2026-05-04T13:02:34-05:00</eTimes.03>
+      <eTimes.05>2026-05-04T13:13:05-05:00</eTimes.05>
+      <eTimes.06>2026-05-04T13:14:11-05:00</eTimes.06>
+      <eTimes.07>2026-05-04T13:21:43-05:00</eTimes.07>
+      <eTimes.09>2026-05-04T13:27:50-05:00</eTimes.09>
+    </eTimes>
+
+    <eScene>
+      <eScene.07>2807-INTERSTATE</eScene.07>
+      <eScene.09>2809-RURAL</eScene.09>
+      <eScene.18>1</eScene.18>
+    </eScene>
+
+    <ePatient>
+      <ePatient.13>9906003</ePatient.13>
+      <ePatient.15>38</ePatient.15>
+      <ePatient.16>2516001</ePatient.16>
+    </ePatient>
+
+    <eHistory>
+      <eHistory.05>None known</eHistory.05>
+      <eHistory.06>Acetaminophen 500mg PO PRN</eHistory.06>
+      <eHistory.06>Lisinopril 10mg PO daily</eHistory.06>
+      <eHistory.08>3050-HYPERTENSION</eHistory.08>
+      <eHistory.16>3133005</eHistory.16>
+    </eHistory>
+
+    <eVitals>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T13:14:11-05:00</eVitals.01>
+        <eVitals.06>102</eVitals.06>
+        <eVitals.07>65</eVitals.07>
+        <eVitals.10>110</eVitals.10>
+        <eVitals.14>22</eVitals.14>
+        <eVitals.20>92</eVitals.20>
+        <eVitals.23>13</eVitals.23>
+      </eVitalsGroup>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T13:18:30-05:00</eVitals.01>
+        <eVitals.06>88</eVitals.06>
+        <eVitals.07>54</eVitals.07>
+        <eVitals.10>122</eVitals.10>
+        <eVitals.14>26</eVitals.14>
+        <eVitals.20>90</eVitals.20>
+        <eVitals.23>10</eVitals.23>
+      </eVitalsGroup>
+      <eVitalsGroup>
+        <eVitals.01>2026-05-04T13:21:43-05:00</eVitals.01>
+        <eVitals.06>78</eVitals.06>
+        <eVitals.07>48</eVitals.07>
+        <eVitals.10>132</eVitals.10>
+        <eVitals.14>30</eVitals.14>
+        <eVitals.20>87</eVitals.20>
+        <eVitals.23>8</eVitals.23>
+      </eVitalsGroup>
+    </eVitals>
+
+    <eExam>
+      <eExam.13>3613-DEFORMITY-CHEST</eExam.13>
+      <eExam.18>3618-TENDERNESS-ABDOMEN</eExam.18>
+      <eExam.20>3620-DEFORMITY-PELVIS</eExam.20>
+    </eExam>
+
+    <eMedications>
+      <eMedicationsGroup>
+        <eMedications.01>2026-05-04T13:19:05-05:00</eMedications.01>
+        <eMedications.03>3322-NORMAL-SALINE</eMedications.03>
+        <eMedications.05>500</eMedications.05>
+        <eMedications.06>3326-MILLILITERS</eMedications.06>
+        <eMedications.07>3327-IV-PERIPHERAL</eMedications.07>
+      </eMedicationsGroup>
+      <eMedicationsGroup>
+        <eMedications.01>2026-05-04T13:20:11-05:00</eMedications.01>
+        <eMedications.03>Tranexamic acid 1g IV</eMedications.03>
+        <eMedications.05>1000</eMedications.05>
+        <eMedications.06>3326-MILLIGRAMS</eMedications.06>
+        <eMedications.07>3327-IV-PERIPHERAL</eMedications.07>
+      </eMedicationsGroup>
+    </eMedications>
+
+    <eProcedures>
+      <eProceduresGroup>
+        <eProcedures.01>2026-05-04T13:14:55-05:00</eProcedures.01>
+        <eProcedures.03>3502-CERVICAL-COLLAR</eProcedures.03>
+      </eProceduresGroup>
+      <eProceduresGroup>
+        <eProcedures.01>2026-05-04T13:16:20-05:00</eProcedures.01>
+        <eProcedures.03>3503-IV-ACCESS</eProcedures.03>
+      </eProceduresGroup>
+    </eProcedures>
+
+    <eSituation>
+      <eSituation.02>V44.5XXA</eSituation.02>
+      <eSituation.07>S06.6X9A</eSituation.07>
+      <eSituation.11>3811-INJURY-MULTIPLE</eSituation.11>
+    </eSituation>
+
+    <eInjury>
+      <eInjury.09>4509001</eInjury.09>
+      <eInjury.09>4509003</eInjury.09>
+      <eInjury.09>4509031</eInjury.09>
+    </eInjury>
+
+    <eNarrative>
+      <eNarrative.01>38 yo M unrestrained driver, single-vehicle rollover on rural interstate. Significant front-end deformity, prolonged extrication. Patient AOx3 on EMS arrival, c/o chest and abdominal pain. Vitals deteriorated en route with progressive hypotension and tachycardia. GCS dropped from 13 to 8 over 7-minute transport. C-collar in place, two large-bore IVs. Notified receiving facility for trauma activation Level 1. ETA 6 minutes at last contact.</eNarrative.01>
+    </eNarrative>
+
+    <eDisposition>
+      <eDisposition.01>4801-TRANSPORTED</eDisposition.01>
+      <eDisposition.20>4820-TRAUMA-CENTER-LEVEL-I</eDisposition.20>
+    </eDisposition>
+  </PatientCareReport>
+</EMSDataSet>

@@ -804,54 +804,29 @@ interface NemsisResponse {
   latency_ms: number;
 }
 
-const SAMPLE_NEMSIS_XML = `<?xml version="1.0" encoding="UTF-8"?>
-<EMSDataSet xmlns="http://www.nemsis.org">
-  <Header><Source>synthetic-sample</Source></Header>
-  <PatientCareReport>
-    <eRecord>
-      <eRecord.01>SYN-DEMO-HEMORRHAGE</eRecord.01>
-    </eRecord>
-    <ePatient>
-      <ePatient.13>9906003</ePatient.13>
-      <ePatient.15>34</ePatient.15>
-      <ePatient.16>2516001</ePatient.16>
-    </ePatient>
-    <eHistory>
-      <eHistory.06>None</eHistory.06>
-      <eHistory.16>3133003</eHistory.16>
-    </eHistory>
-    <eVitals>
-      <eVitalsGroup>
-        <eVitals.01>2026-05-04T13:14:11-05:00</eVitals.01>
-        <eVitals.06>120</eVitals.06>
-        <eVitals.10>104</eVitals.10>
-        <eVitals.23>9</eVitals.23>
-      </eVitalsGroup>
-      <eVitalsGroup>
-        <eVitals.01>2026-05-04T13:21:43-05:00</eVitals.01>
-        <eVitals.06>82</eVitals.06>
-        <eVitals.10>128</eVitals.10>
-        <eVitals.23>7</eVitals.23>
-      </eVitalsGroup>
-    </eVitals>
-    <eSituation>
-      <eSituation.02>V43.5XXA</eSituation.02>
-    </eSituation>
-  </PatientCareReport>
-</EMSDataSet>
-`;
+const NEMSIS_SAMPLES: { file: string; label: string; sub: string }[] = [
+  { file: "realistic-mva-polytrauma.xml", label: "Polytrauma MVA (adult)", sub: "hemorrhage · TBI · hypotension" },
+  { file: "realistic-peds-severe-tbi.xml", label: "Severe TBI (pediatric)", sub: "GCS 4 · age 7" },
+  { file: "realistic-isolated-burn.xml", label: "Isolated burn (adult)", sub: "no hemorrhage · stable vitals" },
+  { file: "realistic-sci-diving.xml", label: "Spinal cord injury (diving)", sub: "spinal · alert · stable" },
+  { file: "persona-001-hemorrhage.xml", label: "Hemorrhage (minimal record)", sub: "smallest valid PCR" },
+  { file: "persona-006-pregnant-fall.xml", label: "Pregnancy + fall", sub: "pregnancy flag set" },
+  { file: "persona-008-pediatric-mvc.xml", label: "Pediatric MVC", sub: "age 9 · MVC mechanism" },
+];
 
 function NemsisPanel({ trials }: { trials: Trial[] }) {
   const [xml, setXml] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<NemsisResponse | null>(null);
+  const [sampleLoading, setSampleLoading] = useState<string | null>(null);
+  const [dragActive, setDragActive] = useState(false);
 
   async function run() {
     setError(null);
     setData(null);
     if (!xml.trim()) {
-      setError("paste an XML PCR or click 'use sample'");
+      setError("paste an XML PCR, load a sample, or drop a file");
       return;
     }
     setLoading(true);
@@ -874,6 +849,46 @@ function NemsisPanel({ trials }: { trials: Trial[] }) {
     }
   }
 
+  async function loadSample(file: string) {
+    if (!file) return;
+    setError(null);
+    setData(null);
+    setSampleLoading(file);
+    try {
+      const res = await fetch(`/nemsis-samples/${file}`);
+      if (!res.ok) {
+        setError(`couldn't load sample (${res.status})`);
+        return;
+      }
+      setXml(await res.text());
+    } catch {
+      setError("network error loading sample");
+    } finally {
+      setSampleLoading(null);
+    }
+  }
+
+  async function loadFile(file: File) {
+    setError(null);
+    setData(null);
+    if (file.size > 200_000) {
+      setError(`file is ${(file.size / 1024).toFixed(0)} KB — limit is 200 KB`);
+      return;
+    }
+    const isXml =
+      file.type.includes("xml") ||
+      file.name.toLowerCase().endsWith(".xml");
+    if (!isXml) {
+      setError("file must be .xml");
+      return;
+    }
+    try {
+      setXml(await file.text());
+    } catch {
+      setError("couldn't read file");
+    }
+  }
+
   return (
     <div className="mt-4 rounded-lg border border-slate-800 bg-slate-900/40 p-5 fade-in">
       <p className="font-mono text-[10px] tracking-[0.2em] text-slate-500 mb-2">
@@ -887,22 +902,61 @@ function NemsisPanel({ trials }: { trials: Trial[] }) {
         Patient was built. <em>v0 mapping; not a clinical-grade extractor.</em>
       </p>
 
+      <div className="mb-3 flex flex-col sm:flex-row sm:items-center gap-2">
+        <label className="font-mono text-[10px] tracking-wider text-slate-500 sm:mr-1">
+          LOAD SAMPLE
+        </label>
+        <select
+          value=""
+          onChange={(e) => loadSample(e.target.value)}
+          disabled={sampleLoading !== null}
+          className="font-mono text-[11px] px-2 py-1.5 rounded border border-slate-700 bg-slate-950 text-slate-200 focus:outline-none focus:border-slate-500 disabled:opacity-50"
+        >
+          <option value="">— pick a synthetic ePCR —</option>
+          {NEMSIS_SAMPLES.map((s) => (
+            <option key={s.file} value={s.file}>
+              {s.label} · {s.sub}
+            </option>
+          ))}
+        </select>
+        <span className="font-mono text-[10px] text-slate-500 sm:mx-1">or</span>
+        <label className="font-mono text-[10px] tracking-wider px-3 py-2 rounded border border-slate-700 text-slate-300 hover:bg-slate-800/40 cursor-pointer">
+          UPLOAD .XML
+          <input
+            type="file"
+            accept=".xml,application/xml,text/xml"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) loadFile(f);
+              e.target.value = "";
+            }}
+          />
+        </label>
+      </div>
+
       <textarea
         value={xml}
         onChange={(e) => setXml(e.target.value)}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragActive(true);
+        }}
+        onDragLeave={() => setDragActive(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragActive(false);
+          const f = e.dataTransfer.files?.[0];
+          if (f) loadFile(f);
+        }}
         rows={8}
         spellCheck={false}
-        placeholder="<EMSDataSet xmlns='http://www.nemsis.org'> ... </EMSDataSet>"
-        className="w-full px-3 py-2 rounded border border-slate-800 bg-slate-950 font-mono text-[11px] text-slate-100 focus:outline-none focus:border-slate-500 leading-relaxed"
+        placeholder="<EMSDataSet xmlns='http://www.nemsis.org'> ... </EMSDataSet>  — or drop a .xml file here"
+        className={`w-full px-3 py-2 rounded border bg-slate-950 font-mono text-[11px] text-slate-100 focus:outline-none leading-relaxed transition-colors ${
+          dragActive ? "border-rose-500 bg-rose-950/20" : "border-slate-800 focus:border-slate-500"
+        }`}
       />
       <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setXml(SAMPLE_NEMSIS_XML)}
-          className="font-mono text-[10px] tracking-wider px-3 py-2 rounded border border-slate-700 text-slate-300 hover:bg-slate-800/40"
-        >
-          USE SAMPLE
-        </button>
         <button
           onClick={run}
           disabled={loading}
